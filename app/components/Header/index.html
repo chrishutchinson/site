@@ -1,0 +1,103 @@
+<header>
+
+  <main>
+    
+    <h1>Chris Hutchinson</h1>
+
+    <hr />
+
+    <ul>
+      <li>
+        <a href="https://www.twitter.com/chrishutchinson">Twitter</a>
+      </li>
+      <li>
+        <a href="https://www.github.com/chrishutchinson">GitHub</a>
+      </li>
+    </ul>
+
+  </main>
+
+</header>
+
+<style>
+header {
+  width: 100%;
+  position: sticky;
+  top: -12rem;
+  left: 0;
+  background-image: linear-gradient( 135deg, #79F1A4 0%, #0E5CAD 100%);
+  text-align: center;
+  min-height: 14rem;
+  display: flex;
+  border-radius: 0 0 3px 3px;
+  z-index: 10;
+}
+
+@media screen and (min-width: 768px) {
+  header {
+    padding: 2rem;
+    top: 2rem;
+    left: 2rem;
+    width: 25vw;
+    height: 25vw;
+    max-height: calc(100vh - 4rem);
+    box-sizing: border-box;
+    border-radius: 3px;
+  }
+}
+
+main {
+  margin: auto;
+}
+
+h1 {
+  margin: 0 0 1rem;
+  line-height: 1.1em;
+  color: #FFF;
+  font-size: 2.8rem;
+}
+
+hr {
+  border: 0;
+  width: 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  margin: 2rem auto 2.2rem;
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  hr {
+    display: block;
+  }
+}
+
+ul {
+  list-style-type: none;
+  display: flex;
+  color: #FFF;
+  text-align: center;
+  margin: 0;
+  padding: 0.5rem 0;
+  justify-content: space-around;
+  max-width: 16rem;
+  margin: 0 auto;
+}
+
+ul li a {
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.6rem 1rem;
+  border-radius: 3px;
+  color: inherit;
+}
+ul li a:hover,
+ul li a:focus {
+  background: rgba(255, 255, 255, 0.4);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+}
+</style>
+
+<script>
+export default {
+};
+</script>

@@ -1,0 +1,19 @@
+service: chris-hutchinson-svelte
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: eu-west-1
+  profile: chris-machine
+
+functions:
+  app:
+    handler: handler.app
+    events:
+      - http:
+          path: /
+          method: get
+
+plugins:
+  - serverless-offline

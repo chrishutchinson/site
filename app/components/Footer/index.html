@@ -1,0 +1,19 @@
+<footer>
+  <strong>&copy; {{year}} - <a href="https://www.twitter.com/chrishutchinson">Chris Hutchinson</a></strong>
+</footer>
+
+<style>
+footer {
+  text-align: center;
+  margin: 0 0 3rem;
+  width: 100%;
+}
+</style>
+
+<script>
+export default {
+  data: () => ({
+    year: new Date().getUTCFullYear()
+  }),
+};
+</script>

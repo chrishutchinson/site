@@ -1,0 +1,49 @@
+<main>
+
+  {{#each items as item}}
+    <Item type="{{item.type}}" title="{{item.title}}" image="{{item.image}}" date="{{item.date}}" url="{{item.url}}">
+      {{item.description}}
+    </Item>
+  {{/each}}<!-- 
+
+  <Item type="post" title="This is the title">
+    <p>Body content here</p>
+  </Item>
+
+  <Item type="project" image="https://developer.cdn.mozilla.net/media/img/mdn-logo-sm.png" caption="Caption here" title="This is the title">
+    <p>Body content here</p>
+  </Item>
+
+  <Item type="project" image="https://developer.cdn.mozilla.net/media/img/mdn-logo-sm.png" caption="Caption here" title="This is the title">
+    <p>Body content here</p>
+  </Item>
+
+  <Item type="project" image="https://developer.cdn.mozilla.net/media/img/mdn-logo-sm.png" caption="Caption here" title="This is the title">
+    <p>Body content here</p>
+  </Item> -->
+</main>
+
+<style>
+main {
+  margin: 2rem 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  main {
+    display: inline-block;
+    flex: 1;
+    margin: 1rem 0 1rem 2rem;
+    max-width: 52rem;
+  }
+}
+</style>
+
+<script>
+import Item from '../Item/index.html';
+
+export default {
+  components: {
+    Item
+  },
+};
+</script>
