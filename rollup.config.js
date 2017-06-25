@@ -14,8 +14,8 @@ export default {
   dest: 'dist/app.js',
   format: 'iife',
   plugins: [
-    // serve('dist'),
-    // livereload(),
+    serve('dist'),
+    livereload(),
     svelte({
       css: writeFileSync('dist/main.css'),
     }),
