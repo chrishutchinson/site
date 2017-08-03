@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const mime = require('mime-types');
 
 // `import` > `require`
 require('reify');
@@ -17,6 +18,7 @@ const { items } = require('../app/data');
 // Render HTML + CSS
 const html = App.render({
   items,
+  hydratable: true,
 });
 const { css } = App.renderCss();
 
@@ -35,4 +37,26 @@ module.exports.app = (event, context, callback) => {
     .replace('<main></main>', `<main>${html}</main>`);
 
   callback(null, response);
+};
+
+module.exports.file = (event, context, callback) => {
+  const validFiles = ['/app.js', '/sw.js', '/main.css', '/manifest.json'];
+
+  if (!validFiles.includes(event.resource)) {
+    callback(null, {
+      statusCode: 404,
+    });
+    return;
+  }
+
+  const file = fs.readFileSync(`../dist${event.resource}`);
+  const mimeType = mime.lookup(event.resource);
+
+  callback(null, {
+    statusCode: 200,
+    headers: {
+      'Content-Type': mimeType,
+    },
+    body: file.toString(),
+  });
 };

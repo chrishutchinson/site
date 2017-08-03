@@ -1,0 +1,12 @@
+{
+  "short_name": "Chris Hutchinson",
+  "name": "Chris Hutchinson",
+  "icons": [
+    {
+      "src": "https://static.chrishutchinson.me/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "index.html"
+}

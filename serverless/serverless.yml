@@ -14,6 +14,24 @@ functions:
       - http:
           path: /
           method: get
+      - http:
+          path: /index.html
+          method: get
+  file:
+    handler: handler.file
+    events:
+      - http:
+          path: /app.js
+          method: get
+      - http:
+          path: /sw.js
+          method: get
+      - http:
+          path: /main.css
+          method: get
+      - http:
+          path: /manifest.json
+          method: get
 
 plugins:
   - serverless-offline

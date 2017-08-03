@@ -3,8 +3,7 @@ import * as fs from 'fs';
 import svelte from 'rollup-plugin-svelte';
 import babel from 'rollup-plugin-babel';
 import uglify from 'rollup-plugin-uglify';
-import serve from 'rollup-plugin-serve';
-import livereload from 'rollup-plugin-livereload';
+import copy from 'rollup-plugin-copy';
 
 const writeFileSync = destination => content =>
   fs.writeFileSync(destination, content);
@@ -14,14 +13,17 @@ export default {
   dest: 'dist/app.js',
   format: 'iife',
   plugins: [
-    serve('dist'),
-    livereload(),
     svelte({
       css: writeFileSync('dist/main.css'),
+      hydratable: true,
     }),
     babel({
       exclude: 'node_modules/**',
     }),
     uglify(),
+    copy({
+      'app/manifest.json': 'dist/manifest.json',
+      'app/assets': 'dist/assets',
+    }),
   ],
 };
