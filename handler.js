@@ -10,14 +10,15 @@ require('reify');
 require('svelte/ssr/register');
 
 // App component
-const App = require('../app/components/App/index.html');
+const App = require('./app/components/App/index.html');
 
 // Data
-const { items } = require('../app/data');
+const { items } = require('./app/data');
 
 // Render HTML + CSS
 const html = App.render({
   items,
+  staticResourceDomain: process.env.STATIC_RESOURCE_DOMAIN,
   hydratable: true,
 });
 const { css } = App.renderCss();
@@ -30,9 +31,11 @@ module.exports.app = (event, context, callback) => {
     },
   };
 
-  response.body = fs
-    .readFileSync('./index.html')
-    .toString()
+  const html = require('./app/html')({
+    domain: process.env.STATIC_RESOURCE_DOMAIN,
+  });
+
+  response.body = html
     .replace('</head>', `<style>${css}</style></head>`)
     .replace('<main></main>', `<main>${html}</main>`);
 
@@ -49,7 +52,8 @@ module.exports.file = (event, context, callback) => {
     return;
   }
 
-  const file = fs.readFileSync(`../dist${event.resource}`);
+  const file = fs.readFileSync(`./dist${event.resource}`);
+  console.log({ file });
   const mimeType = mime.lookup(event.resource);
 
   callback(null, {

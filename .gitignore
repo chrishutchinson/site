@@ -1,8 +1,18 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+
+# Node + npm
 node_modules
 npm-debug.log
 
+# App specific
 .reify-cache
-
 dist
+config/*.env.yml
 
+# macOS
 .DS_Store

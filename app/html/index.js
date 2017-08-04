@@ -1,10 +1,13 @@
-<!DOCTYPE html>
+const getUrl = (domain, path) => `${domain}${path}`;
+
+module.exports = ({ domain }) =>
+  `<!DOCTYPE html>
 <html>
 <head>
   <title></title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="${getUrl(domain, 'manifest.json')}">
   
   <meta charset="utf-8" />
 
@@ -29,7 +32,7 @@
 
 <main></main>
 
-<script type="text/javascript" src="./app.js" defer></script>
+<script type="text/javascript" src="${getUrl(domain, 'app.js')}" defer></script>
 
 </body>
-</html>
+</html>`;

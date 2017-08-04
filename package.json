@@ -25,6 +25,7 @@
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^4.0.0",
     "serverless-offline": "^3.14.2",
+    "serverless-plugin-custom-domain": "^1.1.0",
     "svelte-loader": "^2.0.1",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.0.0"

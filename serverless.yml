@@ -3,9 +3,11 @@ service: chris-hutchinson-svelte
 provider:
   name: aws
   runtime: nodejs6.10
-  stage: dev
-  region: eu-west-1
-  profile: chris-machine
+  stage: ${opt:stage, self:custom.stage}
+  region: ${opt:region, self:custom.region}
+  profile: ${opt:profile}
+  environment:
+    STATIC_RESOURCE_DOMAIN: ${file(./config/${self:provider.stage}.env.yml):static_domain}
 
 functions:
   app:
@@ -33,5 +35,10 @@ functions:
           path: /manifest.json
           method: get
 
+custom:
+  stage: local
+  region: eu-west-1
+
 plugins:
   - serverless-offline
+  - serverless-plugin-custom-domain
