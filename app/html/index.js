@@ -2,14 +2,14 @@ const getUrl = (domain, path) => `${domain}${path}`;
 
 module.exports = ({ domain }) =>
   `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title></title>
+  <title>Chris Hutchinson</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="manifest" href="${getUrl(domain, 'manifest.json')}">
   
-  <meta charset="utf-8" />
+  <meta name="theme-color" content="#2f60ae" />
 
   <style type="text/css">
     html {
@@ -32,6 +32,9 @@ module.exports = ({ domain }) =>
 
 <main></main>
 
+<script type="text/javascript">
+  window.staticResourceDomain = '${domain}';
+</script>
 <script type="text/javascript" src="${getUrl(domain, 'app.js')}" defer></script>
 
 </body>

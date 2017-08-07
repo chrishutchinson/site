@@ -35,6 +35,27 @@ functions:
           path: /manifest.json
           method: get
 
+package:
+  exclude:
+    - node_modules/babel-core/**
+    - node_modules/babel-loader/**
+    - node_modules/babel-plugin-external-helpers/**
+    - node_modules/babel-plugin-*/**
+    - node_modules/babel-preset-env/**
+    - node_modules/rollup/**
+    - node_modules/rollup-plugin-babel/**
+    - node_modules/rollup-plugin-copy/**
+    - node_modules/rollup-plugin-livereload/**
+    - node_modules/rollup-plugin-serve/**
+    - node_modules/rollup-plugin-svelte/**
+    - node_modules/rollup-plugin-uglify/**
+    - node_modules/rollup-watch/**
+    - node_modules/serverless-offline/**
+    - node_modules/serverless-plugin-custom-domain/**
+    - node_modules/svelte-loader/**
+    - node_modules/uglifyjs-webpack-plugin/**
+    - node_modules/webpack/**
+
 custom:
   stage: local
   region: eu-west-1

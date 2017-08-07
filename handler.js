@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const mime = require('mime-types');
+const { minify } = require('html-minifier');
 
 // `import` > `require`
 require('reify');
@@ -24,20 +25,21 @@ const html = App.render({
 const { css } = App.renderCss();
 
 module.exports.app = (event, context, callback) => {
-  const response = {
-    statusCode: 200,
-    headers: {
-      'Content-Type': 'text/html',
-    },
-  };
-
-  const html = require('./app/html')({
+  const htmlContainer = require('./app/html')({
     domain: process.env.STATIC_RESOURCE_DOMAIN,
   });
 
-  response.body = html
+  const htmlContent = htmlContainer
     .replace('</head>', `<style>${css}</style></head>`)
     .replace('<main></main>', `<main>${html}</main>`);
+
+  const response = {
+    statusCode: 200,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+    },
+    body: minify(htmlContent),
+  };
 
   callback(null, response);
 };

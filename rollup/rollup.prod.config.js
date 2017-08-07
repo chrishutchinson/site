@@ -24,6 +24,7 @@ export default {
     copy({
       'app/manifest.json': 'dist/manifest.json',
       'app/assets': 'dist/assets',
+      'app/sw.js': 'dist/sw.js',
     }),
   ],
 };

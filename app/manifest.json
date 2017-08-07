@@ -1,12 +1,20 @@
 {
-  "short_name": "Chris Hutchinson",
+  "short_name": "Chris",
   "name": "Chris Hutchinson",
   "icons": [
     {
-      "src": "https://static.chrishutchinson.me/icon-192.png",
+      "src": "https://static.chris-dev.co.uk/assets/icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "https://static.chris-dev.co.uk/assets/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
-  "start_url": "index.html"
+  "display": "fullscreen",
+  "start_url": "index.html",
+  "theme_color": "#2f60ae",
+  "background_color": "#FFFFFF"
 }
