@@ -55,7 +55,7 @@ module.exports.file = (event, context, callback) => {
   }
 
   const file = fs.readFileSync(`./dist${event.resource}`);
-  console.log({ file });
+
   const mimeType = mime.lookup(event.resource);
 
   callback(null, {

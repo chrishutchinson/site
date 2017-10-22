@@ -59,7 +59,6 @@ package:
 custom:
   stage: local
   region: eu-west-1
-
+  
 plugins:
   - serverless-offline
-  - serverless-plugin-custom-domain
