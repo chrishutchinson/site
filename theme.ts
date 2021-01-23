@@ -5,32 +5,38 @@ const theme: Theme = {
   colors: {
     text: "#111",
     background: "#fff",
-    primary: "#3C6848",
-    secondary: "#3f3f3f",
-    muted: "#3f3f3f",
-    highlight: "#3C6848",
+    primary: "#5DA271",
+    secondary: "#437551",
+    muted: "#437551",
+    highlight: "#5DA271",
     gray: "#6c6c6c",
     accent: "#C84630",
+    subtle: "#3f3f3f",
+    hoverText: "#FFF",
     modes: {
       dark: {
         text: "#FFF",
         background: "#222",
-        muted: "#ddd",
+        muted: "#222",
+        subtle: "#ddd",
         highlight: "#333",
+        hoverText: "#FFF",
       },
     },
   },
   fonts: {
     body: `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif`,
-    title: "Mali",
     heading: "Mali",
   },
   fontSizes: [12, 14, 16, 22, 28, 36, 42, 60, 72, 100],
   lineHeights: {
-    title: 1.05,
+    heading: 1.05,
     body: 1.5,
   },
-  fontWeights: ["normal", 500],
+  fontWeights: {
+    body: "normal",
+    heading: 500,
+  },
   links: {
     bold: {
       fontWeight: 0,
@@ -41,6 +47,13 @@ const theme: Theme = {
       textDecoration: "none",
     },
   },
+  text: {
+    heading: {
+      fontFamily: "heading",
+      lineHeight: "heading",
+      fontWeight: "heading",
+    },
+  },
   styles: {
     root: {
       fontFamily: "body",
@@ -49,16 +62,19 @@ const theme: Theme = {
     },
     a: {
       color: "text",
-      textDecorationColor: "#3C6848",
+      textDecorationColor: "#5DA271",
       textDecorationThickness: 2,
       transition: "background 0.15s ease, color 0.15s ease",
       ":hover": {
         backgroundColor: "primary",
-        color: "background",
+        color: "hoverText",
       },
     },
     h1: {
-      fontWeight: 1,
+      variant: "text.heading",
+    },
+    h2: {
+      variant: "text.heading",
     },
   },
 };

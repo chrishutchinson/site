@@ -64,7 +64,6 @@ export const Card: React.FC<{
               as="h2"
               sx={{
                 fontSize: [2, 3],
-                fontWeight: 1,
                 display: "inline",
               }}
             >
@@ -75,7 +74,7 @@ export const Card: React.FC<{
 
         <Box
           sx={{
-            color: "muted",
+            color: "subtle",
           }}
         >
           {children}

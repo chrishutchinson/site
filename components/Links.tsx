@@ -26,10 +26,6 @@ const BigLink: React.FC<{ to: string; name: string }> = ({
         transition: "background 0.15s ease, color 0.15s ease",
         fontSize: 4,
         color: "text",
-        ":hover": {
-          backgroundColor: "primary",
-          color: "background",
-        },
       }}
     >
       {children}
