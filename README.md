@@ -24,6 +24,8 @@ yarn build
 
 The app is automatically deployed to Vercel on any merge to the `main` branch.
 
+The production URL is https://www.chrishutchinson.me.
+
 ### PR deployments
 
 Vercel handily sets up PR environments automatically, with a temporary domain for previewing, which can be used for testing before merging.
