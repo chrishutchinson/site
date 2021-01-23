@@ -1,8 +1,21 @@
+import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
-import { Box, Flex, Heading } from "theme-ui";
+import {
+  Box,
+  Flex,
+  Heading,
+  IconButton,
+  Link,
+  Text,
+  useColorMode,
+} from "theme-ui";
+import { Container } from "./Container";
 import { Links } from "./Links";
 
 export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
+  const [colorMode, setColorMode] = useColorMode();
+
   return (
     <>
       <Head>
@@ -12,38 +25,79 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
 
       <Box
         sx={{
+          position: "fixed",
+          top: 20,
+          right: 20,
+        }}
+      >
+        <IconButton
+          onClick={(e) => {
+            setColorMode(colorMode === "default" ? "dark" : "default");
+          }}
+        >
+          <FontAwesomeIcon icon={faLightbulb} size="2x" />
+        </IconButton>
+      </Box>
+
+      <Box
+        sx={{
           minHeight: "100vh",
         }}
       >
-        <Box
-          as="header"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-            padding: [4, 5],
-            minHeight: "60vh",
-            marginBottom: 3,
-          }}
-        >
-          <Heading
+        <Container>
+          <Box
+            as="header"
             sx={{
-              fontFamily: "title",
-              fontSize: [7, 7, 9],
-              lineHeight: "title",
-              textAlign: "center",
-              maxWidth: ["initial", 500, 800],
-              marginBottom: [3, 4],
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "center",
+              flexDirection: "column",
+              height: "60vh",
+              maxHeight: 500,
+              marginBottom: 3,
             }}
           >
-            Chris Hutchinson
-          </Heading>
+            <Heading
+              sx={{
+                fontFamily: "title",
+                fontSize: [6, 7, 9],
+                lineHeight: "title",
+                textAlign: "left",
+                maxWidth: ["initial", 500, 800],
+                marginBottom: [3, 4],
+              }}
+            >
+              Chris Hutchinson
+            </Heading>
+            <Text
+              as="p"
+              sx={{
+                color: "muted",
+                fontSize: [1, 2],
+                marginBottom: [4, 5],
+              }}
+            >
+              Software engineer, working at{" "}
+              <Link href="https://www.thetimes.co.uk">The Times</Link>, and
+              tinkering with Rapsberry Pis.
+            </Text>
 
-          <Links />
-        </Box>
+            <Links />
+          </Box>
+        </Container>
 
         <Box>{children}</Box>
+
+        <Flex
+          sx={{
+            backgroundColor: "highlight",
+            padding: 5,
+            justifyContent: "center",
+            color: "#FFF",
+          }}
+        >
+          &copy; {new Date().getFullYear()} &bull; Chris Hutchinson
+        </Flex>
       </Box>
     </>
   );

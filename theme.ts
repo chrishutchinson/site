@@ -5,17 +5,18 @@ const theme: Theme = {
   colors: {
     text: "#111",
     background: "#fff",
-    primary: "#00CAB4",
+    primary: "#5DA271",
     secondary: "#3f3f3f",
-    muted: "#e0e0e0",
-    highlight: "#9f9f9f",
+    muted: "#3f3f3f",
+    highlight: "#5DA271",
     gray: "#6c6c6c",
-    accent: "#3f3f3f",
+    accent: "#C84630",
     modes: {
       dark: {
         text: "#FFF",
         background: "#222",
-        primary: "#FFF",
+        muted: "#ddd",
+        highlight: "#333",
       },
     },
   },
@@ -43,6 +44,12 @@ const theme: Theme = {
     root: {
       fontFamily: "body",
       fontWeight: "body",
+      lineHeight: "body",
+    },
+    a: {
+      color: "text",
+      textDecorationColor: "#5DA271",
+      textDecorationThickness: 2,
     },
   },
 };
