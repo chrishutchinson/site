@@ -15,6 +15,10 @@ export default class extends Document {
           <style
             dangerouslySetInnerHTML={{
               __html: `
+              p, h1, h2, h3, h4, h5, h6 {
+                transition: color 0.15s ease;
+              }
+
             /* thai */
             @font-face {
               font-family: "Mali";

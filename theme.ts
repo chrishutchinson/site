@@ -59,6 +59,7 @@ const theme: Theme = {
       fontFamily: "body",
       fontWeight: 0,
       lineHeight: "body",
+      transition: "background-color 0.15s ease",
     },
     a: {
       color: "text",
