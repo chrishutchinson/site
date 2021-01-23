@@ -20,6 +20,10 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="Chris Hutchinson is a software engineer, working at The Times, and tinkering with Rapsberry Pis."
+        />
         <title>{title ? `${title} | ` : ""}Chris Hutchinson</title>
       </Head>
 
@@ -34,6 +38,7 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
           onClick={(e) => {
             setColorMode(colorMode === "default" ? "dark" : "default");
           }}
+          aria-label="Toggle dark mode"
         >
           <FontAwesomeIcon icon={faLightbulb} size="2x" />
         </IconButton>

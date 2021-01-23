@@ -6,10 +6,16 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Flex, Link } from "theme-ui";
 
-const BigLink: React.FC<{ to: string }> = ({ to, children }) => {
+const BigLink: React.FC<{ to: string; name: string }> = ({
+  to,
+  name,
+  children,
+}) => {
   return (
     <Link
+      rel="noopener noreferrer"
       href={to}
+      aria-label={name}
       sx={{
         display: "flex",
         borderBottom: "3px solid",
@@ -42,13 +48,13 @@ export const Links = () => {
           width: 150,
         }}
       >
-        <BigLink to="/to/twitter">
+        <BigLink to="/to/twitter" name="Chris Hutchinson's Twitter profile">
           <FontAwesomeIcon icon={faTwitter} />
         </BigLink>
-        <BigLink to="/to/github">
+        <BigLink to="/to/github" name="Chris Hutchinson's GitHub profile">
           <FontAwesomeIcon icon={faGithub} />
         </BigLink>
-        <BigLink to="/to/linkedin">
+        <BigLink to="/to/linkedin" name="Chris Hutchinson's LinkedIn profile">
           <FontAwesomeIcon icon={faLinkedin} />
         </BigLink>
       </Flex>

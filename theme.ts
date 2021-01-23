@@ -5,10 +5,10 @@ const theme: Theme = {
   colors: {
     text: "#111",
     background: "#fff",
-    primary: "#5DA271",
+    primary: "#3C6848",
     secondary: "#3f3f3f",
     muted: "#3f3f3f",
-    highlight: "#5DA271",
+    highlight: "#3C6848",
     gray: "#6c6c6c",
     accent: "#C84630",
     modes: {
@@ -25,7 +25,7 @@ const theme: Theme = {
     title: "Mali",
     heading: "Mali",
   },
-  fontSizes: [10, 12, 16, 22, 28, 36, 42, 60, 72, 100],
+  fontSizes: [12, 14, 16, 22, 28, 36, 42, 60, 72, 100],
   lineHeights: {
     title: 1.05,
     body: 1.5,
@@ -48,7 +48,7 @@ const theme: Theme = {
     },
     a: {
       color: "text",
-      textDecorationColor: "#5DA271",
+      textDecorationColor: "#3C6848",
       textDecorationThickness: 2,
     },
   },
