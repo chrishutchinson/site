@@ -20,17 +20,12 @@ const BigLink: React.FC<{ to: string; name: string }> = ({
         display: "flex",
         borderBottom: "3px solid",
         padding: 1,
-        fontWeight: "bold",
         borderColor: "primary",
         alignItems: "center",
         justifyContent: "center",
         transition: "background 0.15s ease, color 0.15s ease",
         fontSize: 4,
         color: "text",
-        ":hover": {
-          backgroundColor: "primary",
-          color: "background",
-        },
       }}
     >
       {children}

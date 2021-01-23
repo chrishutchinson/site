@@ -63,10 +63,9 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
             }}
           >
             <Heading
+              as="h1"
               sx={{
-                fontFamily: "title",
                 fontSize: [6, 7, 9],
-                lineHeight: "title",
                 textAlign: "left",
                 maxWidth: ["initial", 500, 800],
                 marginBottom: [3, 4],
@@ -77,7 +76,7 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
             <Text
               as="p"
               sx={{
-                color: "muted",
+                color: "subtle",
                 fontSize: [1, 2],
                 marginBottom: [4, 5],
               }}
@@ -95,7 +94,7 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
 
         <Flex
           sx={{
-            backgroundColor: "highlight",
+            backgroundColor: "muted",
             paddingTop: 5,
             paddingBottom: 5,
             justifyContent: "flex-start",
@@ -104,11 +103,10 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
         >
           <Container>
             <Heading
+              as="h2"
               sx={{
                 display: "inline",
-                fontFamily: "title",
                 fontSize: 2,
-                lineHeight: "title",
                 textAlign: "left",
               }}
             >

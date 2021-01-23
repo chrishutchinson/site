@@ -52,32 +52,29 @@ export const Card: React.FC<{
           <FontAwesomeIcon icon={icon} size="2x" />
         </Box>
 
-        <Flex
-          sx={{
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+        <Box>
           <Link
             href={href}
             sx={{
               color: "text",
+              display: "inline",
             }}
           >
             <Heading
               as="h2"
               sx={{
                 fontSize: [2, 3],
+                display: "inline",
               }}
             >
               {title}
             </Heading>
           </Link>
-        </Flex>
+        </Box>
 
         <Box
           sx={{
-            color: "muted",
+            color: "subtle",
           }}
         >
           {children}
