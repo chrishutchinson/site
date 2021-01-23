@@ -25,7 +25,7 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
 
       <Box
         sx={{
-          position: "fixed",
+          position: "absolute",
           top: 20,
           right: 20,
         }}
