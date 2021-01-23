@@ -30,12 +30,13 @@ const theme: Theme = {
     title: 1.05,
     body: 1.5,
   },
+  fontWeights: ["normal", 500],
   links: {
     bold: {
-      fontWeight: "bold",
+      fontWeight: 0,
     },
     nav: {
-      fontWeight: "bold",
+      fontWeight: 0,
       color: "inherit",
       textDecoration: "none",
     },
@@ -43,13 +44,21 @@ const theme: Theme = {
   styles: {
     root: {
       fontFamily: "body",
-      fontWeight: "body",
+      fontWeight: 0,
       lineHeight: "body",
     },
     a: {
       color: "text",
       textDecorationColor: "#3C6848",
       textDecorationThickness: 2,
+      transition: "background 0.15s ease, color 0.15s ease",
+      ":hover": {
+        backgroundColor: "primary",
+        color: "background",
+      },
+    },
+    h1: {
+      fontWeight: 1,
     },
   },
 };

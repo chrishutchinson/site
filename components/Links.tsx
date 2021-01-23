@@ -20,7 +20,6 @@ const BigLink: React.FC<{ to: string; name: string }> = ({
         display: "flex",
         borderBottom: "3px solid",
         padding: 1,
-        fontWeight: "bold",
         borderColor: "primary",
         alignItems: "center",
         justifyContent: "center",

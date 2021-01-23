@@ -63,10 +63,11 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
             }}
           >
             <Heading
+              as="h1"
               sx={{
-                fontFamily: "title",
                 fontSize: [6, 7, 9],
                 lineHeight: "title",
+                fontWeight: 1,
                 textAlign: "left",
                 maxWidth: ["initial", 500, 800],
                 marginBottom: [3, 4],
