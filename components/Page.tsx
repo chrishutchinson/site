@@ -53,7 +53,7 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
               justifyContent: "center",
               flexDirection: "column",
               height: "60vh",
-              maxHeight: 500,
+              maxHeight: 700,
               marginBottom: 3,
             }}
           >
@@ -91,12 +91,26 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
         <Flex
           sx={{
             backgroundColor: "highlight",
-            padding: 5,
-            justifyContent: "center",
+            paddingTop: 5,
+            paddingBottom: 5,
+            justifyContent: "flex-start",
             color: "#FFF",
           }}
         >
-          &copy; {new Date().getFullYear()} &bull; Chris Hutchinson
+          <Container>
+            <Heading
+              sx={{
+                display: "inline",
+                fontFamily: "title",
+                fontSize: 2,
+                lineHeight: "title",
+                textAlign: "left",
+              }}
+            >
+              Chris Hutchinson
+            </Heading>{" "}
+            &bull; {new Date().getFullYear()}
+          </Container>
         </Flex>
       </Box>
     </>

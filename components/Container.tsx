@@ -4,7 +4,8 @@ export const Container: React.FC = ({ children }) => {
   return (
     <Box
       sx={{
-        padding: [4, 5],
+        paddingLeft: [4, 5],
+        paddingRight: [4, 5],
       }}
     >
       {children}
