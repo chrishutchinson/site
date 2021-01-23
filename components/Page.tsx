@@ -13,6 +13,14 @@ import {
 import { Container } from "./Container";
 import { Links } from "./Links";
 
+const metadata = {
+  url: (path = "") => `https://www.chrishutchinson.me/${path}`,
+  title: (i) => `${i ? `${i} | ` : ""}Chris Hutchinson`,
+  description: () =>
+    "Chris Hutchinson is a software engineer, working at The Times, and tinkering with Rapsberry Pis.",
+  image: () => "/share-image.png",
+};
+
 export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
   const [colorMode, setColorMode] = useColorMode();
 
@@ -20,11 +28,16 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="description"
-          content="Chris Hutchinson is a software engineer, working at The Times, and tinkering with Rapsberry Pis."
-        />
-        <title>{title ? `${title} | ` : ""}Chris Hutchinson</title>
+        <title>{metadata.title(title)}</title>
+        <meta name="description" content={metadata.description()} />
+        <meta property="og:url" content={metadata.url()} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={metadata.title(title)} />
+        <meta property="og:description" content={metadata.description()} />
+        <meta property="og:image" content={metadata.image()} />
+        <meta property="twitter:card" content="summary_large_image"></meta>
+        <meta property="twitter:site" content="chrishutchinson"></meta>
+        <meta property="twitter:image" content={metadata.image()} />
       </Head>
 
       <Box
