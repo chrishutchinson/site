@@ -96,7 +96,7 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
             >
               Software engineer, working at{" "}
               <Link href="https://www.thetimes.co.uk">The Times</Link>, and
-              tinkering with Rapsberry Pis.
+              Raspberry Pi tinkerer.
             </Text>
 
             <Links />
