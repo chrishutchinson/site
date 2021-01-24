@@ -32,20 +32,35 @@ export default function Home() {
               title="Talk: React Testing Library"
               href="https://github.com/chrishutchinson/talk-react-testing-library"
               icon={faTasks}
-            />
+            >
+              <p>
+                A talk given in July 2019 giving a high level introduction to
+                React Testing Library
+              </p>
+            </Card>
 
             <Card
               title="Paint your own Christmas tree"
               href="https://github.com/chrishutchinson/christmas-tree-painter"
               icon={faRaspberryPi}
               radius="15px 120px 15px 200px/120px 15px 200px 15px"
-            />
+            >
+              <p>
+                TypeScript UI and Node.js API for remotely controlling WS2811
+                LEDs on a Christmas tree
+              </p>
+            </Card>
 
             <Card
               title="UK Air Quality Alexa Skill"
               href="https://github.com/chrishutchinson/air-quality-alexa-skill"
               icon={faWind}
-            />
+            >
+              <p>
+                Alexa Skill for finding out about your local air quality. Ask:
+                "Alexa, what's the air quality like in London?"
+              </p>
+            </Card>
           </Rail>
         </Box>
       </Page>

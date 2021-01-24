@@ -17,7 +17,7 @@ const metadata = {
   url: (path = "") => `https://www.chrishutchinson.me/${path}`,
   title: (i) => `${i ? `${i} | ` : ""}Chris Hutchinson`,
   description: () =>
-    "Chris Hutchinson is a software engineer, working at The Times, and tinkering with Rapsberry Pis.",
+    "Chris Hutchinson is a software engineer, working at The Times, and Rapsberry Pi tinkerer.",
   image: () => "/share-image.png",
 };
 
