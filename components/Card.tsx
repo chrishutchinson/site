@@ -1,16 +1,18 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Flex, Heading, Link } from "theme-ui";
+import { Box, Heading, Link } from "theme-ui";
 
 export const Card: React.FC<{
-  icon: IconProp;
   title: string;
   href: string;
+  label?: JSX.Element;
+  icon?: IconProp;
   radius?: string;
 }> = ({
-  icon,
   title,
   href,
+  icon,
+  label,
   radius = "255px 15px 225px 15px/15px 225px 15px 255px",
   children,
 }) => {
@@ -36,21 +38,33 @@ export const Card: React.FC<{
           height: "100%",
         }}
       >
-        <Box
-          sx={{
-            marginBottom: 2,
-            backgroundColor: "accent",
-            color: "#FFF",
-            display: "inline-flex",
-            width: 55,
-            height: 55,
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: "50%",
-          }}
-        >
-          <FontAwesomeIcon icon={icon} size="2x" />
-        </Box>
+        {icon && (
+          <Box
+            sx={{
+              marginBottom: 2,
+              backgroundColor: "accent",
+              color: "#FFF",
+              display: "inline-flex",
+              width: 55,
+              height: 55,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: "50%",
+            }}
+          >
+            <FontAwesomeIcon icon={icon} size="2x" />
+          </Box>
+        )}
+
+        {label && (
+          <Box
+            sx={{
+              marginBottom: 1,
+            }}
+          >
+            {label}
+          </Box>
+        )}
 
         <Box>
           <Link

@@ -3,7 +3,7 @@ import { faTasks, faWind } from "@fortawesome/free-solid-svg-icons";
 import { faRaspberryPi } from "@fortawesome/free-brands-svg-icons";
 import { Rail } from "../components/Rail";
 import { Card } from "../components/Card";
-import { Box } from "theme-ui";
+import { Box, Text } from "theme-ui";
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
             paddingBottom: 5,
           }}
         >
-          <Rail>
+          <Rail title="Projects">
             <Card
               title="Train departure board"
               href="https://github.com/chrishutchinson/train-departure-screen"

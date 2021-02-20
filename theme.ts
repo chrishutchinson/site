@@ -46,12 +46,29 @@ const theme: Theme = {
       color: "inherit",
       textDecoration: "none",
     },
+    blockUnderline: {
+      color: "text",
+      textDecoration: "none",
+      transition: "background 0.15s ease, color 0.15s ease",
+      ":hover": {
+        backgroundColor: "primary",
+        color: "hoverText",
+      },
+      borderBottom: "2px solid",
+      borderColor: "primary",
+    },
   },
   text: {
     heading: {
       fontFamily: "heading",
       lineHeight: "heading",
       fontWeight: "heading",
+    },
+    label: {
+      textTransform: "uppercase",
+      letterSpacing: "1px",
+      fontSize: 1,
+      color: "subtle",
     },
   },
   styles: {
