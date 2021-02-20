@@ -4,6 +4,8 @@ const makeQuery = async <T extends object>(
   query: string,
   variables?: object
 ): Promise<T> => {
+  const masterRef = await fetchMasterRef();
+
   const { data } = await fetch(
     `https://chrishutchinson.prismic.io/graphql?query=${encodeURIComponent(
       query
@@ -15,7 +17,7 @@ const makeQuery = async <T extends object>(
     {
       method: "get",
       headers: {
-        "Prismic-Ref": "YDAI9hUAACYA5r4R",
+        "Prismic-Ref": masterRef,
       },
     }
   ).then((res) => {
@@ -29,6 +31,28 @@ const makeQuery = async <T extends object>(
   return data as T;
 };
 
+const fetchMasterRef = async () => {
+  const { refs } = await fetch(
+    "https://chrishutchinson.cdn.prismic.io/api/v2",
+    {
+      method: "get",
+    }
+  ).then((res) => {
+    if (!res.ok) {
+      throw new Error(res.statusText);
+    }
+
+    return res.json() as Promise<{
+      refs: {
+        isMasterRef: boolean;
+        ref: string;
+      }[];
+    }>;
+  });
+
+  return refs.find((r) => r.isMasterRef).ref;
+};
+
 export type Post = {
   id: string;
   slug: string;
@@ -36,12 +60,39 @@ export type Post = {
   subheading: string | null;
   summary: string;
   publishedAt: string;
-  body: {
-    type: "text";
-    primary: {
-      text: RichTextBlock[];
-    };
-  }[];
+  body: (
+    | {
+        type: "text";
+        primary: {
+          text: RichTextBlock[];
+        };
+      }
+    | {
+        type: "blockquote";
+        primary: {
+          text: RichTextBlock[];
+        };
+      }
+    | {
+        type: "divider";
+      }
+    | {
+        type: "gist";
+        primary: {
+          embed: {
+            html: string;
+          };
+        };
+      }
+    | {
+        type: "video";
+        primary: {
+          embed: {
+            html: string;
+          };
+        };
+      }
+  )[];
 };
 
 type PrismicPostNode = {
@@ -52,12 +103,39 @@ type PrismicPostNode = {
   headline: RichTextBlock[];
   subheading: RichTextBlock[];
   publishedAt: string;
-  body: {
-    type: "text";
-    primary: {
-      text: RichTextBlock[];
-    };
-  }[];
+  body: (
+    | {
+        type: "text";
+        primary: {
+          text: RichTextBlock[];
+        };
+      }
+    | {
+        type: "blockquote";
+        primary: {
+          text: RichTextBlock[];
+        };
+      }
+    | {
+        type: "divider";
+      }
+    | {
+        type: "gist";
+        primary: {
+          embed: {
+            html: string;
+          };
+        };
+      }
+    | {
+        type: "video";
+        primary: {
+          embed: {
+            html: string;
+          };
+        };
+      }
+  )[];
 };
 
 const trimToWordCount = (str: string, count: number): string => {
@@ -92,7 +170,27 @@ export const getPosts = async () => {
             body {
               ... on Blog_postBodyText {
                 type
-                label
+                primary {
+                  text
+                }
+              }
+              ... on Blog_postBodyVideo {
+                type
+                primary {
+                  embed
+                }
+              }
+              ... on Blog_postBodyGist {
+                type
+                primary {
+                  embed
+                }
+              }
+              ... on Blog_postBodyDivider {
+                type
+              }
+              ... on Blog_postBodyBlockquote {
+                type
                 primary {
                   text
                 }
@@ -129,7 +227,27 @@ export const getPost = async (slug: string) => {
         body {
           ... on Blog_postBodyText {
             type
-            label
+            primary {
+              text
+            }
+          }
+          ... on Blog_postBodyVideo {
+            type
+            primary {
+              embed
+            }
+          }
+          ... on Blog_postBodyGist {
+            type
+            primary {
+              embed
+            }
+          }
+          ... on Blog_postBodyDivider {
+            type
+          }
+          ... on Blog_postBodyBlockquote {
+            type
             primary {
               text
             }

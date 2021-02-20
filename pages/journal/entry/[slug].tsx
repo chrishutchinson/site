@@ -4,7 +4,7 @@ import { format } from "date-fns";
 
 import { GetServerSideProps } from "next";
 import { RichText } from "prismic-reactjs";
-import { Box, Flex, Heading, Link, Text } from "theme-ui";
+import { Box, Divider, Flex, Heading, Link, Text } from "theme-ui";
 import { getPost, Post } from "../../../api/prismic";
 import { Container } from "../../../components/Container";
 import { Page } from "../../../components/Page";
@@ -13,14 +13,9 @@ import { linkResolver } from "../../../utils/link-resolver";
 
 const Content: React.FC<{ post: Post }> = ({ post }) => {
   return (
-    <Box
-      sx={{
-        maxWidth: 800,
-      }}
-    >
+    <Box>
       {post.body.map((slice) => {
         if (slice.type === "text") {
-          // @ts-ignore
           return (
             <RichText
               render={slice.primary.text}
@@ -28,9 +23,43 @@ const Content: React.FC<{ post: Post }> = ({ post }) => {
               htmlSerializer={htmlSerializer}
             />
           );
-        } else {
-          return null;
         }
+
+        if (slice.type === "divider") {
+          return <Divider />;
+        }
+
+        if (slice.type === "blockquote") {
+          return (
+            <Text as="blockquote">
+              <RichText
+                render={slice.primary.text}
+                linkResolver={linkResolver}
+                htmlSerializer={htmlSerializer}
+              />
+            </Text>
+          );
+        }
+
+        if (slice.type === "video" || slice.type === "gist") {
+          if (!slice.primary.embed) {
+            return null;
+          }
+          console.log(slice.primary.embed.html);
+          return (
+            <>
+              {" "}
+              <Box
+                dangerouslySetInnerHTML={{
+                  __html: slice.primary.embed.html,
+                }}
+              />
+              <Box>GIST!</Box>
+            </>
+          );
+        }
+
+        return null;
       })}
     </Box>
   );
@@ -41,12 +70,13 @@ const Aside: React.FC<{ post: Post }> = ({ post }) => {
     <Flex
       sx={{
         flexDirection: "column",
+        minWidth: 350,
+        maxWidth: 350,
       }}
     >
       <Box
         as="aside"
         sx={{
-          maxWidth: 350,
           padding: [3, 4],
           backgroundColor: "buff",
           marginBottom: 3,
@@ -68,7 +98,7 @@ const Aside: React.FC<{ post: Post }> = ({ post }) => {
           </Text>
         </Box>
 
-        <Box sx={{}}>
+        <Box>
           <Text as="p">
             <FontAwesomeIcon icon={faLink} />
             <br />
@@ -112,26 +142,33 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
             <Aside post={post} />
 
             <Box>
-              <Heading
-                as="h1"
+              <Box
                 sx={{
-                  fontSize: [4, 6],
-                  marginBottom: 4,
+                  maxWidth: 800,
                 }}
               >
-                {post.headline}
-              </Heading>
-
-              {post.subheading && (
                 <Heading
-                  as="h2"
+                  as="h1"
                   sx={{
-                    fontSize: [3, 4],
+                    fontSize: [4, 6],
+                    marginBottom: 4,
                   }}
                 >
-                  {post.subheading}
+                  {post.headline}
                 </Heading>
-              )}
+
+                {post.subheading && (
+                  <Heading
+                    as="h2"
+                    sx={{
+                      fontSize: [3, 4],
+                      marginBottom: 4,
+                    }}
+                  >
+                    {post.subheading}
+                  </Heading>
+                )}
+              </Box>
 
               <Content post={post} />
             </Box>

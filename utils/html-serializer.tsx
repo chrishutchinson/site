@@ -1,6 +1,6 @@
 import React from "react";
 import { Elements } from "prismic-reactjs";
-import { Box, Link, Text } from "theme-ui";
+import { Box, Image, Link, Text } from "theme-ui";
 
 import { linkResolver } from "./link-resolver";
 
@@ -15,6 +15,7 @@ export const htmlSerializer = function (type, element, content, children, key) {
         <Box
           sx={{
             marginBottom: 3,
+            maxWidth: 800,
           }}
         >
           <Text as="p" variant="body" {...propsWithUniqueKey({}, key)}>
@@ -23,10 +24,27 @@ export const htmlSerializer = function (type, element, content, children, key) {
         </Box>
       );
 
-    // // Don't wrap images in a <p> tag
-    // case Elements.image:
-    //   props = { src: element.url, alt: element.alt || "" };
-    //   return React.createElement("img", propsWithUniqueKey(props, key));
+    case Elements.image:
+      return (
+        <Box
+          sx={{
+            marginBottom: 4,
+            textAlign: "center",
+            maxWidth: 1200,
+          }}
+        >
+          <Image
+            {...propsWithUniqueKey(
+              {
+                src: element.url,
+                alt: element.alt || "",
+              },
+              key
+            )}
+          />
+          <Text as="cite">{element.alt}</Text>
+        </Box>
+      );
 
     // Add a class to hyperlinks
     case Elements.hyperlink:
