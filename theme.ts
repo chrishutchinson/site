@@ -10,6 +10,7 @@ const theme: Theme = {
     muted: "#437551",
     highlight: "#5DA271",
     gray: "#6c6c6c",
+    buff: "#eaeaea",
     accent: "#C84630",
     subtle: "#3f3f3f",
     hoverText: "#FFF",
@@ -18,6 +19,7 @@ const theme: Theme = {
         text: "#FFF",
         background: "#222",
         muted: "#222",
+        buff: "#1a1a1a",
         subtle: "#ddd",
         highlight: "#333",
         hoverText: "#FFF",
@@ -59,6 +61,11 @@ const theme: Theme = {
     },
   },
   text: {
+    body: {
+      fontFamily: "body",
+      lineHeight: 1.5,
+      fontWeight: "body",
+    },
     heading: {
       fontFamily: "heading",
       lineHeight: "heading",
@@ -69,6 +76,7 @@ const theme: Theme = {
       letterSpacing: "1px",
       fontSize: 1,
       color: "subtle",
+      transition: "color 0.15s ease",
     },
   },
   styles: {

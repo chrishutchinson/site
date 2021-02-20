@@ -1,69 +1,142 @@
 import { Page } from "../components/Page";
-import { faTasks, faWind } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDoubleRight,
+  faTasks,
+  faWind,
+} from "@fortawesome/free-solid-svg-icons";
 import { faRaspberryPi } from "@fortawesome/free-brands-svg-icons";
 import { Rail } from "../components/Rail";
 import { Card } from "../components/Card";
-import { Box, Text } from "theme-ui";
+import { Box, Flex, Link } from "theme-ui";
+import { getPosts, Post } from "../api/prismic";
+import { GetServerSideProps } from "next";
+import { BlogPostCard } from "../components/BlogPostCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function Home() {
+const projects = [
+  {
+    title: "Train departure board",
+    link: "https://github.com/chrishutchinson/train-departure-screen",
+    icon: faRaspberryPi,
+    children: (
+      <>
+        <p>
+          A python script to display replica real-time UK railway station
+          departure screens for SSD13xx devices
+        </p>
+      </>
+    ),
+  },
+  {
+    title: "Talk: React Testing Library",
+    href: "https://github.com/chrishutchinson/talk-react-testing-library",
+    icon: faTasks,
+    children: (
+      <>
+        <p>
+          A talk given in July 2019 giving a high level introduction to React
+          Testing Library
+        </p>
+      </>
+    ),
+  },
+  {
+    title: "Paint your own Christmas tree",
+    href: "https://github.com/chrishutchinson/christmas-tree-painter",
+    icon: faRaspberryPi,
+    children: (
+      <>
+        <p>
+          TypeScript UI and Node.js API for remotely controlling WS2811 LEDs on
+          a Christmas tree
+        </p>
+      </>
+    ),
+  },
+  {
+    title: "UK Air Quality Alexa Skill",
+    href: "https://github.com/chrishutchinson/air-quality-alexa-skill",
+    icon: faWind,
+    children: (
+      <>
+        <p>
+          Alexa Skill for finding out about your local air quality. Ask: "Alexa,
+          what's the air quality like in London?"
+        </p>
+      </>
+    ),
+  },
+];
+
+const Home: React.FC<{ posts: Post[] }> = ({ posts }) => {
   return (
     <>
       <Page>
         <Box
           sx={{
             paddingTop: 5,
-            paddingBottom: 5,
+            paddingBottom: 3,
           }}
         >
           <Rail title="Projects">
-            <Card
-              title="Train departure board"
-              href="https://github.com/chrishutchinson/train-departure-screen"
-              icon={faRaspberryPi}
-              radius="100px 15px 225px 15px/15px 225px 15px 100px"
-            >
-              <p>
-                A python script to display replica real-time UK railway station
-                departure screens for SSD13xx devices
-              </p>
-            </Card>
+            {projects.map((project, index) => (
+              <Card
+                key={index}
+                title={project.title}
+                href={project.link}
+                icon={project.icon}
+                radiusIndex={index % 3}
+              >
+                {project.children}
+              </Card>
+            ))}
+          </Rail>
+        </Box>
 
-            <Card
-              title="Talk: React Testing Library"
-              href="https://github.com/chrishutchinson/talk-react-testing-library"
-              icon={faTasks}
-            >
-              <p>
-                A talk given in July 2019 giving a high level introduction to
-                React Testing Library
-              </p>
-            </Card>
+        <Box
+          sx={{
+            paddingTop: 3,
+            paddingBottom: 5,
+          }}
+        >
+          <Rail title="Journal">
+            {posts.map((post) => (
+              <BlogPostCard post={post} key={post.id} />
+            ))}
 
-            <Card
-              title="Paint your own Christmas tree"
-              href="https://github.com/chrishutchinson/christmas-tree-painter"
-              icon={faRaspberryPi}
-              radius="15px 120px 15px 200px/120px 15px 200px 15px"
+            <Flex
+              sx={{
+                overflow: "visible",
+                width: [260, 300],
+                marginRight: [4, 5],
+                justifyContent: "flex-start",
+                alignItems: "center",
+                flexShrink: 0,
+                ":last-child": {
+                  width: [260 + 32, 300 + 64],
+                  paddingRight: [4, 5],
+                },
+              }}
             >
-              <p>
-                TypeScript UI and Node.js API for remotely controlling WS2811
-                LEDs on a Christmas tree
-              </p>
-            </Card>
-
-            <Card
-              title="UK Air Quality Alexa Skill"
-              href="https://github.com/chrishutchinson/air-quality-alexa-skill"
-              icon={faWind}
-            >
-              <p>
-                Alexa Skill for finding out about your local air quality. Ask:
-                "Alexa, what's the air quality like in London?"
-              </p>
-            </Card>
+              <Link href="/journal" variant="blockUnderline">
+                Read older entries <FontAwesomeIcon icon={faAngleDoubleRight} />
+              </Link>
+            </Flex>
           </Rail>
         </Box>
       </Page>
     </>
   );
-}
+};
+
+export default Home;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const posts = await getPosts();
+
+  return {
+    props: {
+      posts: posts.slice(0, 4),
+    },
+  };
+};

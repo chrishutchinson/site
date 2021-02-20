@@ -23,7 +23,7 @@ const feedHandler: NextApiHandler = async (req, res) => {
         <item>
           <guid>${post.slug}</guid>
           <title>${post.headline}</title>
-          <link>${BASE_DOMAIN}/journal/${post.slug}</link>
+          <link>${BASE_DOMAIN}/journal/entry/${post.slug}</link>
           <description>${post.summary}</description>
           <pubDate>${post.publishedAt}</pubDate>
         </item>
