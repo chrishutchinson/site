@@ -130,7 +130,11 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
             inLanguage: "en-GB",
             isFamilyFriendly: "true",
             copyrightYear: "${new Date().getFullYear().toString()}",
-            copyrightHolder: "Chris Hutchinson",
+            copyrightHolder: {
+              "@type": "Person",
+              name: "Chris Hutchinson",
+              url: "https://www.chrishutchinson.me"
+            },
             author: {
               "@type": "Person",
               name: "Chris Hutchinson",
