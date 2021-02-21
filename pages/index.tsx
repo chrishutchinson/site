@@ -7,7 +7,7 @@ import {
 import { faRaspberryPi } from "@fortawesome/free-brands-svg-icons";
 import { Rail } from "../components/Rail";
 import { Card } from "../components/Card";
-import { Box, Flex, Link } from "theme-ui";
+import { Box, Flex, Link, Text } from "theme-ui";
 import { getPosts, Post } from "../api/prismic";
 import { GetServerSideProps } from "next";
 import { BlogPostCard } from "../components/BlogPostCard";
@@ -20,49 +20,49 @@ const projects = [
     icon: faRaspberryPi,
     children: (
       <>
-        <p>
+        <Text as="p">
           A python script to display replica real-time UK railway station
           departure screens for SSD13xx devices
-        </p>
+        </Text>
       </>
     ),
   },
   {
     title: "Talk: React Testing Library",
-    href: "https://github.com/chrishutchinson/talk-react-testing-library",
+    link: "https://github.com/chrishutchinson/talk-react-testing-library",
     icon: faTasks,
     children: (
       <>
-        <p>
+        <Text as="p">
           A talk given in July 2019 giving a high level introduction to React
           Testing Library
-        </p>
+        </Text>
       </>
     ),
   },
   {
     title: "Paint your own Christmas tree",
-    href: "https://github.com/chrishutchinson/christmas-tree-painter",
+    link: "https://github.com/chrishutchinson/christmas-tree-painter",
     icon: faRaspberryPi,
     children: (
       <>
-        <p>
+        <Text as="p">
           TypeScript UI and Node.js API for remotely controlling WS2811 LEDs on
           a Christmas tree
-        </p>
+        </Text>
       </>
     ),
   },
   {
     title: "UK Air Quality Alexa Skill",
-    href: "https://github.com/chrishutchinson/air-quality-alexa-skill",
+    link: "https://github.com/chrishutchinson/air-quality-alexa-skill",
     icon: faWind,
     children: (
       <>
-        <p>
+        <Text as="p">
           Alexa Skill for finding out about your local air quality. Ask: "Alexa,
           what's the air quality like in London?"
-        </p>
+        </Text>
       </>
     ),
   },

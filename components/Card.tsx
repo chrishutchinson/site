@@ -1,7 +1,8 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { Box, Heading, Link } from "theme-ui";
+import { Box, Flex, Heading, Link, Text } from "theme-ui";
 
 const getRadius = (index: number) => {
   const radii = [
@@ -20,10 +21,19 @@ const getRadius = (index: number) => {
 export const Card: React.FC<{
   title: string;
   href: string;
+  showReadLink?: boolean;
   label?: JSX.Element;
   icon?: IconProp;
   radiusIndex?: number;
-}> = ({ title, href, icon, label, radiusIndex = 0, children }) => {
+}> = ({
+  title,
+  href,
+  icon,
+  label,
+  showReadLink = false,
+  radiusIndex = 0,
+  children,
+}) => {
   const radius = getRadius(radiusIndex);
 
   return (
@@ -39,71 +49,92 @@ export const Card: React.FC<{
         },
       }}
     >
-      <Box
+      <Flex
         sx={{
+          flexDirection: "column",
+          justifyContent: "space-between",
           boxShadow: "20px 28px 34px -26px hsla(0,0%,0%,.2)",
           borderRadius: radius,
-          padding: ["30px 30px 20px", "40px 50px 20px"],
+          padding: ["30px 30px", "40px 50px"],
           border: radius ? "solid 3px #41403E" : "none",
           height: "100%",
         }}
       >
-        {icon && (
+        <Box>
+          {icon && (
+            <Box
+              sx={{
+                marginBottom: 2,
+                backgroundColor: "accent",
+                color: "#FFF",
+                display: "inline-flex",
+                width: 55,
+                height: 55,
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: "50%",
+              }}
+            >
+              <FontAwesomeIcon icon={icon} size="2x" />
+            </Box>
+          )}
+
+          {label && (
+            <Box
+              sx={{
+                marginBottom: 1,
+              }}
+            >
+              {label}
+            </Box>
+          )}
+
           <Box
             sx={{
               marginBottom: 2,
-              backgroundColor: "accent",
-              color: "#FFF",
-              display: "inline-flex",
-              width: 55,
-              height: 55,
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: "50%",
             }}
           >
-            <FontAwesomeIcon icon={icon} size="2x" />
-          </Box>
-        )}
-
-        {label && (
-          <Box
-            sx={{
-              marginBottom: 1,
-            }}
-          >
-            {label}
-          </Box>
-        )}
-
-        <Box>
-          <Link
-            href={href}
-            sx={{
-              color: "text",
-              display: "inline",
-            }}
-          >
-            <Heading
-              as="h2"
+            <Link
+              href={href}
               sx={{
-                fontSize: [2, 3],
+                color: "text",
                 display: "inline",
               }}
             >
-              {title}
-            </Heading>
-          </Link>
+              <Heading
+                as="h2"
+                sx={{
+                  fontSize: [2, 3],
+                  display: "inline",
+                }}
+              >
+                {title}
+              </Heading>
+            </Link>
+          </Box>
+
+          <Box
+            sx={{
+              color: "subtle",
+            }}
+          >
+            {children}
+          </Box>
         </Box>
 
-        <Box
-          sx={{
-            color: "subtle",
-          }}
-        >
-          {children}
-        </Box>
-      </Box>
+        {showReadLink && (
+          <Text
+            as="p"
+            sx={{
+              marginTop: 4,
+            }}
+          >
+            <Link variant="blockUnderline" href={href}>
+              Read <FontAwesomeIcon icon={faAngleDoubleRight} />
+            </Link>
+          </Text>
+        )}
+      </Flex>
     </Box>
   );
 };
