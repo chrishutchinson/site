@@ -45,6 +45,20 @@ export const Page: React.FC<{
           type="application/rss+xml"
           href={metadata.url("api/journal/feed.xml")}
         />
+
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-GFBYX2XJ7K"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-GFBYX2XJ7K');`,
+          }}
+        />
       </Head>
 
       <Box
