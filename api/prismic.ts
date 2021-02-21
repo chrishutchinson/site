@@ -1,5 +1,62 @@
 import { RichTextBlock } from "prismic-reactjs";
 
+export type PrismicSlice<T> =
+  | (T extends "text"
+      ? {
+          type: "text";
+          primary: {
+            text: RichTextBlock[];
+          };
+        }
+      : never)
+  | (T extends "blockquote"
+      ? {
+          type: "blockquote";
+          primary: {
+            text: RichTextBlock[];
+          };
+        }
+      : never)
+  | (T extends "divider"
+      ? {
+          type: "divider";
+        }
+      : never)
+  | (T extends "gist"
+      ? {
+          type: "gist";
+          primary: {
+            embed: {
+              gist: string;
+            };
+          };
+        }
+      : never)
+  | (T extends "video"
+      ? {
+          type: "video";
+          primary: {
+            embed: {
+              html: string;
+            };
+          };
+        }
+      : never)
+  | (T extends "tweet"
+      ? {
+          type: "tweet";
+          primary: {
+            embed: {
+              html: string;
+            };
+          };
+        }
+      : never);
+
+type PrismicBody = PrismicSlice<
+  "text" | "blockquote" | "divider" | "gist" | "video" | "tweet"
+>[];
+
 const makeQuery = async <T extends object>(
   query: string,
   variables?: object
@@ -60,47 +117,7 @@ export type Post = {
   subheading: string | null;
   summary: string;
   publishedAt: string;
-  body: (
-    | {
-        type: "text";
-        primary: {
-          text: RichTextBlock[];
-        };
-      }
-    | {
-        type: "blockquote";
-        primary: {
-          text: RichTextBlock[];
-        };
-      }
-    | {
-        type: "divider";
-      }
-    | {
-        type: "gist";
-        primary: {
-          embed: {
-            gist: string;
-          };
-        };
-      }
-    | {
-        type: "video";
-        primary: {
-          embed: {
-            html: string;
-          };
-        };
-      }
-    | {
-        type: "tweet";
-        primary: {
-          embed: {
-            html: string;
-          };
-        };
-      }
-  )[];
+  body: PrismicBody;
 };
 
 type PrismicPostNode = {
@@ -111,47 +128,7 @@ type PrismicPostNode = {
   headline: RichTextBlock[];
   subheading: RichTextBlock[];
   publishedAt: string;
-  body: (
-    | {
-        type: "text";
-        primary: {
-          text: RichTextBlock[];
-        };
-      }
-    | {
-        type: "blockquote";
-        primary: {
-          text: RichTextBlock[];
-        };
-      }
-    | {
-        type: "divider";
-      }
-    | {
-        type: "gist";
-        primary: {
-          embed: {
-            gist: string;
-          };
-        };
-      }
-    | {
-        type: "video";
-        primary: {
-          embed: {
-            html: string;
-          };
-        };
-      }
-    | {
-        type: "tweet";
-        primary: {
-          embed: {
-            html: string;
-          };
-        };
-      }
-  )[];
+  body: PrismicBody;
 };
 
 const trimToWordCount = (str: string, count: number): string => {

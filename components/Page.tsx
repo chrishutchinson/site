@@ -25,8 +25,6 @@ export const Page: React.FC<{
   title?: string;
   headerLayout?: "default" | "inline";
 }> = ({ title, headerLayout = "default", children }) => {
-  const [colorMode, setColorMode] = useColorMode();
-
   return (
     <>
       <Head>
@@ -48,23 +46,6 @@ export const Page: React.FC<{
           href={metadata.url("api/journal/feed.xml")}
         />
       </Head>
-
-      <Box
-        sx={{
-          position: "absolute",
-          top: 27,
-          right: 27,
-        }}
-      >
-        <IconButton
-          onClick={(e) => {
-            setColorMode(colorMode === "default" ? "dark" : "default");
-          }}
-          aria-label="Toggle dark mode"
-        >
-          <FontAwesomeIcon icon={faLightbulb} size="2x" />
-        </IconButton>
-      </Box>
 
       <Box
         sx={{
@@ -120,7 +101,7 @@ export const Page: React.FC<{
               as="header"
               sx={{
                 alignItems: "center",
-                justifyContent: "flex-start",
+                justifyContent: "space-between",
                 flexDirection: "row",
                 marginBottom: [4, 5],
                 paddingTop: 4,

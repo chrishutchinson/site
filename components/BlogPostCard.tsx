@@ -17,7 +17,19 @@ export const BlogPostCard: React.FC<{ post: Post }> = ({ post }) => {
       href={`/journal/entry/${post.slug}`}
       radiusIndex={2}
     >
-      <p>{post.summary}</p>
+      <Text
+        as="p"
+        sx={{
+          WebkitLineClamp: 4,
+          overflow: "hidden",
+          display: "-webkit-box",
+          "-webkit-box-orient": "vertical",
+          marginTop: 2,
+          lineHeight: 1.69,
+        }}
+      >
+        {post.summary}
+      </Text>
 
       <Text
         as="p"

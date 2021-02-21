@@ -2,113 +2,40 @@ import { faCalendar, faLink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import { GetServerSideProps } from "next";
-import { RichText } from "prismic-reactjs";
-import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { Box, Divider, Flex, Heading, Link, Text } from "theme-ui";
+import { Box, Flex, Heading, Link, Text } from "theme-ui";
 
 import { getPost, Post } from "../../../api/prismic";
 import { Container } from "../../../components/Container";
-import { GistEmbed } from "../../../components/GistEmbed";
+import { Blockquote } from "../../../components/content-blocks/Blockquote";
+import { Divider } from "../../../components/content-blocks/Divider";
+import { Gist } from "../../../components/content-blocks/Gist";
+import { Tweet } from "../../../components/content-blocks/Tweet";
+import { Text as TextContentBlock } from "../../../components/content-blocks/Text";
 import { Page } from "../../../components/Page";
-import { htmlSerializer } from "../../../utils/html-serializer";
-import { linkResolver } from "../../../utils/link-resolver";
 
 const Content: React.FC<{ post: Post }> = ({ post }) => {
   return (
     <Box>
       {post.body.map((slice, index) => {
         if (slice.type === "text") {
-          return (
-            <RichText
-              render={slice.primary.text}
-              linkResolver={linkResolver}
-              htmlSerializer={htmlSerializer}
-            />
-          );
+          return <TextContentBlock slice={slice} />;
         }
 
         if (slice.type === "divider") {
-          return (
-            <Box
-              key={index}
-              sx={{
-                width: "100%",
-                maxWidth: 800,
-              }}
-            >
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: ["80%", 400],
-                  margin: "auto",
-                  marginTop: 4,
-                  marginBottom: 4,
-                }}
-              >
-                <Divider />
-              </Box>
-            </Box>
-          );
+          return <Divider key={index} />;
         }
 
         if (slice.type === "blockquote") {
-          return (
-            <Box
-              key={index}
-              sx={{
-                width: "100%",
-                maxWidth: 800,
-                marginBottom: 3,
-              }}
-            >
-              <Text as="blockquote" variant="blockquote">
-                <RichText
-                  render={slice.primary.text}
-                  linkResolver={linkResolver}
-                  htmlSerializer={htmlSerializer}
-                />
-              </Text>
-            </Box>
-          );
+          return <Blockquote slice={slice} />;
         }
 
         if (slice.type === "gist") {
-          if (!slice.primary.embed) {
-            return null;
-          }
-
-          const [gist] = slice.primary.embed.gist.split("#");
-
-          return (
-            <Box
-              key={index}
-              sx={{
-                width: "100%",
-              }}
-            >
-              <GistEmbed gist={gist} />
-            </Box>
-          );
+          return <Gist slice={slice} />;
         }
 
         if (slice.type === "tweet") {
-          if (!slice.primary.embed) {
-            return null;
-          }
-
-          return (
-            <Box
-              key={index}
-              sx={{
-                width: "100%",
-              }}
-            >
-              <Box
-                dangerouslySetInnerHTML={{ __html: slice.primary.embed.html }}
-              />
-            </Box>
-          );
+          return <Tweet slice={slice} />;
         }
 
         return null;
@@ -137,7 +64,7 @@ const Aside: React.FC<{ post: Post }> = ({ post }) => {
       >
         <Box
           sx={{
-            marginBottom: 3,
+            marginBottom: [0, 3],
           }}
         >
           <Text as="p">
@@ -150,7 +77,11 @@ const Aside: React.FC<{ post: Post }> = ({ post }) => {
           </Text>
         </Box>
 
-        <Box>
+        <Box
+          sx={{
+            display: ["none", "initial"],
+          }}
+        >
           <Text as="p">
             <FontAwesomeIcon icon={faLink} />
             <br />
