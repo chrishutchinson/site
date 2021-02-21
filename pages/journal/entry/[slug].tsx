@@ -136,7 +136,6 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
               name: "Chris Hutchinson",
               url: "https://www.chrishutchinson.me",
             },
-            mainEntityOfPage: "true",
           })}
         </script>
       </Head>
