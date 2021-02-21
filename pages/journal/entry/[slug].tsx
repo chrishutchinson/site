@@ -1,12 +1,13 @@
 import { faCalendar, faLink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
-
 import { GetServerSideProps } from "next";
 import { RichText } from "prismic-reactjs";
 import { Box, Divider, Flex, Heading, Link, Text } from "theme-ui";
+
 import { getPost, Post } from "../../../api/prismic";
 import { Container } from "../../../components/Container";
+import { GistEmbed } from "../../../components/GistEmbed";
 import { Page } from "../../../components/Page";
 import { htmlSerializer } from "../../../utils/html-serializer";
 import { linkResolver } from "../../../utils/link-resolver";
@@ -14,7 +15,7 @@ import { linkResolver } from "../../../utils/link-resolver";
 const Content: React.FC<{ post: Post }> = ({ post }) => {
   return (
     <Box>
-      {post.body.map((slice) => {
+      {post.body.map((slice, index) => {
         if (slice.type === "text") {
           return (
             <RichText
@@ -26,36 +27,63 @@ const Content: React.FC<{ post: Post }> = ({ post }) => {
         }
 
         if (slice.type === "divider") {
-          return <Divider />;
+          return (
+            <Box
+              key={index}
+              sx={{
+                maxWidth: 800,
+              }}
+            >
+              <Box
+                sx={{
+                  maxWidth: ["80%", 400],
+                  margin: "auto",
+                  marginTop: 4,
+                  marginBottom: 4,
+                }}
+              >
+                <Divider />
+              </Box>
+            </Box>
+          );
         }
 
         if (slice.type === "blockquote") {
           return (
-            <Text as="blockquote">
-              <RichText
-                render={slice.primary.text}
-                linkResolver={linkResolver}
-                htmlSerializer={htmlSerializer}
-              />
-            </Text>
+            <Box
+              key={index}
+              sx={{
+                maxWidth: 800,
+                marginBottom: 3,
+              }}
+            >
+              <Text as="blockquote" variant="blockquote">
+                <RichText
+                  render={slice.primary.text}
+                  linkResolver={linkResolver}
+                  htmlSerializer={htmlSerializer}
+                />
+              </Text>
+            </Box>
           );
         }
 
-        if (slice.type === "video" || slice.type === "gist") {
+        if (slice.type === "gist") {
           if (!slice.primary.embed) {
             return null;
           }
-          console.log(slice.primary.embed.html);
+
+          const [gist] = slice.primary.embed.gist.split("#");
+
           return (
-            <>
-              {" "}
-              <Box
-                dangerouslySetInnerHTML={{
-                  __html: slice.primary.embed.html,
-                }}
-              />
-              <Box>GIST!</Box>
-            </>
+            <Box
+              key={index}
+              sx={{
+                maxWidth: 800,
+              }}
+            >
+              <GistEmbed gist={gist} />
+            </Box>
           );
         }
 
@@ -70,8 +98,8 @@ const Aside: React.FC<{ post: Post }> = ({ post }) => {
     <Flex
       sx={{
         flexDirection: "column",
-        minWidth: 350,
-        maxWidth: 350,
+        minWidth: ["100%", 200, 350],
+        maxWidth: ["100%", 200, 350],
       }}
     >
       <Box

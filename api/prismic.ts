@@ -80,7 +80,7 @@ export type Post = {
         type: "gist";
         primary: {
           embed: {
-            html: string;
+            gist: string;
           };
         };
       }
@@ -123,7 +123,7 @@ type PrismicPostNode = {
         type: "gist";
         primary: {
           embed: {
-            html: string;
+            gist: string;
           };
         };
       }

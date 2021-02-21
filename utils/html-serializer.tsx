@@ -4,21 +4,21 @@ import { Box, Image, Link, Text } from "theme-ui";
 
 import { linkResolver } from "./link-resolver";
 
-const propsWithUniqueKey = function (props, key) {
-  return Object.assign(props || {}, { key });
-};
-
-export const htmlSerializer = function (type, element, content, children, key) {
+export const htmlSerializer = (type, element, content, children, key) => {
   switch (type) {
     case Elements.paragraph:
       return (
         <Box
+          key={key}
           sx={{
             marginBottom: 3,
             maxWidth: 800,
+            ":last-of-type": {
+              marginBottom: 0,
+            },
           }}
         >
-          <Text as="p" variant="body" {...propsWithUniqueKey({}, key)}>
+          <Text as="p" variant="body">
             {children}
           </Text>
         </Box>
@@ -27,21 +27,14 @@ export const htmlSerializer = function (type, element, content, children, key) {
     case Elements.image:
       return (
         <Box
+          key={key}
           sx={{
             marginBottom: 4,
             textAlign: "center",
             maxWidth: 1200,
           }}
         >
-          <Image
-            {...propsWithUniqueKey(
-              {
-                src: element.url,
-                alt: element.alt || "",
-              },
-              key
-            )}
-          />
+          <Image src={element.url} alt={element.alt} />
           <Text as="cite">{element.alt}</Text>
         </Box>
       );
@@ -56,15 +49,12 @@ export const htmlSerializer = function (type, element, content, children, key) {
 
       return (
         <Link
-          {...propsWithUniqueKey(
-            {
-              className: "link-class",
-              href: element.data.url || linkResolver(element.data),
-              ...targetAttr,
-              ...relAttr,
-            },
-            key
-          )}
+          key={key}
+          href={element.data.url || linkResolver(element.data)}
+          {...{
+            ...targetAttr,
+            ...relAttr,
+          }}
         >
           {children}
         </Link>

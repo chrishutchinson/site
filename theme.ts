@@ -78,6 +78,12 @@ const theme: Theme = {
       color: "subtle",
       transition: "color 0.15s ease",
     },
+    blockquote: {
+      padding: 3,
+      borderLeft: "2px solid",
+      borderColor: "primary",
+      fontStyle: "italic",
+    },
   },
   styles: {
     root: {
@@ -85,6 +91,14 @@ const theme: Theme = {
       fontWeight: 0,
       lineHeight: "body",
       transition: "background-color 0.15s ease",
+    },
+    hr: {
+      border: 0,
+      backgroundColor: "transparent",
+      height: "4px",
+      borderTop: "1px solid",
+      borderBottom: "1px solid",
+      borderColor: "primary",
     },
     a: {
       color: "text",
