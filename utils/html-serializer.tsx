@@ -39,7 +39,6 @@ export const htmlSerializer = (type, element, content, children, key) => {
         </Box>
       );
 
-    // Add a class to hyperlinks
     case Elements.hyperlink:
       const targetAttr = element.data.target
         ? { target: element.data.target }
@@ -58,6 +57,20 @@ export const htmlSerializer = (type, element, content, children, key) => {
         >
           {children}
         </Link>
+      );
+
+    case Elements.preformatted:
+      return (
+        <Text
+          as="pre"
+          sx={{
+            marginBottom: 3,
+            width: "100%",
+            overflow: "auto",
+          }}
+        >
+          {children}
+        </Text>
       );
 
     default:

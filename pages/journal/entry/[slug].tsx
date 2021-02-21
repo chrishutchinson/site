@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import { GetServerSideProps } from "next";
 import { RichText } from "prismic-reactjs";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import { Box, Divider, Flex, Heading, Link, Text } from "theme-ui";
 
 import { getPost, Post } from "../../../api/prismic";
@@ -31,11 +33,13 @@ const Content: React.FC<{ post: Post }> = ({ post }) => {
             <Box
               key={index}
               sx={{
+                width: "100%",
                 maxWidth: 800,
               }}
             >
               <Box
                 sx={{
+                  width: "100%",
                   maxWidth: ["80%", 400],
                   margin: "auto",
                   marginTop: 4,
@@ -53,6 +57,7 @@ const Content: React.FC<{ post: Post }> = ({ post }) => {
             <Box
               key={index}
               sx={{
+                width: "100%",
                 maxWidth: 800,
                 marginBottom: 3,
               }}
@@ -79,10 +84,29 @@ const Content: React.FC<{ post: Post }> = ({ post }) => {
             <Box
               key={index}
               sx={{
-                maxWidth: 800,
+                width: "100%",
               }}
             >
               <GistEmbed gist={gist} />
+            </Box>
+          );
+        }
+
+        if (slice.type === "tweet") {
+          if (!slice.primary.embed) {
+            return null;
+          }
+
+          return (
+            <Box
+              key={index}
+              sx={{
+                width: "100%",
+              }}
+            >
+              <Box
+                dangerouslySetInnerHTML={{ __html: slice.primary.embed.html }}
+              />
             </Box>
           );
         }
@@ -153,6 +177,11 @@ const Aside: React.FC<{ post: Post }> = ({ post }) => {
 };
 
 const Entry: React.FC<{ post: Post }> = ({ post }) => {
+  const { ref, inView } = useInView({
+    initialInView: true,
+    threshold: 0.5,
+  });
+
   return (
     <Page title={post.headline} headerLayout="inline">
       <Box
@@ -169,13 +198,18 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
           >
             <Aside post={post} />
 
-            <Box>
+            <Box
+              sx={{
+                width: "100%",
+              }}
+            >
               <Box
                 sx={{
                   maxWidth: 800,
                 }}
               >
                 <Heading
+                  ref={ref}
                   as="h1"
                   sx={{
                     fontSize: [4, 6],
@@ -184,6 +218,34 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
                 >
                   {post.headline}
                 </Heading>
+
+                <Box
+                  sx={{
+                    position: "fixed",
+                    zIndex: 10,
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    boxShadow: "0px 2px 8px hsla(0,0%,0%,.2)",
+                    backgroundColor: "background",
+                    padding: 3,
+                    transition: "transform 0.2s ease",
+                    transform: inView ? "translateY(-100%)" : "translateY(0)",
+                  }}
+                >
+                  <Text as="time" variant="label" title={post.publishedAt}>
+                    {format(new Date(post.publishedAt), "MMMM do, yyyy")}
+                  </Text>
+                  <Heading
+                    as="h1"
+                    sx={{
+                      fontSize: 2,
+                      marginBottom: 2,
+                    }}
+                  >
+                    {post.headline}
+                  </Heading>
+                </Box>
 
                 {post.subheading && (
                   <Heading

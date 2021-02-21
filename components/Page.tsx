@@ -52,8 +52,8 @@ export const Page: React.FC<{
       <Box
         sx={{
           position: "absolute",
-          top: 20,
-          right: 20,
+          top: 27,
+          right: 27,
         }}
       >
         <IconButton

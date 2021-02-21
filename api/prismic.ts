@@ -92,6 +92,14 @@ export type Post = {
           };
         };
       }
+    | {
+        type: "tweet";
+        primary: {
+          embed: {
+            html: string;
+          };
+        };
+      }
   )[];
 };
 
@@ -135,6 +143,14 @@ type PrismicPostNode = {
           };
         };
       }
+    | {
+        type: "tweet";
+        primary: {
+          embed: {
+            html: string;
+          };
+        };
+      }
   )[];
 };
 
@@ -142,17 +158,26 @@ const trimToWordCount = (str: string, count: number): string => {
   return `${str.split(" ").slice(0, count).join(" ").trim()}...`;
 };
 
-const formatPrismicPost = (node: PrismicPostNode): Post => ({
-  id: node.meta.id,
-  slug: node.meta.slug,
-  headline: node.headline[0].text,
-  subheading: node.subheading && node.subheading[0].text,
-  summary: node.subheading
-    ? node.subheading[0].text
-    : trimToWordCount(node.body[0].primary.text[0].text, 20),
-  publishedAt: node.publishedAt,
-  body: node.body,
-});
+const formatPrismicPost = (node: PrismicPostNode): Post => {
+  const firstTextBlock = node.body.find((block) => block.type === "text") as {
+    type: "text";
+    primary: {
+      text: RichTextBlock[];
+    };
+  };
+
+  return {
+    id: node.meta.id,
+    slug: node.meta.slug,
+    headline: node.headline[0].text,
+    subheading: node.subheading && node.subheading[0].text,
+    summary: node.subheading
+      ? node.subheading[0].text
+      : trimToWordCount(firstTextBlock.primary.text[0].text, 20),
+    publishedAt: node.publishedAt,
+    body: node.body,
+  };
+};
 
 export const getPosts = async () => {
   const POSTS_QUERY = `
@@ -193,6 +218,12 @@ export const getPosts = async () => {
                 type
                 primary {
                   text
+                }
+              }
+              ...on Blog_postBodyTweet {
+                type
+                primary {
+                  embed
                 }
               }
             }
@@ -250,6 +281,12 @@ export const getPost = async (slug: string) => {
             type
             primary {
               text
+            }
+          }
+          ...on Blog_postBodyTweet {
+            type
+            primary {
+              embed
             }
           }
         }
