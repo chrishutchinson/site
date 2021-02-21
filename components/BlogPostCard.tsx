@@ -15,6 +15,7 @@ export const BlogPostCard: React.FC<{ post: Post }> = ({ post }) => {
         </Text>
       }
       href={`/journal/entry/${post.slug}`}
+      showReadLink
       radiusIndex={2}
     >
       <Text
@@ -24,22 +25,10 @@ export const BlogPostCard: React.FC<{ post: Post }> = ({ post }) => {
           overflow: "hidden",
           display: "-webkit-box",
           "-webkit-box-orient": "vertical",
-          marginTop: 2,
           lineHeight: 1.69,
         }}
       >
         {post.summary}
-      </Text>
-
-      <Text
-        as="p"
-        sx={{
-          marginTop: 4,
-        }}
-      >
-        <Link variant="blockUnderline" href={`/journal/entry/${post.slug}`}>
-          Read <FontAwesomeIcon icon={faAngleDoubleRight} />
-        </Link>
       </Text>
     </Card>
   );
