@@ -13,6 +13,7 @@ import { Gist } from "../../../components/content-blocks/Gist";
 import { Tweet } from "../../../components/content-blocks/Tweet";
 import { Text as TextContentBlock } from "../../../components/content-blocks/Text";
 import { Page } from "../../../components/Page";
+import Head from "next/head";
 
 const Content: React.FC<{ post: Post }> = ({ post }) => {
   return (
@@ -114,91 +115,117 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
   });
 
   return (
-    <Page title={post.headline} headerLayout="inline">
-      <Box
-        sx={{
-          paddingBottom: 5,
-        }}
-      >
-        <Container>
-          <Flex
-            sx={{
-              flexDirection: ["column", "row"],
-              alignItems: "flex-start",
-            }}
-          >
-            <Aside post={post} />
+    <>
+      <Head>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "http://schema.org",
+            "@type": "BlogPosting",
+            url: `https://www.chrishutchinson.me/journal/entry/${post.slug}`,
+            headline: post.headline,
+            alternativeHeadline: post.subheading,
+            dateCreated: post.publishedAt,
+            datePublished: post.publishedAt,
+            dateModified: post.publishedAt,
+            inLanguage: "en-GB",
+            isFamilyFriendly: "true",
+            copyrightYear: new Date().getFullYear().toString(),
+            copyrightHolder: "Chris Hutchinson",
+            author: {
+              "@type": "Person",
+              name: "Chris Hutchinson",
+              url: "https://www.chrishutchinson.me",
+            },
+            mainEntityOfPage: "true",
+          })}
+        </script>
+      </Head>
 
-            <Box
+      <Page title={post.headline} headerLayout="inline">
+        <Box
+          sx={{
+            paddingBottom: 5,
+          }}
+        >
+          <Container>
+            <Flex
               sx={{
-                width: "100%",
+                flexDirection: ["column", "row"],
+                alignItems: "flex-start",
               }}
             >
+              <Aside post={post} />
+
               <Box
                 sx={{
-                  maxWidth: 800,
+                  width: "100%",
                 }}
               >
-                <Heading
-                  ref={ref}
-                  as="h1"
-                  sx={{
-                    fontSize: [4, 6],
-                    marginBottom: 4,
-                  }}
-                >
-                  {post.headline}
-                </Heading>
-
                 <Box
                   sx={{
-                    position: "fixed",
-                    zIndex: 10,
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    boxShadow: "0px 2px 8px hsla(0,0%,0%,.2)",
-                    backgroundColor: "background",
-                    padding: 3,
-                    transition: "transform 0.2s ease",
-                    transform: inView ? "translateY(-100%)" : "translateY(0)",
+                    maxWidth: 800,
                   }}
                 >
-                  <Text as="time" variant="label" title={post.publishedAt}>
-                    {format(new Date(post.publishedAt), "MMMM do, yyyy")}
-                  </Text>
                   <Heading
+                    ref={ref}
                     as="h1"
                     sx={{
-                      fontSize: 2,
-                      marginBottom: 2,
+                      fontSize: [4, 6],
+                      marginBottom: 4,
                     }}
                   >
                     {post.headline}
                   </Heading>
-                </Box>
 
-                {post.subheading && (
-                  <Heading
-                    as="h2"
+                  <Box
                     sx={{
-                      fontSize: [3, 4],
-                      marginBottom: 4,
+                      position: "fixed",
+                      zIndex: 10,
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      boxShadow: "0px 2px 8px hsla(0,0%,0%,.2)",
+                      backgroundColor: "background",
+                      padding: 3,
+                      transition: "transform 0.2s ease",
+                      transform: inView ? "translateY(-100%)" : "translateY(0)",
                     }}
                   >
-                    {post.subheading}
-                  </Heading>
-                )}
-              </Box>
+                    <Text as="time" variant="label" title={post.publishedAt}>
+                      {format(new Date(post.publishedAt), "MMMM do, yyyy")}
+                    </Text>
+                    <Heading
+                      as="h1"
+                      sx={{
+                        fontSize: 2,
+                        marginBottom: 2,
+                      }}
+                    >
+                      {post.headline}
+                    </Heading>
+                  </Box>
 
-              <Content post={post} />
-            </Box>
-          </Flex>
-        </Container>
-      </Box>
-    </Page>
+                  {post.subheading && (
+                    <Heading
+                      as="h2"
+                      sx={{
+                        fontSize: [3, 4],
+                        marginBottom: 4,
+                      }}
+                    >
+                      {post.subheading}
+                    </Heading>
+                  )}
+                </Box>
+
+                <Content post={post} />
+              </Box>
+            </Flex>
+          </Container>
+        </Box>
+      </Page>
+    </>
   );
-  // return RichText.render(slice.primary.rich_text, linkResolver);
 };
 
 export default Entry;
