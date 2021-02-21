@@ -10,6 +10,7 @@ const theme: Theme = {
     muted: "#437551",
     highlight: "#5DA271",
     gray: "#6c6c6c",
+    buff: "#eaeaea",
     accent: "#C84630",
     subtle: "#3f3f3f",
     hoverText: "#FFF",
@@ -18,6 +19,7 @@ const theme: Theme = {
         text: "#FFF",
         background: "#222",
         muted: "#222",
+        buff: "#1a1a1a",
         subtle: "#ddd",
         highlight: "#333",
         hoverText: "#FFF",
@@ -46,12 +48,41 @@ const theme: Theme = {
       color: "inherit",
       textDecoration: "none",
     },
+    blockUnderline: {
+      color: "text",
+      textDecoration: "none",
+      transition: "background 0.15s ease, color 0.15s ease",
+      ":hover": {
+        backgroundColor: "primary",
+        color: "hoverText",
+      },
+      borderBottom: "2px solid",
+      borderColor: "primary",
+    },
   },
   text: {
+    body: {
+      fontFamily: "body",
+      lineHeight: 1.5,
+      fontWeight: "body",
+    },
     heading: {
       fontFamily: "heading",
       lineHeight: "heading",
       fontWeight: "heading",
+    },
+    label: {
+      textTransform: "uppercase",
+      letterSpacing: "1px",
+      fontSize: 1,
+      color: "subtle",
+      transition: "color 0.15s ease",
+    },
+    blockquote: {
+      padding: 3,
+      borderLeft: "2px solid",
+      borderColor: "primary",
+      fontStyle: "italic",
     },
   },
   styles: {
@@ -60,6 +91,14 @@ const theme: Theme = {
       fontWeight: 0,
       lineHeight: "body",
       transition: "background-color 0.15s ease",
+    },
+    hr: {
+      border: 0,
+      backgroundColor: "transparent",
+      height: "4px",
+      borderTop: "1px solid",
+      borderBottom: "1px solid",
+      borderColor: "primary",
     },
     a: {
       color: "text",

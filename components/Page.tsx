@@ -15,15 +15,16 @@ import { Links } from "./Links";
 
 const metadata = {
   url: (path = "") => `https://www.chrishutchinson.me/${path}`,
-  title: (i) => `${i ? `${i} | ` : ""}Chris Hutchinson`,
+  title: (i) => `${i ? `${i} • ` : ""}Chris Hutchinson`,
   description: () =>
     "Chris Hutchinson is a software engineer, working at The Times, and Rapsberry Pi tinkerer.",
   image: () => "/share-image.png",
 };
 
-export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
-  const [colorMode, setColorMode] = useColorMode();
-
+export const Page: React.FC<{
+  title?: string;
+  headerLayout?: "default" | "inline";
+}> = ({ title, headerLayout = "default", children }) => {
   return (
     <>
       <Head>
@@ -38,70 +39,91 @@ export const Page: React.FC<{ title?: string }> = ({ title, children }) => {
         <meta property="twitter:card" content="summary_large_image"></meta>
         <meta property="twitter:site" content="chrishutchinson"></meta>
         <meta property="twitter:image" content={metadata.image()} />
-      </Head>
 
-      <Box
-        sx={{
-          position: "absolute",
-          top: 20,
-          right: 20,
-        }}
-      >
-        <IconButton
-          onClick={(e) => {
-            setColorMode(colorMode === "default" ? "dark" : "default");
-          }}
-          aria-label="Toggle dark mode"
-        >
-          <FontAwesomeIcon icon={faLightbulb} size="2x" />
-        </IconButton>
-      </Box>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          href={metadata.url("api/journal/feed.xml")}
+        />
+      </Head>
 
       <Box
         sx={{
           minHeight: "100vh",
         }}
       >
-        <Container>
-          <Box
-            as="header"
-            sx={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "center",
-              flexDirection: "column",
-              height: "60vh",
-              maxHeight: 700,
-              marginBottom: 3,
-            }}
-          >
-            <Heading
-              as="h1"
+        {headerLayout === "default" && (
+          <Container>
+            <Box
+              as="header"
               sx={{
-                fontSize: [6, 7, 9],
-                textAlign: "left",
-                maxWidth: ["initial", 500, 800],
-                marginBottom: [3, 4],
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "center",
+                flexDirection: "column",
+                height: "60vh",
+                maxHeight: 700,
+                marginBottom: 3,
               }}
             >
-              Chris Hutchinson
-            </Heading>
-            <Text
-              as="p"
-              sx={{
-                color: "subtle",
-                fontSize: [1, 2],
-                marginBottom: [4, 5],
-              }}
-            >
-              Software engineer, working at{" "}
-              <Link href="https://www.thetimes.co.uk">The Times</Link>, and
-              Raspberry Pi tinkerer.
-            </Text>
+              <Heading
+                as="h1"
+                sx={{
+                  fontSize: [6, 7, 9],
+                  textAlign: "left",
+                  maxWidth: ["initial", 500, 800],
+                  marginBottom: [3, 4],
+                }}
+              >
+                Chris Hutchinson
+              </Heading>
+              <Text
+                as="p"
+                sx={{
+                  color: "subtle",
+                  fontSize: [1, 2],
+                  marginBottom: [4, 5],
+                }}
+              >
+                Software engineer, working at{" "}
+                <Link href="https://www.thetimes.co.uk">The Times</Link>, and
+                Raspberry Pi tinkerer.
+              </Text>
 
-            <Links />
-          </Box>
-        </Container>
+              <Links />
+            </Box>
+          </Container>
+        )}
+
+        {headerLayout === "inline" && (
+          <Container>
+            <Flex
+              as="header"
+              sx={{
+                alignItems: "center",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                marginBottom: [4, 5],
+                paddingTop: 4,
+              }}
+            >
+              <Text
+                as="p"
+                variant="heading"
+                sx={{
+                  fontSize: [3, 3, 4],
+                  textAlign: "left",
+                  maxWidth: ["initial", 500, 800],
+                  marginRight: 4,
+                }}
+              >
+                <Link href="/">Chris Hutchinson</Link>
+              </Text>
+
+              <Links size="small" />
+            </Flex>
+          </Container>
+        )}
 
         <Box>{children}</Box>
 
