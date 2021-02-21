@@ -3,6 +3,7 @@ import {
   faLinkedin,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import { faRss } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Flex, Link } from "theme-ui";
 
@@ -42,7 +43,7 @@ export const Links: React.FC<{
         sx={{
           flexDirection: "row",
           justifyContent: "space-between",
-          width: size === "small" ? 100 : 150,
+          width: size === "small" ? 150 : 180,
         }}
       >
         <BigLink
@@ -65,6 +66,13 @@ export const Links: React.FC<{
           name="Chris Hutchinson's LinkedIn profile"
         >
           <FontAwesomeIcon icon={faLinkedin} />
+        </BigLink>
+        <BigLink
+          size={size}
+          to="/api/journal/feed.xml"
+          name="RSS XML feed for Chris Hutchinson's journal"
+        >
+          <FontAwesomeIcon icon={faRss} />
         </BigLink>
       </Flex>
     </Flex>
