@@ -118,25 +118,25 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
     <>
       <Head>
         <script type="application/ld+json">
-          {JSON.stringify({
+          {`{
             "@context": "http://schema.org",
             "@type": "BlogPosting",
-            url: `https://www.chrishutchinson.me/journal/entry/${post.slug}`,
-            headline: post.headline,
-            alternativeHeadline: post.subheading,
-            dateCreated: post.publishedAt,
-            datePublished: post.publishedAt,
-            dateModified: post.publishedAt,
+            url: "https://www.chrishutchinson.me/journal/entry/${post.slug}",
+            headline: "${post.headline}",
+            alternativeHeadline: "${post.subheading}",
+            dateCreated: "${post.publishedAt}",
+            datePublished: "${post.publishedAt}",
+            dateModified: "${post.publishedAt}",
             inLanguage: "en-GB",
             isFamilyFriendly: "true",
-            copyrightYear: new Date().getFullYear().toString(),
+            copyrightYear: "${new Date().getFullYear().toString()}",
             copyrightHolder: "Chris Hutchinson",
             author: {
               "@type": "Person",
               name: "Chris Hutchinson",
-              url: "https://www.chrishutchinson.me",
-            },
-          })}
+              url: "https://www.chrishutchinson.me"
+            }
+          }`}
         </script>
       </Head>
 
