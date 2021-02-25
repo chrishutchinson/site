@@ -1,15 +1,6 @@
-import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
-import {
-  Box,
-  Flex,
-  Heading,
-  IconButton,
-  Link,
-  Text,
-  useColorMode,
-} from "theme-ui";
+import { Box, Flex, Heading, Link, Text } from "theme-ui";
+
 import { Container } from "./Container";
 import { Links } from "./Links";
 

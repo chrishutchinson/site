@@ -2,8 +2,11 @@
 
 import NextApp from "next/app";
 import { ThemeProvider } from "theme-ui";
+import { config } from "@fortawesome/fontawesome-svg-core";
 
 import theme from "../theme";
+
+config.autoAddCss = false;
 
 export default class App extends NextApp {
   render() {

@@ -1,5 +1,6 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
-import { Box, InitializeColorMode } from "theme-ui";
+import { InitializeColorMode } from "theme-ui";
+import { dom } from "@fortawesome/fontawesome-svg-core";
 
 export default class extends Document {
   static async getInitialProps(ctx) {
@@ -63,6 +64,8 @@ export default class extends Document {
                 U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
             }
+
+            ${dom.css()}
           `,
             }}
           />
