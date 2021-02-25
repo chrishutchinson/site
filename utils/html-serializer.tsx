@@ -1,7 +1,8 @@
 import React from "react";
 import { Elements } from "prismic-reactjs";
-import { Box, Image, Link, Text } from "theme-ui";
+import { Box, Link, Text } from "theme-ui";
 
+import { Image } from "../components/content-blocks/Image";
 import { linkResolver } from "./link-resolver";
 
 export const htmlSerializer = (type, element, content, children, key) => {
@@ -26,17 +27,9 @@ export const htmlSerializer = (type, element, content, children, key) => {
 
     case Elements.image:
       return (
-        <Box
-          key={key}
-          sx={{
-            marginBottom: 4,
-            textAlign: "center",
-            maxWidth: 1200,
-          }}
-        >
-          <Image src={element.url} alt={element.alt} />
-          <Text as="cite">{element.alt}</Text>
-        </Box>
+        <Link href={element.url}>
+          <Image key={key} url={element.url} alt={element.alt} />
+        </Link>
       );
 
     case Elements.hyperlink:
