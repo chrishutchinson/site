@@ -1,6 +1,8 @@
 import { NextApiHandler } from "next";
+import sanitizeHtml from "sanitize-html";
 
 import { getPosts } from "../../../api/prismic";
+import { renderPostAsHtml } from "../../../utils/render-content";
 
 const BASE_DOMAIN = "https://www.chrishutchinson.me";
 
@@ -18,15 +20,36 @@ const feedHandler: NextApiHandler = async (req, res) => {
     <atom:link href="${BASE_DOMAIN}/api/journal/feed.xml" rel="self" type="application/rss+xml" />
 
     ${posts
-      .map(
-        (post) => `<item>
+      .map((post) => {
+        const postHtml = sanitizeHtml(renderPostAsHtml(post), {
+          allowedTags: [
+            "p",
+            "a",
+            "pre",
+            "span",
+            "strong",
+            "ul",
+            "ol",
+            "li",
+            "blockquote",
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "img",
+          ],
+        });
+
+        return `<item>
           <guid>${BASE_DOMAIN}/journal/entry/${post.slug}</guid>
           <title>${post.headline}</title>
           <link>${BASE_DOMAIN}/journal/entry/${post.slug}</link>
-          <description>${post.summary}</description>
+          <description><![CDATA[ ${postHtml} ]]></description>
           <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
-        </item>`
-      )
+        </item>`;
+      })
       .join("\n")}
   </channel>
   </rss>`);
