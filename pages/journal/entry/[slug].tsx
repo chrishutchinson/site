@@ -14,36 +14,7 @@ import { Tweet } from "../../../components/content-blocks/Tweet";
 import { Text as TextContentBlock } from "../../../components/content-blocks/Text";
 import { Page } from "../../../components/Page";
 import Head from "next/head";
-
-const Content: React.FC<{ post: Post }> = ({ post }) => {
-  return (
-    <Box>
-      {post.body.map((slice, index) => {
-        if (slice.type === "text") {
-          return <TextContentBlock slice={slice} />;
-        }
-
-        if (slice.type === "divider") {
-          return <Divider key={index} />;
-        }
-
-        if (slice.type === "blockquote") {
-          return <Blockquote slice={slice} />;
-        }
-
-        if (slice.type === "gist") {
-          return <Gist slice={slice} />;
-        }
-
-        if (slice.type === "tweet") {
-          return <Tweet slice={slice} />;
-        }
-
-        return null;
-      })}
-    </Box>
-  );
-};
+import { Content } from "../../../components/Content";
 
 const Aside: React.FC<{ post: Post }> = ({ post }) => {
   return (
