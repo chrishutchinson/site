@@ -1,5 +1,7 @@
 import { Box, Text, Image as ImageElement } from "theme-ui";
 
+const MAX_PHYSICAL_IMAGE_WIDTH = 800;
+
 const addWidth = (url: string, width: number) => `${url}&w=${width}`;
 
 export const Image: React.FC<{
@@ -10,19 +12,19 @@ export const Image: React.FC<{
     height: number;
   };
 }> = ({ url, alt, dimensions }) => {
-  const retinaWidth = Math.min(dimensions.width, 2400);
+  const retinaWidth = Math.min(dimensions.width, MAX_PHYSICAL_IMAGE_WIDTH * 2);
   const width = retinaWidth / 2;
 
   return (
     <Box
       sx={{
-        marginBottom: 4,
-        maxWidth: 1200,
+        maxWidth: MAX_PHYSICAL_IMAGE_WIDTH,
       }}
     >
       <ImageElement
         sx={{
           display: "block",
+          marginBottom: 2,
         }}
         width={dimensions.width}
         height={dimensions.height}
@@ -31,7 +33,17 @@ export const Image: React.FC<{
         loading="lazy"
         alt={alt}
       />
-      <Text as="cite">{alt}</Text>
+      <Box
+        sx={{
+          borderLeft: "2px solid",
+          borderColor: "primary",
+          paddingLeft: 2,
+        }}
+      >
+        <Text as="cite" variant="body">
+          {alt}
+        </Text>
+      </Box>
     </Box>
   );
 };
