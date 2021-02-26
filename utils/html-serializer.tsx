@@ -126,7 +126,7 @@ export const htmlSerializer: HTMLSerializer<React.ReactNode> = (
               font-family: monospace;
             }
           `}</style>
-          <Text as="p" variant="article">
+          <Text as="span" variant="article">
             {children}
           </Text>
         </Box>
