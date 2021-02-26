@@ -1,11 +1,17 @@
 import React from "react";
-import { Elements } from "prismic-reactjs";
+import { Elements, HTMLSerializer } from "prismic-reactjs";
 import { Box, Link, Text } from "theme-ui";
 
 import { Image } from "../components/content-blocks/Image";
 import { linkResolver } from "./link-resolver";
 
-export const htmlSerializer = (type, element, content, children, key) => {
+export const htmlSerializer: HTMLSerializer<React.ReactNode> = (
+  type,
+  element,
+  content,
+  children,
+  key
+) => {
   switch (type) {
     case Elements.paragraph:
       return (
@@ -19,6 +25,11 @@ export const htmlSerializer = (type, element, content, children, key) => {
             },
           }}
         >
+          <style jsx global>{`
+            .inline-code {
+              font-family: monospace;
+            }
+          `}</style>
           <Text as="p" variant="body">
             {children}
           </Text>
@@ -27,9 +38,12 @@ export const htmlSerializer = (type, element, content, children, key) => {
 
     case Elements.image:
       return (
-        <Link href={element.url}>
-          <Image key={key} url={element.url} alt={element.alt} />
-        </Link>
+        <Image
+          key={key}
+          url={element.url}
+          alt={element.alt}
+          dimensions={element.dimensions}
+        />
       );
 
     case Elements.hyperlink:
