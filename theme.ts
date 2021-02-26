@@ -63,7 +63,7 @@ const theme: Theme = {
   text: {
     body: {
       fontFamily: "body",
-      lineHeight: 1.5,
+      lineHeight: 1.8,
       fontWeight: "body",
     },
     heading: {

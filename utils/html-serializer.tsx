@@ -80,6 +80,26 @@ export const htmlSerializer: HTMLSerializer<React.ReactNode> = (
         </Text>
       );
 
+    case Elements.listItem:
+      return (
+        <Box
+          as="li"
+          key={key}
+          sx={{
+            marginBottom: 2,
+          }}
+        >
+          <style jsx global>{`
+            .inline-code {
+              font-family: monospace;
+            }
+          `}</style>
+          <Text as="p" variant="body">
+            {children}
+          </Text>
+        </Box>
+      );
+
     default:
       return null;
   }
