@@ -144,7 +144,11 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
         </script>
       </Head>
 
-      <Page title={post.headline} headerLayout="inline">
+      <Page
+        title={post.headline}
+        description={post.subheading}
+        headerLayout="inline"
+      >
         <Box
           sx={{
             paddingBottom: 5,

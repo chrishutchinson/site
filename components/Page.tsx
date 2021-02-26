@@ -1,3 +1,4 @@
+import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import { Box, Flex, Heading, Link, Text } from "theme-ui";
 
@@ -5,27 +6,35 @@ import { Container } from "./Container";
 import { Links } from "./Links";
 
 const metadata = {
-  url: (path = "") => `https://www.chrishutchinson.me/${path}`,
+  url: (path = "/") => `https://www.chrishutchinson.me${path}`,
   title: (i) => `${i ? `${i} • ` : ""}Chris Hutchinson`,
-  description: () =>
-    "Chris Hutchinson is a software engineer, working at The Times, and Rapsberry Pi tinkerer.",
+  description: (text?: string) =>
+    text
+      ? text
+      : "Chris Hutchinson is a software engineer, working at The Times, and Rapsberry Pi tinkerer.",
   image: () => "/share-image.png",
 };
 
 export const Page: React.FC<{
   title?: string;
+  description?: string;
   headerLayout?: "default" | "inline";
-}> = ({ title, headerLayout = "default", children }) => {
+}> = ({ title, description, headerLayout = "default", children }) => {
+  const router = useRouter();
+
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{metadata.title(title)}</title>
-        <meta name="description" content={metadata.description()} />
-        <meta property="og:url" content={metadata.url()} />
+        <meta name="description" content={metadata.description(description)} />
+        <meta property="og:url" content={metadata.url(router.asPath)} />
         <meta property="og:type" content="article" />
         <meta property="og:title" content={metadata.title(title)} />
-        <meta property="og:description" content={metadata.description()} />
+        <meta
+          property="og:description"
+          content={metadata.description(description)}
+        />
         <meta property="og:image" content={metadata.image()} />
         <meta property="twitter:card" content="summary_large_image"></meta>
         <meta property="twitter:site" content="chrishutchinson"></meta>
@@ -34,7 +43,7 @@ export const Page: React.FC<{
         <link
           rel="alternate"
           type="application/rss+xml"
-          href={metadata.url("api/journal/feed.xml")}
+          href={metadata.url("/api/journal/feed.xml")}
         />
 
         <script
