@@ -12,6 +12,7 @@ import { getAllPostSlugs, getPost, Post } from "../../../api/prismic";
 import { Container } from "../../../components/Container";
 import { Page } from "../../../components/Page";
 import { Content } from "../../../components/Content";
+import { useRouter } from "next/router";
 
 const Aside: React.FC<{ post: Post }> = ({ post }) => {
   return (
@@ -79,10 +80,28 @@ const Aside: React.FC<{ post: Post }> = ({ post }) => {
 };
 
 const Entry: React.FC<{ post: Post }> = ({ post }) => {
+  const { isFallback } = useRouter();
+
   const { ref, inView } = useInView({
     initialInView: true,
     threshold: 0.5,
   });
+
+  if (isFallback) {
+    return (
+      <Page title="Loading">
+        <Box
+          sx={{
+            paddingBottom: 5,
+          }}
+        >
+          <Container>
+            <Heading as="h1">Loading...</Heading>
+          </Container>
+        </Box>
+      </Page>
+    );
+  }
 
   if (!post) {
     return <Error statusCode={404} />;
