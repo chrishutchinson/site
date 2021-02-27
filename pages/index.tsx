@@ -5,7 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faRaspberryPi } from "@fortawesome/free-brands-svg-icons";
 import { Box, Flex, Link, Text } from "theme-ui";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NextLink from "next/link";
 
@@ -135,7 +135,7 @@ const Home: React.FC<{ posts: Post[] }> = ({ posts }) => {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const posts = await getPosts();
 
   return {
