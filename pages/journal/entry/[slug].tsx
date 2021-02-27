@@ -148,7 +148,7 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
                     ref={ref}
                     as="h1"
                     sx={{
-                      fontSize: [4, 6],
+                      fontSize: [5, 6, 7],
                       marginBottom: 4,
                     }}
                   >
@@ -166,7 +166,7 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
                       backgroundColor: "background",
                       padding: 3,
                       transition: "transform 0.2s ease",
-                      transform: inView ? "translateY(-100%)" : "translateY(0)",
+                      transform: inView ? "translateY(-150%)" : "translateY(0)",
                     }}
                   >
                     <Text as="time" variant="label" title={post.publishedAt}>
