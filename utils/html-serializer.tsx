@@ -99,6 +99,7 @@ export const htmlSerializer: HTMLSerializer<React.ReactNode> = (
     case Elements.list:
       return (
         <Box
+          as="ul"
           key={key}
           sx={{
             marginBottom: 3,
