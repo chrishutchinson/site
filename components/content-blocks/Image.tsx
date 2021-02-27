@@ -13,7 +13,7 @@ export const Image: React.FC<{
   };
 }> = ({ url, alt, dimensions }) => {
   const retinaWidth = Math.min(dimensions.width, MAX_PHYSICAL_IMAGE_WIDTH * 2);
-  const width = retinaWidth / 2;
+  const width = Math.max(retinaWidth / 2, MAX_PHYSICAL_IMAGE_WIDTH);
 
   return (
     <Box
