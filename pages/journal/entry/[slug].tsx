@@ -1,19 +1,16 @@
 import { faCalendar, faLink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
-import { GetServerSideProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { useInView } from "react-intersection-observer";
 import { Box, Flex, Heading, Link, Text } from "theme-ui";
-
-import { getPost, Post } from "../../../api/prismic";
-import { Container } from "../../../components/Container";
-import { Blockquote } from "../../../components/content-blocks/Blockquote";
-import { Divider } from "../../../components/content-blocks/Divider";
-import { Gist } from "../../../components/content-blocks/Gist";
-import { Tweet } from "../../../components/content-blocks/Tweet";
-import { Text as TextContentBlock } from "../../../components/content-blocks/Text";
-import { Page } from "../../../components/Page";
 import Head from "next/head";
+import Error from "next/error";
+import NextLink from "next/link";
+
+import { getAllPostSlugs, getPost, Post } from "../../../api/prismic";
+import { Container } from "../../../components/Container";
+import { Page } from "../../../components/Page";
 import { Content } from "../../../components/Content";
 
 const Aside: React.FC<{ post: Post }> = ({ post }) => {
@@ -73,7 +70,9 @@ const Aside: React.FC<{ post: Post }> = ({ post }) => {
           marginBottom: 5,
         }}
       >
-        <Link href="/journal">Back to all entries</Link>
+        <NextLink href="/journal" passHref={true}>
+          <Link>Back to all entries</Link>
+        </NextLink>
       </Box>
     </Flex>
   );
@@ -84,6 +83,10 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
     initialInView: true,
     threshold: 0.5,
   });
+
+  if (!post) {
+    return <Error statusCode={404} />;
+  }
 
   return (
     <>
@@ -208,14 +211,36 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
 
 export default Entry;
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const post = await getPost(
-    Array.isArray(query.slug) ? query.slug[0] : query.slug
-  );
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  try {
+    const post = await getPost(
+      Array.isArray(params.slug) ? params.slug[0] : params.slug
+    );
+
+    return {
+      props: {
+        post,
+      },
+      revalidate: 1,
+    };
+  } catch (e) {
+    return {
+      props: {
+        post: null,
+      },
+    };
+  }
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const slugs = await getAllPostSlugs();
 
   return {
-    props: {
-      post,
-    },
+    paths: slugs.map((slug) => ({
+      params: {
+        slug,
+      },
+    })),
+    fallback: true,
   };
 };

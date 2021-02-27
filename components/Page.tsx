@@ -1,6 +1,7 @@
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import { Box, Flex, Heading, Link, Text } from "theme-ui";
+import NextLink from "next/link";
 
 import { Container } from "./Container";
 import { Links } from "./Links";
@@ -117,7 +118,9 @@ export const Page: React.FC<{
                   marginRight: 4,
                 }}
               >
-                <Link href="/">Chris Hutchinson</Link>
+                <NextLink href="/" passHref={true}>
+                  <Link>Chris Hutchinson</Link>
+                </NextLink>
               </Text>
 
               <Links size="small" />
