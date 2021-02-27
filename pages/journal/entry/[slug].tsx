@@ -148,7 +148,7 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
                     ref={ref}
                     as="h1"
                     sx={{
-                      fontSize: [4, 6],
+                      fontSize: [5, 6, 7],
                       marginBottom: 4,
                     }}
                   >

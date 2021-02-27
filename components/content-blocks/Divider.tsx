@@ -13,8 +13,8 @@ export const Divider = () => {
           width: "100%",
           maxWidth: ["80%", 400],
           margin: "auto",
-          marginTop: 4,
-          marginBottom: 4,
+          marginTop: 5,
+          marginBottom: 5,
         }}
       >
         <ThemeUiDivider />

@@ -104,7 +104,7 @@ const theme: Theme = {
       height: "4px",
       borderTop: "1px solid",
       borderBottom: "1px solid",
-      borderColor: "primary",
+      borderColor: "accent",
     },
     a: {
       color: "text",
