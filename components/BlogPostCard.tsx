@@ -1,8 +1,8 @@
-import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
-import { Link, Text } from "theme-ui";
+import { Text } from "theme-ui";
+
 import { Post } from "../api/prismic";
+
 import { Card } from "./Card";
 
 export const BlogPostCard: React.FC<{ post: Post }> = ({ post }) => {

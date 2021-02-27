@@ -1,11 +1,11 @@
 import { Box } from "theme-ui";
+import { GetStaticProps } from "next";
+import { getYear } from "date-fns";
 
 import { Page } from "../../components/Page";
 import { Rail } from "../../components/Rail";
-import { GetServerSideProps } from "next";
 import { getPosts, Post } from "../../api/prismic";
 import { BlogPostCard } from "../../components/BlogPostCard";
-import { getYear } from "date-fns";
 
 const Journal: React.FC<{ posts: Post[] }> = ({ posts }) => {
   const groupedPosts = posts.reduce(
@@ -52,12 +52,13 @@ const Journal: React.FC<{ posts: Post[] }> = ({ posts }) => {
 
 export default Journal;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const posts = await getPosts();
 
   return {
     props: {
       posts,
     },
+    revalidate: 1,
   };
 };

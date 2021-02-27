@@ -1,8 +1,8 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
 import { Box, Flex, Heading, Link, Text } from "theme-ui";
+import NextLink from "next/link";
 
 const getRadius = (index: number) => {
   const radii = [
@@ -94,23 +94,24 @@ export const Card: React.FC<{
               marginBottom: 2,
             }}
           >
-            <Link
-              href={href}
-              sx={{
-                color: "text",
-                display: "inline",
-              }}
-            >
-              <Heading
-                as="h2"
+            <NextLink href={href} passHref={true}>
+              <Link
                 sx={{
-                  fontSize: [2, 3],
+                  color: "text",
                   display: "inline",
                 }}
               >
-                {title}
-              </Heading>
-            </Link>
+                <Heading
+                  as="h2"
+                  sx={{
+                    fontSize: [2, 3],
+                    display: "inline",
+                  }}
+                >
+                  {title}
+                </Heading>
+              </Link>
+            </NextLink>
           </Box>
 
           <Box
@@ -129,9 +130,11 @@ export const Card: React.FC<{
               marginTop: 4,
             }}
           >
-            <Link variant="blockUnderline" href={href}>
-              Read <FontAwesomeIcon icon={faAngleDoubleRight} />
-            </Link>
+            <NextLink href={href} passHref={true}>
+              <Link variant="blockUnderline">
+                Read <FontAwesomeIcon icon={faAngleDoubleRight} />
+              </Link>
+            </NextLink>
           </Text>
         )}
       </Flex>

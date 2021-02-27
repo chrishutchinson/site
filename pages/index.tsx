@@ -1,18 +1,19 @@
-import { Page } from "../components/Page";
 import {
   faAngleDoubleRight,
   faTasks,
   faWind,
 } from "@fortawesome/free-solid-svg-icons";
 import { faRaspberryPi } from "@fortawesome/free-brands-svg-icons";
+import { Box, Flex, Link, Text } from "theme-ui";
+import { GetStaticProps } from "next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import NextLink from "next/link";
+
+import { Page } from "../components/Page";
 import { Rail } from "../components/Rail";
 import { Card } from "../components/Card";
-import { Box, Flex, Link, Text } from "theme-ui";
 import { getPosts, Post } from "../api/prismic";
-import { GetServerSideProps } from "next";
 import { BlogPostCard } from "../components/BlogPostCard";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 const projects = [
   {
     title: "Train departure board",
@@ -118,9 +119,12 @@ const Home: React.FC<{ posts: Post[] }> = ({ posts }) => {
                 },
               }}
             >
-              <Link href="/journal" variant="blockUnderline">
-                Read older entries <FontAwesomeIcon icon={faAngleDoubleRight} />
-              </Link>
+              <NextLink href="/journal" passHref={true}>
+                <Link variant="blockUnderline">
+                  Read older entries{" "}
+                  <FontAwesomeIcon icon={faAngleDoubleRight} />
+                </Link>
+              </NextLink>
             </Flex>
           </Rail>
         </Box>
@@ -131,7 +135,7 @@ const Home: React.FC<{ posts: Post[] }> = ({ posts }) => {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const posts = await getPosts();
 
   return {

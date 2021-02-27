@@ -277,5 +277,60 @@ export const getPost = async (slug: string) => {
     slug,
   });
 
+  if (!data.post) {
+    throw new Error("No post found matching the requested slug");
+  }
+
   return formatPrismicPost(data.post);
+};
+
+export const getAllPostSlugs = () => {
+  const recursivelyFetchSlugs = async (
+    list: string[] = [],
+    after?: string
+  ): Promise<string[]> => {
+    const ALL_POSTS_QUERY = `query GetAllPostSlugs($after: String) {
+      posts: allBlog_posts(first: 100, sortBy: published_at_DESC, after: $after) {
+         pageInfo {
+          endCursor
+          hasNextPage
+        }
+        edges {
+          node {
+            meta: _meta {
+              slug: uid
+            }
+          }
+        }
+      }
+    }`;
+
+    const { posts } = await makeQuery<{
+      posts: {
+        pageInfo: {
+          endCursor?: string;
+          hasNextPage: boolean;
+        };
+        edges: {
+          node: {
+            meta: {
+              slug: string;
+            };
+          };
+        }[];
+      };
+    }>(ALL_POSTS_QUERY, {
+      after,
+    });
+
+    const newList = [...list, ...posts.edges.map((e) => e.node.meta.slug)];
+
+    if (posts.pageInfo.hasNextPage && posts.pageInfo.endCursor) {
+      return recursivelyFetchSlugs(newList, posts.pageInfo.endCursor);
+    }
+
+    return newList;
+  };
+
+  return recursivelyFetchSlugs();
 };
