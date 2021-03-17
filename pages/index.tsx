@@ -1,5 +1,6 @@
 import {
   faAngleDoubleRight,
+  faCheck,
   faTasks,
   faWind,
 } from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +15,21 @@ import { Rail } from "../components/Rail";
 import { Card } from "../components/Card";
 import { getPosts, Post } from "../api/prismic";
 import { BlogPostCard } from "../components/BlogPostCard";
+
 const projects = [
+  {
+    title: "To Do × RSS",
+    link: "https://todo.hutch.tf",
+    icon: faCheck,
+    children: (
+      <>
+        <Text as="p">
+          Turn Microsoft To Do lists into RSS feeds, for quick and easy reading
+          lists!
+        </Text>
+      </>
+    ),
+  },
   {
     title: "Train departure board",
     link: "https://github.com/chrishutchinson/train-departure-screen",
