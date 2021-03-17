@@ -24,7 +24,7 @@ export const BlogPostCard: React.FC<{ post: Post }> = ({ post }) => {
           WebkitLineClamp: 4,
           overflow: "hidden",
           display: "-webkit-box",
-          "-webkit-box-orient": "vertical",
+          WebkitBoxOrient: "vertical",
           lineHeight: 1.69,
         }}
       >
