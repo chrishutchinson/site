@@ -24,7 +24,6 @@ const Aside: React.FC<{ post: Post }> = ({ post }) => {
       }}
     >
       <Box
-        as="aside"
         sx={{
           padding: [3, 4],
           backgroundColor: "buff",

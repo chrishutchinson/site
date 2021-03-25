@@ -128,7 +128,7 @@ export const Page: React.FC<{
           </Container>
         )}
 
-        <Box>{children}</Box>
+        <Box role="main">{children}</Box>
 
         <Flex
           sx={{
@@ -138,6 +138,7 @@ export const Page: React.FC<{
             justifyContent: "flex-start",
             color: "#FFF",
           }}
+          as="footer"
         >
           <Container>
             <Heading
