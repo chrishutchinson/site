@@ -1,8 +1,6 @@
 name: Run Axe CLI
 
 on:
-  issue_comment:
-    types: [edited]
   pull_request:
     branches: [main]
 
@@ -11,11 +9,13 @@ jobs:
     name: Run Axe CLI
     runs-on: "ubuntu-latest"
     steps:
-      - uses: aaron-binary/vercel-preview-url-action@master
+      - name: Waiting for 200 from the Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@master
         id: vercel_preview_url
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npx wait-on ${{ steps.vercel_preview_url.outputs.vercel_preview_url }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 60
+      - run: npx wait-on ${{ steps.vercel_preview_url.outputs.url }}
       - name: Run axe
         run: |
-          npx axe ${{ steps.vercel_preview_url.outputs.vercel_preview_url }} --exit
+          npx axe ${{ steps.vercel_preview_url.outputs.url }} --exit
