@@ -1,0 +1,19 @@
+name: Run Axe CLI
+
+on:
+  issue_comment:
+    types: [edited]
+
+jobs:
+  capture_vercel_preview_url:
+    name: Run Axe CLI
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: aaron-binary/vercel-preview-url-action@master
+        id: vercel_preview_url
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npx wait-on ${{ steps.vercel_preview_url.outputs.vercel_preview_url }}
+      - name: Run axe
+        run: |
+          npx axe ${{ steps.vercel_preview_url.outputs.vercel_preview_url }} --exit
