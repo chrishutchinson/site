@@ -1,12 +1,12 @@
-name: Run Axe CLI
+name: Axe CLI
 
 on:
   pull_request:
     branches: [main]
 
 jobs:
-  capture_vercel_preview_url:
-    name: Run Axe CLI
+  axe_cli:
+    name: Axe CLI
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
