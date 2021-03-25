@@ -7,8 +7,10 @@ on:
 jobs:
   capture_vercel_preview_url:
     name: Run Axe CLI
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - run: yarn
       - name: Waiting for 200 from the Vercel Preview
         uses: patrickedqvist/wait-for-vercel-preview@master
         id: vercel_preview_url
@@ -18,5 +20,4 @@ jobs:
       - run: npx wait-on ${{ steps.vercel_preview_url.outputs.url }}
       - name: Run axe
         run: |
-          npm install -g @axe-core/cli
-          axe ${{ steps.vercel_preview_url.outputs.url }} --exit
+          yarn axe ${{ steps.vercel_preview_url.outputs.url }} --exit
