@@ -18,5 +18,5 @@ jobs:
       - run: npx wait-on ${{ steps.vercel_preview_url.outputs.url }}
       - name: Run axe
         run: |
-          yarn global add @axe-core/cli
+          npm install -g @axe-core/cli
           axe ${{ steps.vercel_preview_url.outputs.url }} --exit
