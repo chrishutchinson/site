@@ -12,7 +12,7 @@ const metadata = {
   description: (text?: string) =>
     text
       ? text
-      : "Chris Hutchinson is a software engineer, working at The Times, and Rapsberry Pi tinkerer.",
+      : "Chris Hutchinson is a software engineer and Rapsberry Pi tinkerer.",
   image: () => "/share-image.png",
 };
 
@@ -86,9 +86,7 @@ export const Page: React.FC<{
                   marginBottom: [4, 5],
                 }}
               >
-                Software engineer, working at{" "}
-                <Link href="https://www.thetimes.co.uk">The Times</Link>, and
-                Raspberry Pi tinkerer.
+                Software engineer and Raspberry Pi tinkerer.
               </Text>
 
               <Links />
