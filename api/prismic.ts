@@ -1,4 +1,6 @@
+import { format } from "date-fns";
 import { RichTextBlock } from "prismic-reactjs";
+import { trimToWordCount } from "../utils/trim-to-word-count";
 
 export type PrismicSlice<T> =
   | (T extends "text"
@@ -120,6 +122,15 @@ export type Post = {
   body: PrismicBody;
 };
 
+export type Weeknote = {
+  id: string;
+  slug: string;
+  headline: string;
+  subheading: string | null;
+  publishedAt: string;
+  body: PrismicBody;
+};
+
 type PrismicPostNode = {
   meta: {
     id: string;
@@ -131,8 +142,15 @@ type PrismicPostNode = {
   body: PrismicBody;
 };
 
-const trimToWordCount = (str: string, count: number): string => {
-  return `${str.split(" ").slice(0, count).join(" ").trim()}...`;
+type PrismicWeeknoteNode = {
+  meta: {
+    id: string;
+    slug: string;
+  };
+  subheading: RichTextBlock[];
+  weekBeginningDate: string;
+  publishedAt: string;
+  body: PrismicBody;
 };
 
 const formatPrismicPost = (node: PrismicPostNode): Post => {
@@ -151,6 +169,20 @@ const formatPrismicPost = (node: PrismicPostNode): Post => {
     summary: node.subheading
       ? node.subheading[0].text
       : trimToWordCount(firstTextBlock.primary.text[0].text, 20),
+    publishedAt: node.publishedAt,
+    body: node.body,
+  };
+};
+
+const formatPrismicWeeknote = (node: PrismicWeeknoteNode): Weeknote => {
+  return {
+    id: node.meta.id,
+    slug: node.meta.slug,
+    headline: `Weeknotes for week beginning ${format(
+      new Date(node.weekBeginningDate),
+      "do LLLL yyyy"
+    )}`,
+    subheading: node.subheading && node.subheading[0].text,
     publishedAt: node.publishedAt,
     body: node.body,
   };
@@ -327,6 +359,120 @@ export const getAllPostSlugs = () => {
 
     if (posts.pageInfo.hasNextPage && posts.pageInfo.endCursor) {
       return recursivelyFetchSlugs(newList, posts.pageInfo.endCursor);
+    }
+
+    return newList;
+  };
+
+  return recursivelyFetchSlugs();
+};
+
+export const getWeeknote = async (slug: string) => {
+  const WEEKNOTE_QUERY = `
+    query GetWeeknoteBySlug($slug: String!) {
+      weeknote: week_note(uid: $slug, lang: "en-gb") {
+        meta: _meta {
+          id
+          slug: uid
+        }
+        subheading
+        publishedAt: published_at
+        weekBeginningDate: week_beginning_date
+        body {
+          ... on Week_noteBodyText {
+            type
+            primary {
+              text
+            }
+          }
+          ... on Week_noteBodyVideo {
+            type
+            primary {
+              embed
+            }
+          }
+          ... on Week_noteBodyGist {
+            type
+            primary {
+              embed
+            }
+          }
+          ... on Week_noteBodyDivider {
+            type
+          }
+          ... on Week_noteBodyBlockquote {
+            type
+            primary {
+              text
+            }
+          }
+          ...on Week_noteBodyTweet {
+            type
+            primary {
+              embed
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const data = await makeQuery<{
+    weeknote: PrismicWeeknoteNode;
+  }>(WEEKNOTE_QUERY, {
+    slug,
+  });
+
+  if (!data.weeknote) {
+    throw new Error("No post found matching the requested slug");
+  }
+
+  return formatPrismicWeeknote(data.weeknote);
+};
+
+export const getAllWeeknoteSlugs = () => {
+  const recursivelyFetchSlugs = async (
+    list: string[] = [],
+    after?: string
+  ): Promise<string[]> => {
+    const ALL_WEEKNOTES_QUERY = `query GetAllWeeknoteSlugs($after: String) {
+      weeknotes: allWeek_notes(first: 100, sortBy: published_at_DESC, after: $after) {
+         pageInfo {
+          endCursor
+          hasNextPage
+        }
+        edges {
+          node {
+            meta: _meta {
+              slug: uid
+            }
+          }
+        }
+      }
+    }`;
+
+    const { weeknotes } = await makeQuery<{
+      weeknotes: {
+        pageInfo: {
+          endCursor?: string;
+          hasNextPage: boolean;
+        };
+        edges: {
+          node: {
+            meta: {
+              slug: string;
+            };
+          };
+        }[];
+      };
+    }>(ALL_WEEKNOTES_QUERY, {
+      after,
+    });
+
+    const newList = [...list, ...weeknotes.edges.map((e) => e.node.meta.slug)];
+
+    if (weeknotes.pageInfo.hasNextPage && weeknotes.pageInfo.endCursor) {
+      return recursivelyFetchSlugs(newList, weeknotes.pageInfo.endCursor);
     }
 
     return newList;
