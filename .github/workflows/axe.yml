@@ -20,4 +20,4 @@ jobs:
       - run: npx wait-on ${{ steps.vercel_preview_url.outputs.url }}
       - name: Run axe
         run: |
-          yarn axe ${{ steps.vercel_preview_url.outputs.url }}, ${{ steps.vercel_preview_url.outputs.url }}/journal/entry/finding-your-documentation-groove --exit
+          yarn axe ${{ steps.vercel_preview_url.outputs.url }}, ${{ steps.vercel_preview_url.outputs.url }}/journal/entry/finding-your-documentation-groove, ${{ steps.vercel_preview_url.outputs.url }}/weeknotes/back-to-work-a-culture-of-feedback-and-learning-corporations-taking-over --exit
