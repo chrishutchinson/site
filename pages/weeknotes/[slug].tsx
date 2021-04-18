@@ -120,7 +120,7 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
             "@context": "http://schema.org",
             "@type": "BlogPosting",
             url: "https://www.chrishutchinson.me/weeknotes/${post.slug}",
-            headline: `Weeknotes ${post.weekBeginningDate}`,
+            headline: post.headline,
             alternativeHeadline: post.subheading,
             dateCreated: post.publishedAt,
             datePublished: post.publishedAt,
