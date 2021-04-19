@@ -13,8 +13,9 @@ import NextLink from "next/link";
 import { Page } from "../components/Page";
 import { Rail } from "../components/Rail";
 import { Card } from "../components/Card";
-import { getPosts, Post } from "../api/prismic";
-import { BlogPostCard } from "../components/BlogPostCard";
+import { getPosts, getWeeknotes, Post, Weeknote } from "../api/prismic";
+import { BlogPostCard, WeeknoteCard } from "../components/BlogPostCard";
+import { Container } from "../components/Container";
 
 const projects = [
   {
@@ -84,10 +85,42 @@ const projects = [
   },
 ];
 
-const Home: React.FC<{ posts: Post[] }> = ({ posts }) => {
+const Home: React.FC<{ posts: Post[]; latestWeeknote: Weeknote | null }> = ({
+  posts,
+  latestWeeknote,
+}) => {
   return (
     <>
       <Page>
+        {latestWeeknote && (
+          <Box
+            sx={{
+              paddingTop: 5,
+              paddingBottom: 3,
+            }}
+          >
+            <Container>
+              <Text
+                as="h2"
+                variant="heading"
+                sx={{
+                  display: "inline-block",
+                  fontSize: 2,
+                }}
+              >
+                Latest weeknote
+              </Text>{" "}
+              –{" "}
+              <NextLink href={`/weeknotes/${latestWeeknote.slug}`}>
+                <Link href={`/weeknotes/${latestWeeknote.slug}`}>
+                  <strong>{latestWeeknote.subheading}</strong>
+                </Link>
+              </NextLink>
+              , {latestWeeknote.weekBeginningDate}
+            </Container>
+          </Box>
+        )}
+
         <Box
           sx={{
             paddingTop: 5,
@@ -152,10 +185,12 @@ export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
   const posts = await getPosts();
+  const weeknotes = await getWeeknotes();
 
   return {
     props: {
       posts: posts.slice(0, 4),
+      latestWeeknote: weeknotes.length > 0 ? weeknotes[0] : null,
     },
   };
 };

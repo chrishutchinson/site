@@ -55,7 +55,7 @@ export type PrismicSlice<T> =
         }
       : never);
 
-type PrismicBody = PrismicSlice<
+export type PrismicBody = PrismicSlice<
   "text" | "blockquote" | "divider" | "gist" | "video" | "tweet"
 >[];
 
@@ -128,6 +128,7 @@ export type Weeknote = {
   headline: string;
   subheading: string | null;
   publishedAt: string;
+  weekBeginningDate: string;
   body: PrismicBody;
 };
 
@@ -182,6 +183,7 @@ const formatPrismicWeeknote = (node: PrismicWeeknoteNode): Weeknote => {
       new Date(node.weekBeginningDate),
       "do LLLL yyyy"
     )}`,
+    weekBeginningDate: format(new Date(node.weekBeginningDate), "do LLLL yyyy"),
     subheading: node.subheading && node.subheading[0].text,
     publishedAt: node.publishedAt,
     body: node.body,
@@ -367,6 +369,71 @@ export const getAllPostSlugs = () => {
   return recursivelyFetchSlugs();
 };
 
+export const getWeeknotes = async () => {
+  const WEEKNOTES_QUERY = `
+    query GetLatestWeeknotes {
+      weeknotes: allWeek_notes(sortBy: published_at_DESC, first: 10) {
+        edges {
+          node {
+            meta: _meta {
+              id
+              slug: uid
+            }
+            subheading
+            publishedAt: published_at
+            weekBeginningDate: week_beginning_date
+            body {
+              ... on Week_noteBodyText {
+                type
+                primary {
+                  text
+                }
+              }
+              ... on Week_noteBodyVideo {
+                type
+                primary {
+                  embed
+                }
+              }
+              ... on Week_noteBodyGist {
+                type
+                primary {
+                  embed
+                }
+              }
+              ... on Week_noteBodyDivider {
+                type
+              }
+              ... on Week_noteBodyBlockquote {
+                type
+                primary {
+                  text
+                }
+              }
+              ...on Week_noteBodyTweet {
+                type
+                primary {
+                  embed
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const data = await makeQuery<{
+    weeknotes: {
+      edges: {
+        node: PrismicWeeknoteNode;
+      }[];
+    };
+  }>(WEEKNOTES_QUERY);
+
+  return data.weeknotes.edges.map(({ node }) => formatPrismicWeeknote(node));
+};
+
 export const getWeeknote = async (slug: string) => {
   const WEEKNOTE_QUERY = `
     query GetWeeknoteBySlug($slug: String!) {
@@ -479,4 +546,142 @@ export const getAllWeeknoteSlugs = () => {
   };
 
   return recursivelyFetchSlugs();
+};
+
+export const getAllDocuments = async (): Promise<
+  (
+    | { type: "weeknote"; document: Weeknote }
+    | { type: "post"; document: Post }
+  )[]
+> => {
+  const ALL_CONTENT_QUERY = `
+    query GetLatestContent {
+      documents: _allDocuments(type_in: ["blog_post", "week_note"], sortBy: meta_firstPublicationDate_DESC, first: 10) {
+        edges {
+          node {
+            type: __typename
+            ... on Blog_post {
+              meta: _meta {
+                id
+                slug: uid
+              }
+              headline
+              subheading
+              publishedAt: published_at
+              body {
+                ... on Blog_postBodyText {
+                  type
+                  primary {
+                    text
+                  }
+                }
+                ... on Blog_postBodyVideo {
+                  type
+                  primary {
+                    embed
+                  }
+                }
+                ... on Blog_postBodyGist {
+                  type
+                  primary {
+                    embed
+                  }
+                }
+                ... on Blog_postBodyDivider {
+                  type
+                }
+                ... on Blog_postBodyBlockquote {
+                  type
+                  primary {
+                    text
+                  }
+                }
+                ...on Blog_postBodyTweet {
+                  type
+                  primary {
+                    embed
+                  }
+                }
+              }
+            }
+
+            ... on Week_note {
+              meta: _meta {
+                id
+                slug: uid
+              }
+              subheading
+              publishedAt: published_at
+              weekBeginningDate: week_beginning_date
+              body {
+                ... on Week_noteBodyText {
+                  type
+                  primary {
+                    text
+                  }
+                }
+                ... on Week_noteBodyVideo {
+                  type
+                  primary {
+                    embed
+                  }
+                }
+                ... on Week_noteBodyGist {
+                  type
+                  primary {
+                    embed
+                  }
+                }
+                ... on Week_noteBodyDivider {
+                  type
+                }
+                ... on Week_noteBodyBlockquote {
+                  type
+                  primary {
+                    text
+                  }
+                }
+                ...on Week_noteBodyTweet {
+                  type
+                  primary {
+                    embed
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const data = await makeQuery<{
+    documents: {
+      edges: {
+        node:
+          | ({
+              type: "Week_note";
+            } & PrismicWeeknoteNode)
+          | ({
+              type: "Blog_post";
+            } & PrismicPostNode);
+      }[];
+    };
+  }>(ALL_CONTENT_QUERY);
+
+  return data.documents.edges.map(({ node }) => {
+    if (node.type === "Blog_post") {
+      return {
+        type: "post",
+        document: formatPrismicPost(node),
+      };
+    }
+
+    if (node.type === "Week_note") {
+      return {
+        type: "weeknote",
+        document: formatPrismicWeeknote(node),
+      };
+    }
+  });
 };

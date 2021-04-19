@@ -69,8 +69,8 @@ export const Links: React.FC<{
         </BigLink>
         <BigLink
           size={size}
-          to="/api/journal/feed.xml"
-          name="RSS XML feed for Chris Hutchinson's journal"
+          to="/api/feed.xml"
+          name="RSS XML feed for Chris Hutchinson's journal and weeknotes"
         >
           <FontAwesomeIcon icon={faRss} />
         </BigLink>

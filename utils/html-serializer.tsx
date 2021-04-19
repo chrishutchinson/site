@@ -68,7 +68,7 @@ export const htmlSerializer: HTMLSerializer<React.ReactNode> = (
           rel={isExternal ? "noopener" : undefined}
         >
           {children}
-          {element.data.url.includes("https://") && (
+          {isExternal && (
             <Box
               as="span"
               sx={{
