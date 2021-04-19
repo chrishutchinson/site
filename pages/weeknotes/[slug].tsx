@@ -6,16 +6,9 @@ import { useInView } from "react-intersection-observer";
 import { Box, Flex, Heading, Link, Text } from "theme-ui";
 import Head from "next/head";
 import Error from "next/error";
-import NextLink from "next/link";
 import { useRouter } from "next/router";
 
-import {
-  getAllPostSlugs,
-  getAllWeeknoteSlugs,
-  getPost,
-  getWeeknote,
-  Post,
-} from "../../api/prismic";
+import { getAllWeeknoteSlugs, getWeeknote, Post } from "../../api/prismic";
 import { Container } from "../../components/Container";
 import { Page } from "../../components/Page";
 import { Content } from "../../components/Content";
@@ -179,7 +172,7 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
                       marginBottom: 4,
                     }}
                   >
-                    {post.headline}
+                    {post.subheading}
                   </Heading>
 
                   <Box
@@ -197,7 +190,7 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
                     }}
                   >
                     <Text as="time" variant="label" title={post.publishedAt}>
-                      {format(new Date(post.publishedAt), "MMMM do, yyyy")}
+                      {post.headline}
                     </Text>
                     <Heading
                       as="h1"
@@ -206,7 +199,7 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
                         marginBottom: 2,
                       }}
                     >
-                      {post.headline}
+                      {post.subheading}
                     </Heading>
                   </Box>
 
@@ -218,12 +211,12 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
                         marginBottom: 4,
                       }}
                     >
-                      {post.subheading}
+                      {post.headline}
                     </Heading>
                   )}
                 </Box>
 
-                <Content post={post} />
+                <Content body={post.body} />
               </Box>
             </Flex>
           </Container>

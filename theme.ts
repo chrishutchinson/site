@@ -34,7 +34,7 @@ const theme: Theme = {
   lineHeights: {
     heading: 1.3,
     body: 1.5,
-    article: 1.8,
+    article: 2,
   },
   fontWeights: {
     body: "normal",
@@ -71,6 +71,7 @@ const theme: Theme = {
       fontFamily: "body",
       lineHeight: "article",
       fontWeight: "body",
+      fontSize: 18,
     },
     heading: {
       fontFamily: "heading",

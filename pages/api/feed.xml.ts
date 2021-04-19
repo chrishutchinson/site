@@ -1,13 +1,13 @@
 import { NextApiHandler } from "next";
 import sanitizeHtml from "sanitize-html";
 
-import { getPosts } from "../../../api/prismic";
-import { renderPrismicBodyAsHtml } from "../../../utils/render-content";
+import { getAllDocuments } from "../../api/prismic";
+import { renderPrismicBodyAsHtml } from "../../utils/render-content";
 
 const BASE_DOMAIN = "https://www.chrishutchinson.me";
 
 const feedHandler: NextApiHandler = async (req, res) => {
-  const posts = await getPosts();
+  const documents = await getAllDocuments();
 
   res.statusCode = 200;
   res.setHeader("Content-Type", "application/rss+xml");
@@ -16,12 +16,12 @@ const feedHandler: NextApiHandler = async (req, res) => {
   <channel>
     <title>Chris Hutchinson</title>
     <link>${BASE_DOMAIN}</link>
-    <description>The latest journal entries from Chris Hutchinson – a software engineer and Raspberry Pi tinkerer.</description>
-    <atom:link href="${BASE_DOMAIN}/api/journal/feed.xml" rel="self" type="application/rss+xml" />
+    <description>The latest journal entries and weeknotes from Chris Hutchinson – a software engineer and Raspberry Pi tinkerer.</description>
+    <atom:link href="${BASE_DOMAIN}/api/feed.xml" rel="self" type="application/rss+xml" />
 
-    ${posts
-      .map((post) => {
-        const postHtml = sanitizeHtml(renderPrismicBodyAsHtml(post.body), {
+    ${documents
+      .map(({ type, document }) => {
+        const html = sanitizeHtml(renderPrismicBodyAsHtml(document.body), {
           allowedTags: [
             "p",
             "a",
@@ -42,12 +42,14 @@ const feedHandler: NextApiHandler = async (req, res) => {
           ],
         });
 
+        const path = type === "post" ? "/journal/entry/" : "/weeknotes/";
+
         return `<item>
-          <guid>${BASE_DOMAIN}/journal/entry/${post.slug}</guid>
-          <title>${post.headline}</title>
-          <link>${BASE_DOMAIN}/journal/entry/${post.slug}</link>
-          <description><![CDATA[ ${postHtml} ]]></description>
-          <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
+          <guid>${BASE_DOMAIN}${path}${document.slug}</guid>
+          <title>${document.headline}</title>
+          <link>${BASE_DOMAIN}${path}${document.slug}</link>
+          <description><![CDATA[ ${html} ]]></description>
+          <pubDate>${new Date(document.publishedAt).toUTCString()}</pubDate>
         </item>`;
       })
       .join("\n")}

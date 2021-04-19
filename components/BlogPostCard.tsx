@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { Text } from "theme-ui";
 
-import { Post } from "../api/prismic";
+import { Post, Weeknote } from "../api/prismic";
 
 import { Card } from "./Card";
 

@@ -217,7 +217,7 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
                   )}
                 </Box>
 
-                <Content post={post} />
+                <Content body={post.body} />
               </Box>
             </Flex>
           </Container>

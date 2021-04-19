@@ -1,8 +1,8 @@
 import ReactDOMServer from "react-dom/server";
 
-import { Post } from "../api/prismic";
+import { PrismicBody } from "../api/prismic";
 import { Content } from "../components/Content";
 
-export const renderPostAsHtml = (post: Post) => {
-  return ReactDOMServer.renderToStaticMarkup(<Content post={post} />);
+export const renderPrismicBodyAsHtml = (body: PrismicBody) => {
+  return ReactDOMServer.renderToStaticMarkup(<Content body={body} />);
 };

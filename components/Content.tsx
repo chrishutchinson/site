@@ -1,6 +1,6 @@
 import { Box } from "theme-ui";
 
-import { Post } from "../api/prismic";
+import { PrismicBody } from "../api/prismic";
 
 import { Blockquote } from "./content-blocks/Blockquote";
 import { Divider } from "./content-blocks/Divider";
@@ -8,10 +8,10 @@ import { Gist } from "./content-blocks/Gist";
 import { Tweet } from "./content-blocks/Tweet";
 import { Text as TextContentBlock } from "./content-blocks/Text";
 
-export const Content: React.FC<{ post: Post }> = ({ post }) => {
+export const Content: React.FC<{ body: PrismicBody }> = ({ body }) => {
   return (
     <Box>
-      {post.body.map((slice, index) => {
+      {body.map((slice, index) => {
         if (slice.type === "text") {
           return <TextContentBlock slice={slice} />;
         }
