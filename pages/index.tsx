@@ -14,7 +14,7 @@ import { Page } from "../components/Page";
 import { Rail } from "../components/Rail";
 import { Card } from "../components/Card";
 import { getPosts, getWeeknotes, Post, Weeknote } from "../api/prismic";
-import { BlogPostCard, WeeknoteCard } from "../components/BlogPostCard";
+import { BlogPostCard } from "../components/BlogPostCard";
 import { Container } from "../components/Container";
 
 const projects = [
