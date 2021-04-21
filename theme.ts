@@ -29,12 +29,13 @@ const theme: Theme = {
   fonts: {
     body: `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif`,
     heading: "Mali",
+    serifBody: `"Apple Garamond", "Baskerville", "Times New Roman", "Droid Serif", "Times","Source Serif Pro", serif`,
   },
-  fontSizes: [12, 14, 16, 22, 28, 36, 42, 60, 72, 100],
+  fontSizes: [12, 14, 16, 22, 28, 36, 42, 50, 72, 100],
   lineHeights: {
     heading: 1.3,
     body: 1.5,
-    article: 2,
+    article: 1.8,
   },
   fontWeights: {
     body: "normal",
@@ -68,10 +69,10 @@ const theme: Theme = {
       fontWeight: "body",
     },
     article: {
-      fontFamily: "body",
+      fontFamily: "serifBody",
       lineHeight: "article",
       fontWeight: "body",
-      fontSize: 18,
+      fontSize: 20,
     },
     heading: {
       fontFamily: "heading",

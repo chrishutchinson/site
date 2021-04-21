@@ -20,7 +20,7 @@ export const htmlSerializer: HTMLSerializer<React.ReactNode> = (
         <Box
           key={key}
           sx={{
-            marginBottom: 3,
+            marginBottom: 4,
             maxWidth: 800,
             ":last-of-type": {
               marginBottom: 0,
@@ -30,6 +30,7 @@ export const htmlSerializer: HTMLSerializer<React.ReactNode> = (
           <style jsx global>{`
             .inline-code {
               font-family: monospace;
+              font-size: 16px;
             }
           `}</style>
           <Text as="p" variant="article">
