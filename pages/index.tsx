@@ -192,5 +192,6 @@ export const getStaticProps: GetStaticProps = async () => {
       posts: posts.slice(0, 4),
       latestWeeknote: weeknotes.length > 0 ? weeknotes[0] : null,
     },
+    revalidate: 60,
   };
 };
