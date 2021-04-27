@@ -41,10 +41,24 @@ export const Page: React.FC<{
         <meta property="twitter:site" content="chrishutchinson"></meta>
         <meta property="twitter:image" content={metadata.image()} />
 
+        
         <link
           rel="alternate"
           type="application/rss+xml"
+          title="Chris Hutchinson (Journal & Weeknotes)"
+          href={metadata.url("/api/feed.xml")}
+        />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Chris Hutchinson (Journal)"
           href={metadata.url("/api/journal/feed.xml")}
+        />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Chris Hutchinson (Weeknotes)"
+          href={metadata.url("/api/weeknotes/feed.xml")}
         />
       </Head>
 
