@@ -37,7 +37,7 @@ export const Page: React.FC<{
           content={metadata.description(description)}
         />
         <meta property="og:image" content={metadata.image()} />
-        <meta property="twitter:card" content="summary_large_image"></meta>
+        <meta property="twitter:card" content="summary"></meta>
         <meta property="twitter:site" content="chrishutchinson"></meta>
         <meta property="twitter:image" content={metadata.image()} />
 
