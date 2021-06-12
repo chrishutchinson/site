@@ -2,6 +2,7 @@ import { Theme } from "theme-ui";
 
 const theme: Theme = {
   useColorSchemeMediaQuery: true,
+  useLocalStorage: false,
   colors: {
     text: "#111",
     background: "#fff",
