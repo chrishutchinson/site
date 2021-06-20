@@ -41,6 +41,19 @@ const projects = [
           A python script to display replica real-time UK railway station
           departure screens for SSD13xx devices
         </Text>
+        <Text
+          as="p"
+          sx={{
+            marginTop: 2,
+          }}
+        >
+          <Link
+            href="https://magpi.raspberrypi.org/articles/uk-train-departure-screen"
+            rel="noopener noreferrer"
+          >
+            MagPi magazine write up
+          </Link>
+        </Text>
       </>
     ),
   },
