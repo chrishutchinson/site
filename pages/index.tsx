@@ -1,6 +1,7 @@
 import {
   faAngleDoubleRight,
   faCheck,
+  faNewspaper,
   faTasks,
   faWind,
 } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +19,29 @@ import { BlogPostCard } from "../components/BlogPostCard";
 import { Container } from "../components/Container";
 
 const projects = [
+  {
+    title: "Tomorrow's Papers Today",
+    link: "https://www.tomorrowspapers.app",
+    icon: faNewspaper,
+    children: (
+      <>
+        <Text as="p">
+          An iPhone and iPad app for the latest UK newspaper front pages, all in
+          once place, as soon as they're published.{" "}
+        </Text>
+        <Text
+          as="p"
+          sx={{
+            marginTop: 2,
+          }}
+        >
+          <Link href="https://www.tomorrowspapers.app" rel="noopener">
+            <strong>Beta wait list now open!</strong>
+          </Link>
+        </Text>
+      </>
+    ),
+  },
   {
     title: "To Do × RSS",
     link: "https://todo.hutch.tf",
