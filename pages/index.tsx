@@ -20,6 +20,32 @@ import { Container } from "../components/Container";
 
 const projects = [
   {
+    title: "Slack Testing Library",
+    link: "https://www.github.com/chrishutchinson/slack-testing-library",
+    icon: faCheck,
+    children: (
+      <>
+        <Text as="p">
+          Test your Slack apps like a human would – a super fast Slack intercept
+          server and testing framework.
+        </Text>
+        <Text
+          as="p"
+          sx={{
+            marginTop: 2,
+          }}
+        >
+          <Link
+            href="https://www.github.com/chrishutchinson/slack-testing-library"
+            rel="noopener"
+          >
+            <strong>More on GitHub</strong>
+          </Link>
+        </Text>
+      </>
+    ),
+  },
+  {
     title: "Tomorrow's Papers Today",
     link: "https://www.tomorrowspapers.app",
     icon: faNewspaper,
@@ -75,7 +101,7 @@ const projects = [
             href="https://magpi.raspberrypi.org/articles/uk-train-departure-screen"
             rel="noopener noreferrer"
           >
-            MagPi magazine write up
+            <strong>MagPi magazine write up</strong>
           </Link>
         </Text>
       </>
