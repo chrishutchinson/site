@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: yarn
       - name: Waiting for 200 from the Vercel Preview
-        uses: patrickedqvist/wait-for-vercel-preview@master
+        uses: patrickedqvist/wait-for-vercel-preview@main
         id: vercel_preview_url
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
