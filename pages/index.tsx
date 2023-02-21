@@ -2,7 +2,6 @@ import {
   faAngleDoubleRight,
   faCheck,
   faEnvelope,
-  faMountain,
   faNewspaper,
   faTasks,
   faWind,
