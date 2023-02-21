@@ -1,6 +1,7 @@
 import {
   faAngleDoubleRight,
   faCheck,
+  faEnvelope,
   faNewspaper,
   faTasks,
   faWind,
@@ -19,6 +20,30 @@ import { BlogPostCard } from "../components/BlogPostCard";
 import { Container } from "../components/Container";
 
 const projects = [
+  {
+    title: "Fringe Engineering",
+    link: "https://fringeengineering.substack.com",
+    icon: faEnvelope,
+    children: (
+      <>
+        <Text as="p">
+          A newsletter on the future of engineering and what it means to be a
+          human that tries to get a computer to do what they want. Covering
+          climate, culture, AI, and more.
+        </Text>
+        <Text
+          as="p"
+          sx={{
+            marginTop: 2,
+          }}
+        >
+          <Link href="https://fringeengineering.substack.com" rel="noopener">
+            <strong>Subscribe for free</strong>
+          </Link>
+        </Text>
+      </>
+    ),
+  },
   {
     title: "Slack Testing Library",
     link: "https://www.github.com/chrishutchinson/slack-testing-library",
