@@ -1,7 +1,11 @@
 import { Box, Flex, Text } from "theme-ui";
 import { Container } from "./Container";
+import { PropsWithChildren } from "react";
 
-export const Rail: React.FC<{ title?: string }> = ({ title, children }) => {
+export const Rail: React.FC<PropsWithChildren<{ title?: string }>> = ({
+  title,
+  children,
+}) => {
   return (
     <>
       <Box

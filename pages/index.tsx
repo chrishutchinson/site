@@ -199,8 +199,12 @@ const Home: React.FC<{ posts: Post[]; latestWeeknote: Weeknote | null }> = ({
                 Latest weeknote
               </Text>{" "}
               –{" "}
-              <NextLink href={`/weeknotes/${latestWeeknote.slug}`}>
-                <Link href={`/weeknotes/${latestWeeknote.slug}`}>
+              <NextLink
+                href={`/weeknotes/${latestWeeknote.slug}`}
+                passHref
+                legacyBehavior
+              >
+                <Link>
                   <strong>{latestWeeknote.subheading}</strong>
                 </Link>
               </NextLink>
@@ -255,7 +259,7 @@ const Home: React.FC<{ posts: Post[]; latestWeeknote: Weeknote | null }> = ({
                 },
               }}
             >
-              <NextLink href="/journal" passHref={true}>
+              <NextLink href="/journal" passHref={true} legacyBehavior>
                 <Link variant="blockUnderline">
                   Read older entries{" "}
                   <FontAwesomeIcon icon={faAngleDoubleRight} />
