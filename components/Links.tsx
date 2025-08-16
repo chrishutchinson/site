@@ -5,13 +5,16 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faRss } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { PropsWithChildren } from "react";
 import { Flex, Link } from "theme-ui";
 
-const BigLink: React.FC<{
-  to: string;
-  name: string;
-  size?: "small" | "large";
-}> = ({ to, name, size = "small", children }) => {
+const BigLink: React.FC<
+  PropsWithChildren<{
+    to: string;
+    name: string;
+    size?: "small" | "large";
+  }>
+> = ({ to, name, size = "small", children }) => {
   return (
     <Link
       rel="noopener noreferrer"

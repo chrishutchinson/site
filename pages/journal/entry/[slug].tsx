@@ -70,7 +70,7 @@ const Aside: React.FC<{ post: Post }> = ({ post }) => {
           marginBottom: 5,
         }}
       >
-        <NextLink href="/journal" passHref={true}>
+        <NextLink href="/journal" passHref={true} legacyBehavior>
           <Link>Back to all entries</Link>
         </NextLink>
       </Box>

@@ -34,13 +34,11 @@ export default class extends Document {
           <meta
             name="theme-color"
             content="#FFF"
-            // @ts-expect-error – the media attribute is valid in Safari 15+
             media="(prefers-color-scheme: light)"
           />
           <meta
             name="theme-color"
             content="#222222"
-            // @ts-expect-error – the media attribute is valid in Safari 15+
             media="(prefers-color-scheme: dark)"
           />
           <style

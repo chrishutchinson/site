@@ -5,6 +5,7 @@ import NextLink from "next/link";
 
 import { Container } from "./Container";
 import { Links } from "./Links";
+import { PropsWithChildren } from "react";
 
 const metadata = {
   url: (path = "/") => `https://www.chrishutchinson.me${path}`,
@@ -16,11 +17,13 @@ const metadata = {
   image: () => "/share-image.png",
 };
 
-export const Page: React.FC<{
-  title?: string;
-  description?: string;
-  headerLayout?: "default" | "inline";
-}> = ({ title, description, headerLayout = "default", children }) => {
+export const Page: React.FC<
+  PropsWithChildren<{
+    title?: string;
+    description?: string;
+    headerLayout?: "default" | "inline";
+  }>
+> = ({ title, description, headerLayout = "default", children }) => {
   const router = useRouter();
 
   return (
@@ -41,7 +44,6 @@ export const Page: React.FC<{
         <meta property="twitter:site" content="chrishutchinson"></meta>
         <meta property="twitter:image" content={metadata.image()} />
 
-        
         <link
           rel="alternate"
           type="application/rss+xml"
@@ -130,7 +132,7 @@ export const Page: React.FC<{
                   marginRight: 4,
                 }}
               >
-                <NextLink href="/" passHref={true}>
+                <NextLink href="/" passHref={true} legacyBehavior>
                   <Link>Chris Hutchinson</Link>
                 </NextLink>
               </Text>
