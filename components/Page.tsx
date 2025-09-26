@@ -68,6 +68,7 @@ export const Page: React.FC<
           border: "1px dotted #333",
           maxWidth: 768,
         }}
+        as="header"
       >
         <Container
           sx={{
@@ -101,6 +102,7 @@ export const Page: React.FC<
                 gap: "2",
                 alignItems: "center",
               }}
+              as="nav"
             >
               <NextLink href="/api/feed.xml" passHref legacyBehavior>
                 <Link>rss</Link>
