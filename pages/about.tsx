@@ -95,12 +95,12 @@ export default function AboutPage() {
               <Link>LinkedIn</Link>
             </NextLink>
             . Whether it's about something I've written, one of my projects, or
-            just to say hi, please do reach out – hearing from readers and
-            fellow makers is part of why I do all this!
+            just to say hi, please do reach out if you're thinking about it –
+            hearing from readers and fellow makers is part of why I do all this!
           </Text>
 
           <Text variant="article">
-            I have one favour to ask of you – I'm prioritising reading more
+            I do have one favour to ask of you – I'm prioritising reading more
             books over the next twelve months (fiction, non-fiction – I'm not
             fussy!), so if you have any recommendations, please do send them my
             way!

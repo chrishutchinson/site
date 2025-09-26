@@ -154,7 +154,8 @@ export const Page: React.FC<
       >
         <Flex
           sx={{
-            paddingY: 3,
+            pt: 4,
+            pb: 3,
             justifyContent: "flex-start",
             backgroundColor: "buff",
           }}
