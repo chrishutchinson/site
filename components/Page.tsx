@@ -63,7 +63,7 @@ export const Page: React.FC<
 
       <Box
         sx={{
-          my: [2, 4],
+          mt: [2, 4],
           mx: [2, 4, 4, "auto"],
           border: "1px dotted #333",
           maxWidth: 768,
@@ -72,7 +72,6 @@ export const Page: React.FC<
       >
         <Container
           sx={{
-            borderBottom: "1px dotted #333",
             backgroundColor: "buff",
           }}
         >
@@ -119,23 +118,42 @@ export const Page: React.FC<
             </Flex>
           </Flex>
         </Container>
+      </Box>
 
+      <Box
+        sx={{
+          mx: [2, 4, 4, "auto"],
+          borderLeft: "1px dotted #333",
+          borderRight: "1px dotted #333",
+          maxWidth: 768,
+        }}
+        role="main"
+      >
         <Box
-          role="main"
           sx={{
             backgroundColor: "buff",
           }}
         >
           {children}
         </Box>
+      </Box>
 
+      <Box
+        sx={{
+          mb: [2, 4],
+          mx: [2, 4, 4, "auto"],
+          border: "1px dotted #333",
+          borderTop: "none",
+          maxWidth: 768,
+        }}
+        as="footer"
+      >
         <Flex
           sx={{
             paddingY: 3,
             justifyContent: "flex-start",
             backgroundColor: "buff",
           }}
-          as="footer"
         >
           <Container>
             <Text>{new Date().getFullYear()} – Chris Hutchinson</Text>
