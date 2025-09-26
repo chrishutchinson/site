@@ -1,11 +1,9 @@
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
-import { Box, Flex, Heading, Link, Text } from "theme-ui";
 import NextLink from "next/link";
-
-import { Container } from "./Container";
-import { Links } from "./Links";
 import { PropsWithChildren } from "react";
+import { Box, Flex, Heading, Link, Text } from "theme-ui";
+import { Container } from "./Container";
 
 const metadata = {
   url: (path = "/") => `https://www.chrishutchinson.me${path}`,
@@ -21,9 +19,8 @@ export const Page: React.FC<
   PropsWithChildren<{
     title?: string;
     description?: string;
-    headerLayout?: "default" | "inline";
   }>
-> = ({ title, description, headerLayout = "default", children }) => {
+> = ({ title, description, children }) => {
   const router = useRouter();
 
   return (
@@ -66,106 +63,80 @@ export const Page: React.FC<
 
       <Box
         sx={{
-          minHeight: "100vh",
+          my: [2, 4],
+          mx: [2, 4, 4, "auto"],
+          border: "1px dotted #333",
+          maxWidth: 768,
         }}
       >
-        {headerLayout === "default" && (
-          <Container>
-            <Box
-              as="header"
-              sx={{
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: "center",
-                flexDirection: "column",
-                height: "60vh",
-                maxHeight: 700,
-                marginBottom: 3,
-              }}
-            >
-              <Heading
-                as="h1"
-                sx={{
-                  fontSize: [6, 7, 9],
-                  textAlign: "left",
-                  maxWidth: ["initial", 500, 800],
-                  marginBottom: [3, 4],
-                }}
-              >
-                Chris Hutchinson
-              </Heading>
-              <Text
-                as="p"
-                sx={{
-                  color: "subtle",
-                  fontSize: [1, 2],
-                  marginBottom: [4, 5],
-                }}
-              >
-                Software engineer and Raspberry Pi tinkerer.
-              </Text>
+        <Container
+          sx={{
+            borderBottom: "1px dotted #333",
+            backgroundColor: "buff",
+          }}
+        >
+          <Flex
+            sx={{
+              flexDirection: "column",
+              gap: 2,
+              py: 3,
+            }}
+          >
+            <NextLink href="/" passHref legacyBehavior>
+              <Link variant="navLink">
+                <Heading
+                  as="h1"
+                  sx={{
+                    fontSize: [4, 5],
+                  }}
+                >
+                  chrishutchinson.me
+                </Heading>
+              </Link>
+            </NextLink>
 
-              <Links />
-            </Box>
-          </Container>
-        )}
-
-        {headerLayout === "inline" && (
-          <Container>
             <Flex
-              as="header"
               sx={{
-                alignItems: "center",
-                justifyContent: "space-between",
                 flexDirection: "row",
-                marginBottom: [4, 5],
-                paddingTop: 4,
+                gap: "2",
+                alignItems: "center",
               }}
             >
-              <Text
-                as="p"
-                variant="heading"
-                sx={{
-                  fontSize: [3, 3, 4],
-                  textAlign: "left",
-                  maxWidth: ["initial", 500, 800],
-                  marginRight: 4,
-                }}
-              >
-                <NextLink href="/" passHref={true} legacyBehavior>
-                  <Link>Chris Hutchinson</Link>
-                </NextLink>
-              </Text>
-
-              <Links size="small" />
+              <NextLink href="/api/feed.xml" passHref legacyBehavior>
+                <Link>rss</Link>
+              </NextLink>
+              <NextLink href="/to/github" passHref legacyBehavior>
+                <Link>github</Link>
+              </NextLink>
+              <NextLink href="/to/linkedin" passHref legacyBehavior>
+                <Link>linkedin</Link>
+              </NextLink>
+              <NextLink href="/to/substack" passHref legacyBehavior>
+                <Link>substack</Link>
+              </NextLink>
             </Flex>
-          </Container>
-        )}
+          </Flex>
+        </Container>
 
-        <Box role="main">{children}</Box>
+        <Box
+          role="main"
+          sx={{
+            backgroundColor: "buff",
+          }}
+        >
+          {children}
+        </Box>
 
         <Flex
           sx={{
-            backgroundColor: "muted",
-            paddingTop: 5,
-            paddingBottom: 5,
+            paddingY: 3,
             justifyContent: "flex-start",
-            color: "#FFF",
+            backgroundColor: "buff",
           }}
           as="footer"
         >
           <Container>
-            <Heading
-              as="h2"
-              sx={{
-                display: "inline",
-                fontSize: 2,
-                textAlign: "left",
-              }}
-            >
-              Chris Hutchinson
-            </Heading>{" "}
-            &bull; {new Date().getFullYear()}
+            <Text>{new Date().getFullYear()} – Chris Hutchinson</Text>
           </Container>
         </Flex>
       </Box>

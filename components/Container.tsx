@@ -1,12 +1,16 @@
 import { PropsWithChildren } from "react";
-import { Box } from "theme-ui";
+import { Box, Theme, ThemeUIStyleObject } from "theme-ui";
 
-export const Container: React.FC<PropsWithChildren> = ({ children }) => {
+export const Container: React.FC<
+  PropsWithChildren<{
+    sx?: ThemeUIStyleObject<Theme<{}>>;
+  }>
+> = ({ children, sx }) => {
   return (
     <Box
       sx={{
-        paddingLeft: [4, 5],
-        paddingRight: [4, 5],
+        px: 3,
+        ...sx,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import { Box, Text, Image as ImageElement } from "theme-ui";
+import { Box, Image as ImageElement, Text } from "theme-ui";
 
 const MAX_PHYSICAL_IMAGE_WIDTH = 800;
 

@@ -42,7 +42,7 @@ const feedHandler: NextApiHandler = async (req, res) => {
               "h6",
               "img",
             ],
-          }
+          },
         );
 
         return `<item>

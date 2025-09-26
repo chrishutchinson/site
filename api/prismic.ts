@@ -61,13 +61,13 @@ export type PrismicBody = PrismicSlice<
 
 const makeQuery = async <T extends object>(
   query: string,
-  variables?: object
+  variables?: object,
 ): Promise<T> => {
   const masterRef = await fetchMasterRef();
 
   const { data } = await fetch(
     `https://chrishutchinson.prismic.io/graphql?query=${encodeURIComponent(
-      query
+      query,
     )}${
       variables
         ? `&variables=${encodeURIComponent(JSON.stringify(variables))}`
@@ -78,7 +78,7 @@ const makeQuery = async <T extends object>(
       headers: {
         "Prismic-Ref": masterRef,
       },
-    }
+    },
   ).then((res) => {
     if (!res.ok) {
       throw new Error(res.statusText);
@@ -95,7 +95,7 @@ const fetchMasterRef = async () => {
     "https://chrishutchinson.cdn.prismic.io/api/v2",
     {
       method: "get",
-    }
+    },
   ).then((res) => {
     if (!res.ok) {
       throw new Error(res.statusText);
@@ -120,6 +120,15 @@ export type Post = {
   summary: string;
   publishedAt: string;
   body: PrismicBody;
+};
+
+export type ExternalPost = {
+  id: string;
+  slug: string;
+  headline: string;
+  subheading: string | null;
+  publishedAt: string;
+  url: string;
 };
 
 export type Weeknote = {
@@ -154,6 +163,25 @@ type PrismicWeeknoteNode = {
   body: PrismicBody;
 };
 
+type PrismicExternalPostNode = {
+  meta: {
+    id: string;
+    slug: string;
+  };
+  headline: RichTextBlock[];
+  subheading: RichTextBlock[];
+  publishedAt: string;
+  external_url: {
+    _linkType: string;
+    url?: string;
+    target?: string;
+    _meta?: {
+      id: string;
+      slug: string;
+    };
+  };
+};
+
 const formatPrismicPost = (node: PrismicPostNode): Post => {
   const firstTextBlock = node.body.find((block) => block.type === "text") as {
     type: "text";
@@ -181,12 +209,29 @@ const formatPrismicWeeknote = (node: PrismicWeeknoteNode): Weeknote => {
     slug: node.meta.slug,
     headline: `Weeknotes for week beginning ${format(
       new Date(node.weekBeginningDate),
-      "do LLLL yyyy"
+      "do LLLL yyyy",
     )}`,
     weekBeginningDate: format(new Date(node.weekBeginningDate), "do LLLL yyyy"),
     subheading: node.subheading && node.subheading[0].text,
     publishedAt: node.publishedAt,
     body: node.body,
+  };
+};
+
+const formatPrismicExternalPost = (
+  node: PrismicExternalPostNode,
+): ExternalPost => {
+  if (!node.external_url || !node.external_url.url) {
+    throw new Error("External post is missing external URL");
+  }
+
+  return {
+    id: node.meta.id,
+    slug: node.meta.slug,
+    headline: node.headline[0].text,
+    subheading: node.subheading && node.subheading[0].text,
+    publishedAt: node.publishedAt,
+    url: node.external_url.url,
   };
 };
 
@@ -304,26 +349,133 @@ export const getPost = async (slug: string) => {
       }
     }
   `;
+};
+
+export const getDocument = async (slug: string) => {
+  const POST_QUERY = `
+    query GetDocumentBySlug($slug: String!) {
+      post: blog_post(uid: $slug, lang: "en-gb") {
+        meta: _meta {
+          id
+          slug: uid
+        }
+        headline
+        subheading
+        publishedAt: published_at
+        body {
+          ... on Blog_postBodyText {
+            type
+            primary {
+              text
+            }
+          }
+          ... on Blog_postBodyVideo {
+            type
+            primary {
+              embed
+            }
+          }
+          ... on Blog_postBodyGist {
+            type
+            primary {
+              embed
+            }
+          }
+          ... on Blog_postBodyDivider {
+            type
+          }
+          ... on Blog_postBodyBlockquote {
+            type
+            primary {
+              text
+            }
+          }
+          ...on Blog_postBodyTweet {
+            type
+            primary {
+              embed
+            }
+          }
+        }
+      }
+
+      weeknote: week_note(uid: $slug, lang: "en-gb") {
+        meta: _meta {
+          id
+          slug: uid
+        }
+        subheading
+        publishedAt: published_at
+        weekBeginningDate: week_beginning_date
+        body {
+          ... on Week_noteBodyText {
+            type
+            primary {
+              text
+            }
+          }
+          ... on Week_noteBodyVideo {
+            type
+            primary {
+              embed
+            }
+          }
+          ... on Week_noteBodyGist {
+            type
+            primary {
+              embed
+            }
+          }
+          ... on Week_noteBodyDivider {
+            type
+          }
+          ... on Week_noteBodyBlockquote {
+            type
+            primary {
+              text
+            }
+          }
+          ...on Week_noteBodyTweet {
+            type
+            primary {
+              embed
+            }
+          }
+        }
+      }
+    }
+  `;
 
   const data = await makeQuery<{
-    post: PrismicPostNode;
+    post: PrismicPostNode | null;
+    weeknote: PrismicWeeknoteNode | null;
   }>(POST_QUERY, {
     slug,
   });
 
-  if (!data.post) {
+  if (!data.post && !data.weeknote) {
     throw new Error("No post found matching the requested slug");
   }
 
-  return formatPrismicPost(data.post);
+  if (data.weeknote) {
+    return {
+      type: "weeknote" as const,
+      document: formatPrismicWeeknote(data.weeknote),
+    };
+  }
+
+  return {
+    type: "post" as const,
+    document: formatPrismicPost(data.post),
+  };
 };
 
 export const getAllPostSlugs = () => {
   const recursivelyFetchSlugs = async (
     list: string[] = [],
-    after?: string
+    after?: string,
   ): Promise<string[]> => {
-    const ALL_POSTS_QUERY = `query GetAllPostSlugs($after: String) {
+    const ALL_POST_SLUGS_QUERY = `query GetAllPostSlugs($after: String) {
       posts: allBlog_posts(first: 100, sortBy: published_at_DESC, after: $after) {
          pageInfo {
           endCursor
@@ -353,7 +505,7 @@ export const getAllPostSlugs = () => {
           };
         }[];
       };
-    }>(ALL_POSTS_QUERY, {
+    }>(ALL_POST_SLUGS_QUERY, {
       after,
     });
 
@@ -367,6 +519,13 @@ export const getAllPostSlugs = () => {
   };
 
   return recursivelyFetchSlugs();
+};
+
+export const getAllDocumentSlugs = async () => {
+  const postSlugs = await getAllPostSlugs();
+  const weeknoteSlugs = await getAllWeeknoteSlugs();
+
+  return [...postSlugs, ...weeknoteSlugs];
 };
 
 export const getWeeknotes = async () => {
@@ -500,7 +659,7 @@ export const getWeeknote = async (slug: string) => {
 export const getAllWeeknoteSlugs = () => {
   const recursivelyFetchSlugs = async (
     list: string[] = [],
-    after?: string
+    after?: string,
   ): Promise<string[]> => {
     const ALL_WEEKNOTES_QUERY = `query GetAllWeeknoteSlugs($after: String) {
       weeknotes: allWeek_notes(first: 100, sortBy: published_at_DESC, after: $after) {
@@ -548,15 +707,24 @@ export const getAllWeeknoteSlugs = () => {
   return recursivelyFetchSlugs();
 };
 
-export const getAllDocuments = async (): Promise<
+export const getAllDocuments = async (
+  {
+    count,
+  }: {
+    count?: number;
+  } = {
+    count: 10,
+  },
+): Promise<
   (
     | { type: "weeknote"; document: Weeknote }
     | { type: "post"; document: Post }
+    | { type: "externalPost"; document: ExternalPost }
   )[]
 > => {
   const ALL_CONTENT_QUERY = `
-    query GetLatestContent {
-      documents: _allDocuments(type_in: ["blog_post", "week_note"], sortBy: meta_firstPublicationDate_DESC, first: 10) {
+    query GetLatestContent($count: Int) {
+      documents: _allDocuments(type_in: ["blog_post", "week_note", "external_post"], sortBy: meta_firstPublicationDate_DESC, first: $count) {
         edges {
           node {
             type: __typename
@@ -649,6 +817,35 @@ export const getAllDocuments = async (): Promise<
                 }
               }
             }
+
+            ... on External_post {
+              meta: _meta {
+                id
+                slug: uid
+              }
+              headline
+              subheading
+              publishedAt: published_at
+              external_url {
+                _linkType
+                ... on _ExternalLink {
+                  url
+                  target
+                }
+                ... on _Document {
+                  _meta {
+                    id
+                    slug: uid
+                  }
+                }
+                ... on _FileLink {
+                  url
+                }
+                ... on _ImageLink {
+                  url
+                }
+              }
+            }
           }
         }
       }
@@ -664,10 +861,15 @@ export const getAllDocuments = async (): Promise<
             } & PrismicWeeknoteNode)
           | ({
               type: "Blog_post";
-            } & PrismicPostNode);
+            } & PrismicPostNode)
+          | ({
+              type: "External_post";
+            } & PrismicExternalPostNode);
       }[];
     };
-  }>(ALL_CONTENT_QUERY);
+  }>(ALL_CONTENT_QUERY, {
+    count,
+  });
 
   return data.documents.edges.map(({ node }) => {
     if (node.type === "Blog_post") {
@@ -681,6 +883,13 @@ export const getAllDocuments = async (): Promise<
       return {
         type: "weeknote",
         document: formatPrismicWeeknote(node),
+      };
+    }
+
+    if (node.type === "External_post") {
+      return {
+        type: "externalPost",
+        document: formatPrismicExternalPost(node),
       };
     }
   });
