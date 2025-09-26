@@ -1,50 +1,64 @@
-import { Box } from "theme-ui";
 import { GetStaticProps } from "next";
-import { getYear } from "date-fns";
-
+import { Flex } from "theme-ui";
+import {
+  ExternalPost,
+  getAllDocuments,
+  Post,
+  Weeknote,
+} from "../../api/prismic";
+import { Container } from "../../components/Container";
 import { Page } from "../../components/Page";
-import { Rail } from "../../components/Rail";
-import { getPosts, Post } from "../../api/prismic";
-import { BlogPostCard } from "../../components/BlogPostCard";
+import { ExternalPostCard } from "../../components/post-cards/ExternalPostCard";
+import { PostCard } from "../../components/post-cards/PostCard";
+import { WeeknoteCard } from "../../components/post-cards/WeeknoteCard";
 
-const Journal: React.FC<{ posts: Post[] }> = ({ posts }) => {
-  const groupedPosts = posts.reduce(
-    (acc, post) => {
-      const publicationYear = getYear(new Date(post.publishedAt));
-
-      return {
-        ...acc,
-        [publicationYear]: [...(acc[publicationYear] || []), post],
-      };
-    },
-    {} as {
-      [key: number]: Post[];
-    }
-  );
-
+const Journal: React.FC<{
+  documents: Array<
+    | {
+        type: "post";
+        document: Post;
+      }
+    | {
+        type: "weeknote";
+        document: Weeknote;
+      }
+    | {
+        type: "externalPost";
+        document: ExternalPost;
+      }
+  >;
+}> = ({ documents }) => {
   return (
     <>
-      <Page headerLayout="inline">
-        <Box
+      <Page>
+        <Container
           sx={{
-            paddingTop: 5,
-            paddingBottom: 5,
+            py: 3,
           }}
         >
-          {Object.keys(groupedPosts)
-            .sort((a, b) => parseInt(b) - parseInt(a))
-            .map((year, index) => {
-              const posts = groupedPosts[year];
+          <Flex
+            sx={{
+              flexDirection: "column",
+              gap: 4,
+            }}
+          >
+            {documents.map(({ type, document }) => {
+              if (type === "post") {
+                return <PostCard key={document.id} document={document} />;
+              }
 
-              return (
-                <Rail title={`${index === 0 ? "Journal " : ""}${year}`}>
-                  {posts.map((post) => {
-                    return <BlogPostCard post={post} key={post.id} />;
-                  })}
-                </Rail>
-              );
+              if (type === "weeknote") {
+                return <WeeknoteCard key={document.id} document={document} />;
+              }
+
+              if (type === "externalPost") {
+                return (
+                  <ExternalPostCard key={document.id} document={document} />
+                );
+              }
             })}
-        </Box>
+          </Flex>
+        </Container>
       </Page>
     </>
   );
@@ -53,11 +67,13 @@ const Journal: React.FC<{ posts: Post[] }> = ({ posts }) => {
 export default Journal;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = await getPosts();
+  const documents = await getAllDocuments({
+    count: 100,
+  });
 
   return {
     props: {
-      posts,
+      documents,
     },
     revalidate: 1,
   };

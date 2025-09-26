@@ -2,17 +2,22 @@ import { faCalendar, faLink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import { GetStaticPaths, GetStaticProps } from "next";
+import Error from "next/error";
+import Head from "next/head";
+import NextLink from "next/link";
 import { useInView } from "react-intersection-observer";
 import { Box, Flex, Heading, Link, Text } from "theme-ui";
-import Head from "next/head";
-import Error from "next/error";
-import NextLink from "next/link";
 
-import { getAllPostSlugs, getPost, Post } from "../../../api/prismic";
-import { Container } from "../../../components/Container";
-import { Page } from "../../../components/Page";
-import { Content } from "../../../components/Content";
 import { useRouter } from "next/router";
+import {
+  getAllDocumentSlugs,
+  getDocument,
+  Post,
+  Weeknote,
+} from "../../../api/prismic";
+import { Container } from "../../../components/Container";
+import { Content } from "../../../components/Content";
+import { Page } from "../../../components/Page";
 
 const Aside: React.FC<{ post: Post }> = ({ post }) => {
   return (
@@ -78,7 +83,16 @@ const Aside: React.FC<{ post: Post }> = ({ post }) => {
   );
 };
 
-const Entry: React.FC<{ post: Post }> = ({ post }) => {
+const Entry: React.FC<
+  | {
+      type: "post";
+      document: Post;
+    }
+  | {
+      type: "weeknote";
+      document: Weeknote;
+    }
+> = ({ type, document }) => {
   const { isFallback } = useRouter();
 
   const { ref, inView } = useInView({
@@ -102,7 +116,7 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
     );
   }
 
-  if (!post) {
+  if (!document) {
     return <Error statusCode={404} />;
   }
 
@@ -113,12 +127,13 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
           {JSON.stringify({
             "@context": "http://schema.org",
             "@type": "BlogPosting",
-            url: "https://www.chrishutchinson.me/journal/entry/${post.slug}",
-            headline: post.headline,
-            alternativeHeadline: post.subheading,
-            dateCreated: post.publishedAt,
-            datePublished: post.publishedAt,
-            dateModified: post.publishedAt,
+            url: `https://www.chrishutchinson.me/journal/entry/${document.slug}`,
+            headline: type === "post" ? document.headline : document.subheading,
+            alternativeHeadline:
+              type === "post" ? document.subheading : document.headline,
+            dateCreated: document.publishedAt,
+            datePublished: document.publishedAt,
+            dateModified: document.publishedAt,
             inLanguage: "en-GB",
             isFamilyFriendly: "true",
             copyrightYear: new Date().getFullYear().toString(),
@@ -137,91 +152,89 @@ const Entry: React.FC<{ post: Post }> = ({ post }) => {
       </Head>
 
       <Page
-        title={post.headline}
-        description={post.subheading}
-        headerLayout="inline"
+        title={type === "post" ? document.headline : document.subheading}
+        description={type === "post" ? document.subheading : document.headline}
       >
-        <Box
+        <Container
           sx={{
-            paddingBottom: 5,
+            py: 3,
           }}
         >
-          <Container>
-            <Flex
+          <Flex
+            sx={{
+              flexDirection: ["column", "row"],
+              alignItems: "flex-start",
+            }}
+          >
+            <Box
               sx={{
-                flexDirection: ["column", "row"],
-                alignItems: "flex-start",
+                width: "100%",
               }}
             >
-              <Aside post={post} />
-
               <Box
                 sx={{
-                  width: "100%",
+                  maxWidth: 800,
                 }}
               >
-                <Box
+                <Text as="time" variant="label" title={document.publishedAt}>
+                  {format(new Date(document.publishedAt), "MMMM do, yyyy")}
+                </Text>
+                <Heading
+                  ref={ref}
+                  as="h1"
                   sx={{
-                    maxWidth: 800,
+                    fontSize: [4, 5],
+                    marginBottom: 4,
                   }}
                 >
+                  {type === "post" ? document.headline : document.subheading}
+                </Heading>
+
+                <Box
+                  sx={{
+                    position: "fixed",
+                    zIndex: 10,
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    borderBottom: "1px dotted",
+                    backgroundColor: "background",
+                    padding: 3,
+                    transition: "transform 0.2s ease",
+                    transform: inView ? "translateY(-150%)" : "translateY(0)",
+                  }}
+                >
+                  <Text as="time" variant="label" title={document.publishedAt}>
+                    {format(new Date(document.publishedAt), "MMMM do, yyyy")}
+                  </Text>
                   <Heading
-                    ref={ref}
                     as="h1"
                     sx={{
-                      fontSize: [5, 6, 7],
+                      fontSize: 2,
+                      marginBottom: 2,
+                    }}
+                  >
+                    {type === "post" ? document.headline : document.subheading}
+                  </Heading>
+                </Box>
+
+                {type === "post" && document.subheading && (
+                  <Heading
+                    as="h2"
+                    sx={{
+                      fontSize: [3, 4],
                       marginBottom: 4,
                     }}
                   >
-                    {post.headline}
+                    {document.subheading}
                   </Heading>
-
-                  <Box
-                    sx={{
-                      position: "fixed",
-                      zIndex: 10,
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      boxShadow: "0px 2px 8px hsla(0,0%,0%,.2)",
-                      backgroundColor: "background",
-                      padding: 3,
-                      transition: "transform 0.2s ease",
-                      transform: inView ? "translateY(-150%)" : "translateY(0)",
-                    }}
-                  >
-                    <Text as="time" variant="label" title={post.publishedAt}>
-                      {format(new Date(post.publishedAt), "MMMM do, yyyy")}
-                    </Text>
-                    <Heading
-                      as="h1"
-                      sx={{
-                        fontSize: 2,
-                        marginBottom: 2,
-                      }}
-                    >
-                      {post.headline}
-                    </Heading>
-                  </Box>
-
-                  {post.subheading && (
-                    <Heading
-                      as="h2"
-                      sx={{
-                        fontSize: [3, 4],
-                        marginBottom: 4,
-                      }}
-                    >
-                      {post.subheading}
-                    </Heading>
-                  )}
-                </Box>
-
-                <Content body={post.body} />
+                )}
               </Box>
-            </Flex>
-          </Container>
-        </Box>
+
+              <Content body={document.body} />
+            </Box>
+          </Flex>
+        </Container>
       </Page>
     </>
   );
@@ -231,20 +244,22 @@ export default Entry;
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
-    const post = await getPost(
-      Array.isArray(params.slug) ? params.slug[0] : params.slug
+    const { type, document } = await getDocument(
+      Array.isArray(params.slug) ? params.slug[0] : params.slug,
     );
 
     return {
       props: {
-        post,
+        type,
+        document,
       },
       revalidate: 1,
     };
   } catch (e) {
     return {
       props: {
-        post: null,
+        type: null,
+        document: null,
       },
       revalidate: 1,
     };
@@ -252,7 +267,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const slugs = await getAllPostSlugs();
+  const slugs = await getAllDocumentSlugs();
 
   return {
     paths: slugs.map((slug) => ({

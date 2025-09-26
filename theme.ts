@@ -5,31 +5,34 @@ const theme: Theme = {
   useLocalStorage: false,
   colors: {
     text: "#111",
-    background: "#fff",
+    background: "#e9eee9",
     primary: "#5DA271",
     secondary: "#437551",
     muted: "#437551",
     highlight: "#5DA271",
     gray: "#6c6c6c",
-    buff: "#eaeaea",
+    buff: "#ffffff",
     accent: "#C84630",
     subtle: "#3f3f3f",
-    hoverText: "#FFF",
+    hoverText: "#040404ff",
+    linkText: "#1d3ec2ff",
+    visitedLinkText: "rgba(130, 23, 172, 1)",
     modes: {
       dark: {
         text: "#FFF",
         background: "#222",
         muted: "#222",
-        buff: "#1a1a1a",
+        buff: "#111",
         subtle: "#ddd",
         highlight: "#333",
         hoverText: "#FFF",
+        linkText: "#FFF",
       },
     },
   },
   fonts: {
     body: `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif`,
-    heading: "Mali",
+    heading: `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif`,
     serifBody: `"Apple Garamond", "Baskerville", "Times New Roman", "Droid Serif", "Times","Source Serif Pro", serif`,
   },
   fontSizes: [12, 14, 16, 22, 28, 36, 42, 50, 72, 100],
@@ -55,12 +58,11 @@ const theme: Theme = {
       color: "text",
       textDecoration: "none",
       transition: "background 0.15s ease, color 0.15s ease",
-      ":hover": {
-        backgroundColor: "primary",
-        color: "hoverText",
-      },
       borderBottom: "2px solid",
-      borderColor: "primary",
+    },
+    navLink: {
+      color: "text",
+      textDecoration: "none",
     },
   },
   text: {
@@ -88,10 +90,10 @@ const theme: Theme = {
       transition: "color 0.15s ease",
     },
     blockquote: {
-      padding: 3,
-      borderLeft: "2px solid",
-      borderColor: "primary",
-      fontStyle: "italic",
+      px: 3,
+      py: 1,
+      borderLeft: "2px dotted",
+      borderColor: "subtle",
     },
   },
   styles: {
@@ -110,13 +112,9 @@ const theme: Theme = {
       borderColor: "accent",
     },
     a: {
-      color: "text",
-      textDecorationColor: "#5DA271",
-      textDecorationThickness: 2,
-      transition: "background 0.15s ease, color 0.15s ease",
-      ":hover": {
-        backgroundColor: "primary",
-        color: "hoverText",
+      color: "linkText",
+      ":visited": {
+        color: "visitedLinkText",
       },
     },
     h1: {

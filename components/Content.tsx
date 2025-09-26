@@ -5,15 +5,15 @@ import { PrismicBody } from "../api/prismic";
 import { Blockquote } from "./content-blocks/Blockquote";
 import { Divider } from "./content-blocks/Divider";
 import { Gist } from "./content-blocks/Gist";
-import { Tweet } from "./content-blocks/Tweet";
 import { Text as TextContentBlock } from "./content-blocks/Text";
+import { Tweet } from "./content-blocks/Tweet";
 
 export const Content: React.FC<{ body: PrismicBody }> = ({ body }) => {
   return (
     <Box>
       {body.map((slice, index) => {
         if (slice.type === "text") {
-          return <TextContentBlock slice={slice} />;
+          return <TextContentBlock key={index} slice={slice} />;
         }
 
         if (slice.type === "divider") {
@@ -21,15 +21,15 @@ export const Content: React.FC<{ body: PrismicBody }> = ({ body }) => {
         }
 
         if (slice.type === "blockquote") {
-          return <Blockquote slice={slice} />;
+          return <Blockquote key={index} slice={slice} />;
         }
 
         if (slice.type === "gist") {
-          return <Gist slice={slice} />;
+          return <Gist key={index} slice={slice} />;
         }
 
         if (slice.type === "tweet") {
-          return <Tweet slice={slice} />;
+          return <Tweet key={index} slice={slice} />;
         }
 
         return null;

@@ -21,33 +21,34 @@ const feedHandler: NextApiHandler = async (req, res) => {
 
     ${documents
       .map(({ type, document }) => {
-        const html = sanitizeHtml(renderPrismicBodyAsHtml(document.body), {
-          allowedTags: [
-            "p",
-            "a",
-            "pre",
-            "span",
-            "strong",
-            "ul",
-            "ol",
-            "li",
-            "blockquote",
-            "h1",
-            "h2",
-            "h3",
-            "h4",
-            "h5",
-            "h6",
-            "img",
-          ],
-        });
-
-        const path = type === "post" ? "/journal/entry/" : "/weeknotes/";
+        const html =
+          type === "externalPost"
+            ? `<a href="${document.url}">${document.url}</a>`
+            : sanitizeHtml(renderPrismicBodyAsHtml(document.body), {
+                allowedTags: [
+                  "p",
+                  "a",
+                  "pre",
+                  "span",
+                  "strong",
+                  "ul",
+                  "ol",
+                  "li",
+                  "blockquote",
+                  "h1",
+                  "h2",
+                  "h3",
+                  "h4",
+                  "h5",
+                  "h6",
+                  "img",
+                ],
+              });
 
         return `<item>
-          <guid>${BASE_DOMAIN}${path}${document.slug}</guid>
+          <guid>${BASE_DOMAIN}/journal/entry/${document.slug}</guid>
           <title>${document.headline}</title>
-          <link>${BASE_DOMAIN}${path}${document.slug}</link>
+          <link>${BASE_DOMAIN}/journal/entry/${document.slug}</link>
           <description><![CDATA[ ${html} ]]></description>
           <pubDate>${new Date(document.publishedAt).toUTCString()}</pubDate>
         </item>`;

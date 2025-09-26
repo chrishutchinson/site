@@ -19,6 +19,10 @@ const pages: { [key: string]: Page } = {
     destination: "https://www.github.com/chrishutchinson",
     title: "GitHub",
   },
+  substack: {
+    destination: "https://fringeengineering.substack.com",
+    title: "Substack",
+  },
 };
 
 const GoTo = () => {
