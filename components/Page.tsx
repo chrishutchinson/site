@@ -3,6 +3,7 @@ import Head from "next/head";
 import NextLink from "next/link";
 import { PropsWithChildren } from "react";
 import { Box, Flex, Heading, Link, Text } from "theme-ui";
+import { externalLinks } from "../data/links";
 import { Container } from "./Container";
 
 const metadata = {
@@ -103,16 +104,19 @@ export const Page: React.FC<
               }}
               as="nav"
             >
+              <NextLink href="/about" passHref legacyBehavior>
+                <Link>about</Link>
+              </NextLink>
               <NextLink href="/api/feed.xml" passHref legacyBehavior>
                 <Link>rss</Link>
               </NextLink>
-              <NextLink href="/to/github" passHref legacyBehavior>
+              <NextLink href={externalLinks.github} passHref legacyBehavior>
                 <Link>github</Link>
               </NextLink>
-              <NextLink href="/to/linkedin" passHref legacyBehavior>
+              <NextLink href={externalLinks.linkedin} passHref legacyBehavior>
                 <Link>linkedin</Link>
               </NextLink>
-              <NextLink href="/to/substack" passHref legacyBehavior>
+              <NextLink href={externalLinks.substack} passHref legacyBehavior>
                 <Link>substack</Link>
               </NextLink>
             </Flex>

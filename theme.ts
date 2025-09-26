@@ -26,7 +26,8 @@ const theme: Theme = {
         subtle: "#ddd",
         highlight: "#333",
         hoverText: "#FFF",
-        linkText: "#FFF",
+        linkText: "#a6b5f3ff",
+        visitedLinkText: "rgba(197, 148, 216, 1)",
       },
     },
   },
@@ -43,7 +44,7 @@ const theme: Theme = {
   },
   fontWeights: {
     body: "normal",
-    heading: 500,
+    heading: 700,
   },
   links: {
     bold: {
@@ -72,10 +73,9 @@ const theme: Theme = {
       fontWeight: "body",
     },
     article: {
-      fontFamily: "serifBody",
+      fontFamily: "body",
       lineHeight: "article",
       fontWeight: "body",
-      fontSize: 20,
     },
     heading: {
       fontFamily: "heading",
@@ -102,6 +102,7 @@ const theme: Theme = {
       fontWeight: 0,
       lineHeight: "body",
       transition: "background-color 0.15s ease",
+      textUnderlineOffset: 2,
     },
     hr: {
       border: 0,
