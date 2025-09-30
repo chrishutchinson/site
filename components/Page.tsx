@@ -133,6 +133,9 @@ export const Page: React.FC<
               <NextLink href={externalLinks.linkedin} passHref legacyBehavior>
                 <Link>linkedin</Link>
               </NextLink>
+              <NextLink href={externalLinks.bluesky} passHref legacyBehavior>
+                <Link>bluesky</Link>
+              </NextLink>
               <NextLink href={externalLinks.substack} passHref legacyBehavior>
                 <Link>substack</Link>
               </NextLink>

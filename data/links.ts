@@ -3,6 +3,7 @@ export const externalLinks = {
   github: "https://github.com/chrishutchinson",
   linkedin: "https://www.linkedin.com/in/chris-hutchinson-32b76237/",
   substack: "https://fringeengineering.substack.com",
+  bluesky: "https://bsky.app/profile/hutch.tf",
   madeTech: "https://www.madetech.com",
   learnerbly: "https://www.learnerbly.com",
   theTimes: "https://www.thetimes.com",
