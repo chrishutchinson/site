@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { Box, Flex, Link, Text } from "theme-ui";
 import { Container } from "../../components/Container";
 import { Page } from "../../components/Page";
@@ -31,7 +31,12 @@ export default function PhotographyIndexPage() {
               alt="A photo of Chris"
               width={854}
               height={1280}
-              layout="responsive"
+              sizes="100vw"
+              style={{
+                width: "100%",
+                height: "auto",
+              }}
+              priority
             />
           </Link>
 
@@ -77,8 +82,12 @@ export default function PhotographyIndexPage() {
                 src="/photography/DSCF4213.jpg"
                 width={1366}
                 height={2048}
-                layout="responsive"
                 loading="lazy"
+                sizes="100vw"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
               />
             </Link>
           </Box>
@@ -94,8 +103,12 @@ export default function PhotographyIndexPage() {
                 src="/photography/DSCF3256.jpeg"
                 width={1365}
                 height={2048}
-                layout="responsive"
                 loading="lazy"
+                sizes="100vw"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
               />
             </Link>
           </Box>
@@ -111,8 +124,12 @@ export default function PhotographyIndexPage() {
                 src="/photography/DSC02072.jpg"
                 width={987}
                 height={1280}
-                layout="responsive"
                 loading="lazy"
+                sizes="100vw"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
               />
             </Link>
           </Box>
@@ -128,8 +145,12 @@ export default function PhotographyIndexPage() {
                 src="/photography/DSCF5570.jpg"
                 width={1365}
                 height={2048}
-                layout="responsive"
                 loading="lazy"
+                sizes="100vw"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
               />
             </Link>
           </Box>
@@ -145,8 +166,12 @@ export default function PhotographyIndexPage() {
                 src="/photography/DSCF5297.jpeg"
                 width={1365}
                 height={2048}
-                layout="responsive"
                 loading="lazy"
+                sizes="100vw"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
               />
             </Link>
           </Box>
@@ -162,8 +187,12 @@ export default function PhotographyIndexPage() {
                 src="/photography/DSCF3290.jpeg"
                 width={1365}
                 height={2048}
-                layout="responsive"
                 loading="lazy"
+                sizes="100vw"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
               />
             </Link>
           </Box>
@@ -179,8 +208,12 @@ export default function PhotographyIndexPage() {
                 src="/photography/DSCF3356.jpg"
                 width={1365}
                 height={2048}
-                layout="responsive"
                 loading="lazy"
+                sizes="100vw"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
               />
             </Link>
           </Box>
