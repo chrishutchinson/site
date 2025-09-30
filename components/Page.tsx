@@ -2,7 +2,7 @@ import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import NextLink from "next/link";
 import { PropsWithChildren } from "react";
-import { Box, Flex, Heading, Link, Text } from "theme-ui";
+import { Box, Flex, Heading, Link, SxProp, Text } from "theme-ui";
 import { externalLinks } from "../data/links";
 import { Container } from "./Container";
 
@@ -14,6 +14,15 @@ const metadata = {
       ? text
       : "Chris Hutchinson is a software engineer and Rapsberry Pi tinkerer.",
   image: () => "/share-image.png",
+};
+
+const getActiveLinkStyles = (pathname: string, href: string): SxProp => {
+  return {
+    sx: {
+      textDecorationThickness: pathname === href ? "3px" : undefined,
+      textDecorationSkipInk: "none",
+    },
+  };
 };
 
 export const Page: React.FC<
@@ -101,11 +110,19 @@ export const Page: React.FC<
                 flexDirection: "row",
                 gap: "2",
                 alignItems: "center",
+                flexWrap: "wrap",
               }}
               as="nav"
             >
               <NextLink href="/about" passHref legacyBehavior>
-                <Link>about</Link>
+                <Link {...getActiveLinkStyles(router.pathname, "/about")}>
+                  about
+                </Link>
+              </NextLink>
+              <NextLink href="/photography" passHref legacyBehavior>
+                <Link {...getActiveLinkStyles(router.pathname, "/photography")}>
+                  photography
+                </Link>
               </NextLink>
               <NextLink href="/api/feed.xml" passHref legacyBehavior>
                 <Link>rss</Link>
