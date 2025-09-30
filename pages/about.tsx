@@ -86,6 +86,12 @@ export default function AboutPage() {
           </Text>
 
           <Text variant="article">
+            I'm a <Link href="/photography">casual photographer</Link> too,
+            shooting mostly street and nature photography in and around
+            Edinburgh, as well as on my travels.
+          </Text>
+
+          <Text variant="article">
             If you'd like to get in touch, you can email me at{" "}
             <Link href="mailto:hello@chrishutchinson.me">
               hello@chrishutchinson.me

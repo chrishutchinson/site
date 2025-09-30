@@ -12,4 +12,5 @@ export const externalLinks = {
     "https://magazine.raspberrypi.com/articles/uk-train-departure-screen",
   christmasTreePainterLightsRepo:
     "https://github.com/chrishutchinson/christmas-tree-painter",
+  instagramPhotography: "https://www.instagram.com/christophers.viewfinder",
 };
