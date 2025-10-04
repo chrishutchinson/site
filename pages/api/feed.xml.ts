@@ -14,9 +14,9 @@ const feedHandler: NextApiHandler = async (req, res) => {
   res.send(`<?xml version="1.0" ?>
   <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Chris Hutchinson (Journal and weeknotes)</title>
+    <title>Chris Hutchinson's Journal</title>
     <link>${BASE_DOMAIN}</link>
-    <description>The latest journal entries and weeknotes from Chris Hutchinson – a software engineer and Raspberry Pi tinkerer.</description>
+    <description>The latest journal entries from Chris Hutchinson – Edinburgh-based engineer and casual photographer.</description>
     <atom:link href="${BASE_DOMAIN}/api/feed.xml" rel="self" type="application/rss+xml" />
 
     ${documents
