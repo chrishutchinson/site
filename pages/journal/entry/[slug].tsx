@@ -1,12 +1,8 @@
-import { faCalendar, faLink } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Error from "next/error";
 import Head from "next/head";
-import NextLink from "next/link";
-import { useInView } from "react-intersection-observer";
-import { Box, Flex, Heading, Link, Text } from "theme-ui";
+import { Box, Flex, Heading, Text } from "theme-ui";
 
 import { useRouter } from "next/router";
 import {
@@ -19,70 +15,6 @@ import { Container } from "../../../components/Container";
 import { Content } from "../../../components/Content";
 import { Page } from "../../../components/Page";
 
-const Aside: React.FC<{ post: Post }> = ({ post }) => {
-  return (
-    <Flex
-      sx={{
-        flexDirection: "column",
-        minWidth: ["100%", 200, 350],
-        maxWidth: ["100%", 200, 350],
-      }}
-    >
-      <Box
-        sx={{
-          padding: [3, 4],
-          backgroundColor: "buff",
-          marginBottom: 3,
-          marginRight: [0, 4],
-        }}
-      >
-        <Box
-          sx={{
-            marginBottom: [0, 3],
-          }}
-        >
-          <Text as="p">
-            <FontAwesomeIcon icon={faCalendar} />
-            <br />
-            First published on{" "}
-            <Text as="time" title={post.publishedAt}>
-              {format(new Date(post.publishedAt), "MMMM do, yyyy")}
-            </Text>
-          </Text>
-        </Box>
-
-        <Box
-          sx={{
-            display: ["none", "initial"],
-          }}
-        >
-          <Text as="p">
-            <FontAwesomeIcon icon={faLink} />
-            <br />
-            <Text
-              as="code"
-              sx={{
-                wordBreak: "break-word",
-              }}
-            >
-              chrishutchinson.me/journal/entry/{post.slug}
-            </Text>
-          </Text>
-        </Box>
-      </Box>
-      <Box
-        sx={{
-          marginBottom: 5,
-        }}
-      >
-        <NextLink href="/journal" passHref={true} legacyBehavior>
-          <Link>Back to all entries</Link>
-        </NextLink>
-      </Box>
-    </Flex>
-  );
-};
-
 const Entry: React.FC<
   | {
       type: "post";
@@ -94,11 +26,6 @@ const Entry: React.FC<
     }
 > = ({ type, document }) => {
   const { isFallback } = useRouter();
-
-  const { ref, inView } = useInView({
-    initialInView: true,
-    threshold: 0.5,
-  });
 
   if (isFallback) {
     return (
@@ -180,7 +107,6 @@ const Entry: React.FC<
                   {format(new Date(document.publishedAt), "MMMM do, yyyy")}
                 </Text>
                 <Heading
-                  ref={ref}
                   as="h1"
                   sx={{
                     fontSize: [4, 5],
@@ -189,34 +115,6 @@ const Entry: React.FC<
                 >
                   {type === "post" ? document.headline : document.subheading}
                 </Heading>
-
-                <Box
-                  sx={{
-                    position: "fixed",
-                    zIndex: 10,
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    borderBottom: "1px dotted",
-                    backgroundColor: "background",
-                    padding: 3,
-                    transition: "transform 0.2s ease",
-                    transform: inView ? "translateY(-150%)" : "translateY(0)",
-                  }}
-                >
-                  <Text as="time" variant="label" title={document.publishedAt}>
-                    {format(new Date(document.publishedAt), "MMMM do, yyyy")}
-                  </Text>
-                  <Heading
-                    as="h1"
-                    sx={{
-                      fontSize: 2,
-                      marginBottom: 2,
-                    }}
-                  >
-                    {type === "post" ? document.headline : document.subheading}
-                  </Heading>
-                </Box>
 
                 {type === "post" && document.subheading && (
                   <Heading
