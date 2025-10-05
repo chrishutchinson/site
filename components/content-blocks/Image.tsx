@@ -36,7 +36,7 @@ export const Image: React.FC<{
       <Box
         sx={{
           borderLeft: "2px solid",
-          borderColor: "primary",
+          borderColor: "text",
           paddingLeft: 2,
         }}
       >

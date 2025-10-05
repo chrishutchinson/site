@@ -12,7 +12,7 @@ const metadata = {
   description: (text?: string) =>
     text
       ? text
-      : "Chris Hutchinson is a software engineer and Rapsberry Pi tinkerer.",
+      : "Chris Hutchinson is an Edinburgh-based engineer and casual photographer.",
   image: () => "/share-image.png",
 };
 
@@ -54,19 +54,19 @@ export const Page: React.FC<
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="Chris Hutchinson (Journal & Weeknotes)"
+          title="Chris Hutchinson (Journal)"
           href={metadata.url("/api/feed.xml")}
         />
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="Chris Hutchinson (Journal)"
+          title="Chris Hutchinson (Journal) [Deprecated]"
           href={metadata.url("/api/journal/feed.xml")}
         />
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="Chris Hutchinson (Weeknotes)"
+          title="Chris Hutchinson (Weeknotes) [Deprecated]"
           href={metadata.url("/api/weeknotes/feed.xml")}
         />
       </Head>

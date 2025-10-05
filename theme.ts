@@ -109,8 +109,7 @@ const theme: Theme = {
       backgroundColor: "transparent",
       height: "4px",
       borderTop: "1px solid",
-      borderBottom: "1px solid",
-      borderColor: "accent",
+      borderColor: "text",
     },
     a: {
       color: "linkText",

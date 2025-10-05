@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn
+      - run: npm install
       - name: Waiting for 200 from the Vercel Preview
         uses: patrickedqvist/wait-for-vercel-preview@main
         id: vercel_preview_url
@@ -20,4 +20,4 @@ jobs:
       - run: npx wait-on ${{ steps.vercel_preview_url.outputs.url }}
       - name: Run axe
         run: |
-          yarn axe ${{ steps.vercel_preview_url.outputs.url }}, ${{ steps.vercel_preview_url.outputs.url }}/journal/entry/finding-your-documentation-groove, ${{ steps.vercel_preview_url.outputs.url }}/weeknotes/back-to-work-a-culture-of-feedback-and-learning-corporations-taking-over, ${{ steps.vercel_preview_url.outputs.url }}/photography, ${{ steps.vercel_preview_url.outputs.url }}/about --exit
+          npx axe ${{ steps.vercel_preview_url.outputs.url }}, ${{ steps.vercel_preview_url.outputs.url }}/journal/entry/finding-your-documentation-groove, ${{ steps.vercel_preview_url.outputs.url }}/weeknotes/back-to-work-a-culture-of-feedback-and-learning-corporations-taking-over, ${{ steps.vercel_preview_url.outputs.url }}/photography, ${{ steps.vercel_preview_url.outputs.url }}/about --exit
