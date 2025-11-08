@@ -109,36 +109,57 @@ export const Page: React.FC<
               sx={{
                 flexDirection: "row",
                 gap: "2",
+                justifyContent: "space-between",
                 alignItems: "center",
                 flexWrap: "wrap",
               }}
               as="nav"
             >
-              <NextLink href="/about" passHref legacyBehavior>
-                <Link {...getActiveLinkStyles(router.pathname, "/about")}>
-                  about
-                </Link>
-              </NextLink>
-              <NextLink href="/photography" passHref legacyBehavior>
-                <Link {...getActiveLinkStyles(router.pathname, "/photography")}>
-                  photography
-                </Link>
-              </NextLink>
-              <NextLink href="/api/feed.xml" passHref legacyBehavior>
-                <Link>rss</Link>
-              </NextLink>
-              <NextLink href={externalLinks.github} passHref legacyBehavior>
-                <Link>github</Link>
-              </NextLink>
-              <NextLink href={externalLinks.linkedin} passHref legacyBehavior>
-                <Link>linkedin</Link>
-              </NextLink>
-              <NextLink href={externalLinks.bluesky} passHref legacyBehavior>
-                <Link>bluesky</Link>
-              </NextLink>
-              <NextLink href={externalLinks.substack} passHref legacyBehavior>
-                <Link>substack</Link>
-              </NextLink>
+              <Flex
+                sx={{
+                  flexDirection: "row",
+                  gap: "2",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                }}
+              >
+                <NextLink href="/about" passHref legacyBehavior>
+                  <Link {...getActiveLinkStyles(router.pathname, "/about")}>
+                    about
+                  </Link>
+                </NextLink>
+                <NextLink href="/photography" passHref legacyBehavior>
+                  <Link
+                    {...getActiveLinkStyles(router.pathname, "/photography")}
+                  >
+                    photography
+                  </Link>
+                </NextLink>
+              </Flex>
+              <Flex
+                sx={{
+                  flexDirection: "row",
+                  gap: "2",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                }}
+              >
+                <NextLink href="/api/feed.xml" passHref legacyBehavior>
+                  <Link>rss</Link>
+                </NextLink>
+                <NextLink href={externalLinks.github} passHref legacyBehavior>
+                  <Link>github</Link>
+                </NextLink>
+                <NextLink href={externalLinks.linkedin} passHref legacyBehavior>
+                  <Link>linkedin</Link>
+                </NextLink>
+                <NextLink href={externalLinks.bluesky} passHref legacyBehavior>
+                  <Link>bluesky</Link>
+                </NextLink>
+                <NextLink href={externalLinks.substack} passHref legacyBehavior>
+                  <Link>substack</Link>
+                </NextLink>
+              </Flex>
             </Flex>
           </Flex>
         </Container>
