@@ -99,9 +99,8 @@ const roles = [
     dates: "2025 onwards",
     summary: (
       <>
-        Coming soon! That said, if you're interested in working with me, and
-        joining a really early-stage start up, I am hiring for a Data Engineer,
-        a Forward Deployed Engineer, and Full Stack Software Engineer. If you're
+        Coming soon! If you're interested in working with me, and joining a
+        really early-stage start up in the HR space, I am hiring. If you're
         interested, please reach out by email at{" "}
         <Link href="mailto:hello@chrishutchinson.me">
           hello@chrishutchinson.me
