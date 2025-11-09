@@ -23,7 +23,7 @@ const feedHandler: NextApiHandler = async (req, res) => {
       .map(({ type, document }) => {
         const html =
           type === "externalPost"
-            ? `<a href="${document.url}">${document.url}</a>`
+            ? `<p>${document.subheading}</p><p><a href="${document.url}">${document.url}</a></p>`
             : sanitizeHtml(renderPrismicBodyAsHtml(document.body), {
                 allowedTags: [
                   "p",
@@ -45,10 +45,15 @@ const feedHandler: NextApiHandler = async (req, res) => {
                 ],
               });
 
+        const link =
+          type === "externalPost"
+            ? document.url
+            : `${BASE_DOMAIN}/journal/entry/${document.slug}`;
+
         return `<item>
-          <guid>${BASE_DOMAIN}/journal/entry/${document.slug}</guid>
+          <guid>${link}</guid>
           <title>${document.headline}</title>
-          <link>${BASE_DOMAIN}/journal/entry/${document.slug}</link>
+          <link>${link}</link>
           <description><![CDATA[ ${html} ]]></description>
           <pubDate>${new Date(document.publishedAt).toUTCString()}</pubDate>
         </item>`;
