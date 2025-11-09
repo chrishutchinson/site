@@ -14,4 +14,5 @@ export const externalLinks = {
   christmasTreePainterLightsRepo:
     "https://github.com/chrishutchinson/christmas-tree-painter",
   instagramPhotography: "https://www.instagram.com/christophers.viewfinder",
+  photographyPortfolio: "https://portfolio.chrishutchinson.me",
 };

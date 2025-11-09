@@ -44,10 +44,10 @@ export default function PhotographyIndexPage() {
             I do a mix of urban street and nature photography, shooting with
             either with my Sony A7III, my Fujifilm X100V, or my iPhone (usually
             using <Link href="https://halide.cam/">Halide</Link>
-            ). I post most of my shots on my photography{" "}
-            <Link href={externalLinks.instagramPhotography}>
-              Instagram
-            </Link>{" "}
+            ). I share photo collections on{" "}
+            <Link href={externalLinks.photographyPortfolio}>here</Link>, and
+            select shots on my{" "}
+            <Link href={externalLinks.instagramPhotography}>Instagram</Link>{" "}
             account.
           </Text>
 
