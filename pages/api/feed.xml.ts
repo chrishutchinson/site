@@ -14,16 +14,16 @@ const feedHandler: NextApiHandler = async (req, res) => {
   res.send(`<?xml version="1.0" ?>
   <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Chris Hutchinson's Journal</title>
+    <title>Chris Hutchinson</title>
     <link>${BASE_DOMAIN}</link>
-    <description>The latest journal entries from Chris Hutchinson – Edinburgh-based engineer and casual photographer.</description>
+    <description>The latest posts from Chris Hutchinson – Edinburgh-based engineer and casual photographer.</description>
     <atom:link href="${BASE_DOMAIN}/api/feed.xml" rel="self" type="application/rss+xml" />
 
     ${documents
       .map(({ type, document }) => {
         const html =
           type === "externalPost"
-            ? `<a href="${document.url}">${document.url}</a>`
+            ? `<p>${document.subheading}</p><p><a href="${document.url}">${document.url}</a></p>`
             : sanitizeHtml(renderPrismicBodyAsHtml(document.body), {
                 allowedTags: [
                   "p",
@@ -45,10 +45,15 @@ const feedHandler: NextApiHandler = async (req, res) => {
                 ],
               });
 
+        const link =
+          type === "externalPost"
+            ? document.url
+            : `${BASE_DOMAIN}/journal/entry/${document.slug}`;
+
         return `<item>
-          <guid>${BASE_DOMAIN}/journal/entry/${document.slug}</guid>
+          <guid>${link}</guid>
           <title>${document.headline}</title>
-          <link>${BASE_DOMAIN}/journal/entry/${document.slug}</link>
+          <link>${link}</link>
           <description><![CDATA[ ${html} ]]></description>
           <pubDate>${new Date(document.publishedAt).toUTCString()}</pubDate>
         </item>`;
