@@ -20,7 +20,7 @@ export const htmlSerializer: HTMLSerializer<React.ReactNode> = (
         <Box
           key={key}
           sx={{
-            marginBottom: 4,
+            marginBottom: 3,
             maxWidth: 800,
             ":last-of-type": {
               marginBottom: 0,
@@ -43,8 +43,8 @@ export const htmlSerializer: HTMLSerializer<React.ReactNode> = (
       return (
         <Box
           sx={{
-            marginTop: 5,
-            marginBottom: 5,
+            marginTop: 3,
+            marginBottom: 3,
           }}
         >
           <Image
@@ -103,7 +103,7 @@ export const htmlSerializer: HTMLSerializer<React.ReactNode> = (
           as="ul"
           key={key}
           sx={{
-            marginBottom: 4,
+            marginBottom: 3,
             maxWidth: 800,
           }}
         >
@@ -117,7 +117,7 @@ export const htmlSerializer: HTMLSerializer<React.ReactNode> = (
           as="li"
           key={key}
           sx={{
-            marginBottom: 2,
+            marginBottom: 1,
           }}
         >
           <style jsx global>{`

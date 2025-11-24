@@ -12,7 +12,7 @@ export const Blockquote: React.FC<{ slice: PrismicSlice<"blockquote"> }> = ({
       sx={{
         width: "100%",
         maxWidth: 800,
-        marginBottom: 4,
+        marginBottom: 3,
       }}
     >
       <Text as="blockquote" variant="blockquote">
