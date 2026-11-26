@@ -1,5 +1,5 @@
 export const externalLinks = {
-  twitter: "https://www.twitter.com/chrishutchinson",
+  twitter: "https://x.com/chrishutchinson",
   github: "https://github.com/chrishutchinson",
   linkedin: "https://www.linkedin.com/in/chris-hutchinson-32b76237/",
   substack: "https://fringeengineering.substack.com",
