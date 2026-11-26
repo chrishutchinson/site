@@ -154,7 +154,7 @@ export const Page: React.FC<
                   <Link>linkedin</Link>
                 </NextLink>
                 <NextLink href={externalLinks.twitter} passHref legacyBehavior>
-                  <Link>x</Link>
+                  <Link>X</Link>
                 </NextLink>
                 <NextLink href={externalLinks.substack} passHref legacyBehavior>
                   <Link>substack</Link>
