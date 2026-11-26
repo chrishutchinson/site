@@ -9,7 +9,7 @@ jobs:
     name: Axe CLI
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: npm install
       - name: Waiting for 200 from the Vercel Preview
         uses: patrickedqvist/wait-for-vercel-preview@main
@@ -19,5 +19,7 @@ jobs:
           max_timeout: 60
       - run: npx wait-on ${{ steps.vercel_preview_url.outputs.url }}
       - name: Run axe
+        # Use the runner's ChromeDriver, which always matches its installed Chrome.
+        # The npm chromedriver package drifts out of sync as the runner image updates.
         run: |
-          npx axe ${{ steps.vercel_preview_url.outputs.url }}, ${{ steps.vercel_preview_url.outputs.url }}/journal/entry/finding-your-documentation-groove, ${{ steps.vercel_preview_url.outputs.url }}/weeknotes/back-to-work-a-culture-of-feedback-and-learning-corporations-taking-over, ${{ steps.vercel_preview_url.outputs.url }}/photography, ${{ steps.vercel_preview_url.outputs.url }}/about --exit
+          npx axe ${{ steps.vercel_preview_url.outputs.url }}, ${{ steps.vercel_preview_url.outputs.url }}/journal/entry/finding-your-documentation-groove, ${{ steps.vercel_preview_url.outputs.url }}/weeknotes/back-to-work-a-culture-of-feedback-and-learning-corporations-taking-over, ${{ steps.vercel_preview_url.outputs.url }}/photography, ${{ steps.vercel_preview_url.outputs.url }}/about --exit --chromedriver-path "$CHROMEWEBDRIVER/chromedriver"
