@@ -81,8 +81,11 @@ export default function AboutPage() {
               <Link>an app for "painting" your Christmas tree lights</Link>
             </NextLink>
             . I'm actively working on building a household Star Wars-inspired
-            droid, and an app to counteract the potentially negative cognitive
-            effects of generative AI.
+            droid, and{" "}
+            <Link href="/pal">
+              an iOS app that's home for all the tools I've built for myself
+            </Link>
+            .
           </Text>
 
           <Text variant="article">
